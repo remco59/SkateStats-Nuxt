@@ -696,5 +696,110 @@
         "delta_ms": 592
       }
     }
+  },
+  "race_comparison": {
+    "note": "Computed via build_comparison_context/get_pacing_labels in the old app (commit 4dc6959). Excludes samenvatting_tekst (auto-generated Dutch prose) and the SVG chart-coordinate builders (build_split_delta_series/build_cumulative_delta_series/build_lap_overlay_series) -- those are presentational and the rebuild draws its own SVG directly from this same numeric data instead of porting the old coordinate math line-for-line.",
+    "base": {
+      "distance_m": 1500,
+      "total_time_ms": 137000,
+      "laps_csv": "41.8,30.5,31.2,31.5"
+    },
+    "compare": {
+      "distance_m": 1500,
+      "total_time_ms": 133900,
+      "laps_csv": "41.5,30.2,30.8,31.4"
+    },
+    "expected": {
+      "summary": [
+        {
+          "label": "Totale tijd",
+          "base_ms": 137000,
+          "compare_ms": 133900,
+          "delta_ms": -3100
+        },
+        {
+          "label": "Opening",
+          "base_ms": 41800,
+          "compare_ms": 41500,
+          "delta_ms": -300
+        },
+        {
+          "label": "Laatste 400-eq",
+          "base_ms": 31500,
+          "compare_ms": 31400,
+          "delta_ms": -100
+        },
+        {
+          "label": "Verval",
+          "base_ms": -24233,
+          "compare_ms": -23933,
+          "delta_ms": 300
+        }
+      ],
+      "splits": [
+        {
+          "index": 1,
+          "distance_m": 300,
+          "base_split": 41.8,
+          "compare_split": 41.5,
+          "split_delta_ms": -300,
+          "cumulative_delta_ms": -300,
+          "base_400": 55.733333333333334,
+          "compare_400": 55.333333333333336,
+          "eq_delta_ms": -400
+        },
+        {
+          "index": 2,
+          "distance_m": 400,
+          "base_split": 30.5,
+          "compare_split": 30.2,
+          "split_delta_ms": -300,
+          "cumulative_delta_ms": -600,
+          "base_400": 30.5,
+          "compare_400": 30.2,
+          "eq_delta_ms": -300
+        },
+        {
+          "index": 3,
+          "distance_m": 400,
+          "base_split": 31.2,
+          "compare_split": 30.8,
+          "split_delta_ms": -400,
+          "cumulative_delta_ms": -1000,
+          "base_400": 31.2,
+          "compare_400": 30.8,
+          "eq_delta_ms": -400
+        },
+        {
+          "index": 4,
+          "distance_m": 400,
+          "base_split": 31.5,
+          "compare_split": 31.4,
+          "split_delta_ms": -100,
+          "cumulative_delta_ms": -1100,
+          "base_400": 31.5,
+          "compare_400": 31.4,
+          "eq_delta_ms": -100
+        }
+      ],
+      "highlights": {
+        "total_delta_ms": -3100,
+        "opening_delta_ms": -300,
+        "slot_delta_ms": -100,
+        "verval_delta_ms": 300
+      },
+      "pacing_basis_labels": [
+        "Controleerde start",
+        "Sterke slotronde",
+        "Gelijkmatige opbouw"
+      ],
+      "pacing_compare_labels": [
+        "Controleerde start",
+        "Sterke slotronde",
+        "Gelijkmatige opbouw"
+      ],
+      "sterkste_index": 3,
+      "zwakste_index": 4
+    }
   }
 }
