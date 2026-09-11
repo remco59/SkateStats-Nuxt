@@ -1,0 +1,11 @@
+node_modules
+.output
+.nuxt
+.nitro
+.cache
+data
+.env
+.git
+reference
+REBUILD_PLAN.md
+test

@@ -1,0 +1,21 @@
+<!--
+  Synthetic fixture matching osta_build_laps_csv + osta_extract_competition_name
+  (app/main.py, commit 4dc6959, L5423-5460): p.wedinfo holds
+  "YYYY-MM-DD <wid> <competition name>"; table.rit rows are
+  [lap_number, cumulative_time, lap_time]. Corresponds to ritid=9002
+  (1500m, laps [41.5, 30.2, 30.8, 31.4], total 2:13.90) from results_list.html.
+-->
+<html>
+  <body>
+    <div id="main">
+      <p class="wedinfo">2024-11-16 501 KNSB Bekerwedstrijd Heerenveen</p>
+      <table class="rit">
+        <tr><th>Ronde</th><th>Cumulatief</th><th>Rondetijd</th></tr>
+        <tr><td>1</td><td>41.50</td><td>41.50</td></tr>
+        <tr><td>2</td><td>1:11.70</td><td>30.20</td></tr>
+        <tr><td>3</td><td>1:42.50</td><td>30.80</td></tr>
+        <tr><td>4</td><td>2:13.90</td><td>31.40</td></tr>
+      </table>
+    </div>
+  </body>
+</html>

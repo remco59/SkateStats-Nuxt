@@ -1,0 +1,73 @@
+/*
+  Placeholder design tokens per REBUILD_PLAN.md section 10.
+  These are informed defaults, not extracted from portfolio.remcoland.nl
+  (unreachable from the build environment) -- replace with real values
+  once real tokens/screenshots are supplied, without touching how the
+  rest of the app consumes them (everything reads these CSS variables).
+*/
+
+:root {
+  --font-sans:
+    'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono:
+    'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --color-bg: #ffffff;
+  --color-surface: #f7f7f8;
+  --color-border: #e4e4e7;
+  --color-text: #18181b;
+  --color-text-muted: #6b7280;
+
+  --color-accent: #e5312b;
+  --color-accent-hover: #c8241f;
+  --color-accent-contrast: #ffffff;
+
+  --color-success: #1a7f37;
+  --color-danger: #c8241f;
+  --color-warning: #b45309;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-bg: #0b0b0c;
+    --color-surface: #161618;
+    --color-border: #2a2a2e;
+    --color-text: #f4f4f5;
+    --color-text-muted: #9ca3af;
+    --color-accent: #ff453f;
+    --color-accent-hover: #ff6a65;
+  }
+}
+
+:root[data-theme='dark'] {
+  --color-bg: #0b0b0c;
+  --color-surface: #161618;
+  --color-border: #2a2a2e;
+  --color-text: #f4f4f5;
+  --color-text-muted: #9ca3af;
+  --color-accent: #ff453f;
+  --color-accent-hover: #ff6a65;
+}
+
+:root[data-motion='reduced'] * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+.font-mono,
+.mono {
+  font-family: var(--font-mono);
+}

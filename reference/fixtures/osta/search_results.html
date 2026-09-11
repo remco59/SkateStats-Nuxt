@@ -1,0 +1,28 @@
+<!--
+  Synthetic fixture matching the selectors in osta_lookup_candidates
+  (app/main.py, commit 4dc6959, L5354-5408): table.naam rows, one <a href>
+  profile link per row with a `pid` query param, category/seasons/club in
+  the following <td> cells. Two rows on purpose, to exercise the
+  OstaMultipleMatchesError / profile-selection path.
+-->
+<html>
+  <body>
+    <div id="main">
+      <table class="naam">
+        <tr><th>Naam</th><th>Categorie</th><th>Seizoenen</th><th>Club</th></tr>
+        <tr>
+          <td><a href="index.php?pid=NL12345">Jansen, Remco</a></td>
+          <td>Junioren A</td>
+          <td>2023-2024, 2024-2025</td>
+          <td>IJsclub Voorbeeld</td>
+        </tr>
+        <tr>
+          <td><a href="index.php?pid=NL67890">Jansen, R.</a></td>
+          <td>Senioren</td>
+          <td>2021-2022</td>
+          <td>Andere Club</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

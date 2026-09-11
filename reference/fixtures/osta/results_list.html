@@ -1,0 +1,40 @@
+<!--
+  Synthetic fixture matching extract_osta_results_for_pid
+  (app/main.py, commit 4dc6959, L5463-5548): table.datum rows with
+  [date, venue_code, distance, time(link to detail page), category, competition(link)].
+  Row 2 and 3 are the same competition (two distances skated on the same day),
+  to exercise multi-race-per-competition grouping.
+-->
+<html>
+  <body>
+    <div id="main">
+      <table class="datum">
+        <tr><th>Datum</th><th>Baan</th><th>Afstand</th><th>Tijd</th><th>Cat</th><th>Wedstrijd</th></tr>
+        <tr>
+          <td>2024-11-16</td>
+          <td>HV</td>
+          <td>500</td>
+          <td><a href="index.php?pid=NL12345&ritid=9001">40.55</a></td>
+          <td>JA</td>
+          <td><a href="index.php?wid=501">KNSB Bekerwedstrijd Heerenveen</a></td>
+        </tr>
+        <tr>
+          <td>2024-11-16</td>
+          <td>HV</td>
+          <td>1500</td>
+          <td><a href="index.php?pid=NL12345&ritid=9002">2:13.90</a></td>
+          <td>JA</td>
+          <td><a href="index.php?wid=501">KNSB Bekerwedstrijd Heerenveen</a></td>
+        </tr>
+        <tr>
+          <td>2025-01-11</td>
+          <td>AK</td>
+          <td>1000</td>
+          <td><a href="index.php?pid=NL12345&ritid=9003">1:12.00</a></td>
+          <td>JA</td>
+          <td><a href="index.php?wid=502">Gewestelijke Wedstrijd Alkmaar</a></td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

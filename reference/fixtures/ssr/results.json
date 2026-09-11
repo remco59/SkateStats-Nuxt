@@ -1,0 +1,13 @@
+{
+  "_comment": "Synthetic fixture matching extract_ssr_results_for_skater (app/main.py, commit 4dc6959, L6023-6097). One call is made per distance in SSR_DISTANCES (100,300,500,1000,1500,3000,5000,10000); this file represents the response for distance=1500. Note: SSR results never carry lap times (laps_csv is always null) — SSR import can only ever populate total_time_ms, never splits.",
+  "results": [
+    {
+      "date": "16-11-2024",
+      "name": "KNSB Bekerwedstrijd Heerenveen",
+      "location": "Heerenveen (NED)",
+      "link": "https://speedskatingresults.com/index.php?p=6&e=88123",
+      "distance": 1500,
+      "time": "2:13.90"
+    }
+  ]
+}

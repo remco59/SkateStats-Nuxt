@@ -1,0 +1,96 @@
+{
+  "_comment": "Shape matches export_user_data (app/main.py, commit 4dc6959, L1947-2015). Field names are the literal old sqlite column names (owner_user_id, competition_date, laps_csv, dnf as 0/1, tag_key, ...) since import_user_data (L2018-2164) reads them back by these exact keys — the new import path must accept this shape for old backups to stay restorable.",
+  "exported_at": "2025-02-01T10:00:00+00:00",
+  "user": {
+    "id": 2,
+    "username": "remco",
+    "skater_name": "Remco Land",
+    "theme_preference": "dark",
+    "motion_preference": "all",
+    "created_at": "2024-09-01T08:00:00+00:00",
+    "updated_at": "2025-01-15T12:00:00+00:00",
+    "last_login_at": "2025-02-01T09:55:00+00:00"
+  },
+  "osta_monitor": {
+    "search_name": "Jansen, Remco",
+    "pid": "NL12345",
+    "mode": "notify",
+    "season": "2024",
+    "updated_at": "2025-01-01T00:00:00+00:00"
+  },
+  "osta_import_blacklist": [
+    {
+      "comp_signature": "osta|2024-10-05|knsb bekerwedstrijd deventer|NL12345",
+      "comp_name": "KNSB Bekerwedstrijd Deventer",
+      "comp_date": "2024-10-05",
+      "pid": "NL12345",
+      "race_count": 2,
+      "created_at": "2024-10-06T09:00:00+00:00"
+    }
+  ],
+  "goals": [
+    {
+      "id": 1,
+      "user_id": 2,
+      "distance_m": 1500,
+      "target_time_ms": 130000,
+      "target_opening_ms": 41000,
+      "target_avg_400_ms": 29700,
+      "target_last_400_ms": 30500,
+      "target_fade_400_ms": -10500,
+      "notes": "Doel voor eind seizoen",
+      "created_at": "2024-09-10T00:00:00+00:00",
+      "updated_at": "2024-09-10T00:00:00+00:00"
+    }
+  ],
+  "competitions": [
+    {
+      "id": 501,
+      "name": "KNSB Bekerwedstrijd Heerenveen",
+      "venue": "Heerenveen (NED)",
+      "competition_date": "2024-11-16",
+      "notes": "Geïmporteerd van OSTA: https://www.osta.nl/index.php?pid=NL12345",
+      "created_at": "2024-11-17T07:00:00+00:00"
+    }
+  ],
+  "races": [
+    {
+      "id": 9001,
+      "competition_id": 501,
+      "skater_id": 7,
+      "distance_m": 500,
+      "category": "JA1",
+      "class_name": null,
+      "tag_key": null,
+      "lane": null,
+      "opponent": null,
+      "total_time_ms": 40550,
+      "laps_csv": null,
+      "dnf": 0,
+      "notes": "Geïmporteerd van OSTA: https://www.osta.nl/index.php?pid=NL12345&ritid=9001",
+      "created_at": "2024-11-17T07:00:00+00:00",
+      "competition_name": "KNSB Bekerwedstrijd Heerenveen",
+      "venue": "Heerenveen (NED)",
+      "competition_date": "2024-11-16"
+    },
+    {
+      "id": 9002,
+      "competition_id": 501,
+      "skater_id": 7,
+      "distance_m": 1500,
+      "category": "JA1",
+      "class_name": null,
+      "tag_key": null,
+      "lane": null,
+      "opponent": null,
+      "total_time_ms": 133900,
+      "laps_csv": "41.50,30.20,30.80,31.40",
+      "dnf": 0,
+      "notes": "Geïmporteerd van OSTA: https://www.osta.nl/index.php?pid=NL12345&ritid=9002",
+      "created_at": "2024-11-17T07:00:00+00:00",
+      "competition_name": "KNSB Bekerwedstrijd Heerenveen",
+      "venue": "Heerenveen (NED)",
+      "competition_date": "2024-11-16"
+    }
+  ]
+}

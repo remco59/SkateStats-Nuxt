@@ -1,0 +1,162 @@
+{
+  "generated_by": "Called directly against app/main.py at commit 4dc69595620a268137be4c19f554301e14b8e6da (functions: opening_split_m, segment_distances, per400_times, build_split_rows, compute_race_metrics, parse_laps_to_ms, fmt_ms, season_label_for_date, collect_pr_race_ids, build_pr_progress). These are real outputs of the old app, not hand-derived — use them as the acceptance test fixtures for the ported TypeScript versions. Known-bug cases are flagged explicitly; do not silently 'fix' them without a decision (see REBUILD_PLAN.md section 4).",
+
+  "split_math": [
+    {
+      "label": "1500m, clean 4-lap race",
+      "distance_m": 1500,
+      "laps_s": [41.5, 30.2, 30.8, 31.4],
+      "expected": {
+        "total_time_ms": 133900,
+        "total_time_fmt": "2:13.90",
+        "opening_split_m": 300,
+        "segment_distances": [300, 400, 400, 400],
+        "per400_times": [55.333333333333336, 30.2, 30.8, 31.4],
+        "metrics": {
+          "segment_count": 4, "opening_m": 300, "avg_400": 30.8,
+          "first_400eq": 55.333333333333336, "last_400eq": 31.4,
+          "fade_400eq": -23.933333333333337, "avg_fade_per_segment_400eq": -7.977777777777779
+        }
+      }
+    },
+    {
+      "label": "3000m, clean 7-lap race — KNOWN QUIRK",
+      "distance_m": 3000,
+      "laps_s": [43.0, 32.0, 32.5, 33.0, 33.4, 33.9, 34.2],
+      "expected": {
+        "total_time_ms": 242000,
+        "total_time_fmt": "4:02.00",
+        "opening_split_m": 200,
+        "segment_distances": [200, 400, 400, 400, 400, 400, 800],
+        "per400_times": [86.0, 32.0, 32.5, 33.0, 33.4, 33.9, 17.1],
+        "metrics": {
+          "segment_count": 7, "opening_m": 200, "avg_400": 30.316666666666666,
+          "first_400eq": 86.0, "last_400eq": 17.1,
+          "fade_400eq": -68.9, "avg_fade_per_segment_400eq": -11.483333333333334
+        }
+      },
+      "known_quirk": "segment_distances() assigns the LEFTOVER distance (800m here) to the final segment when the lap count doesn't evenly divide the remaining distance into 400m chunks, but the recorded lap TIME (34.2s) is still just the raw last lap time — so per400_times normalizes it down to 17.1s (34.2 * 400/800), making the last split look implausibly fast and the fade/last_400eq numbers misleading whenever a race has an odd number of laps for its distance. Decide in Phase 2 whether the rebuild reproduces this exactly (byte-for-byte parity with the old app) or fixes it (e.g. by refusing to guess segment distances when they don't evenly divide, and showing the raw lap instead) — do not silently pick one; put it in the phase 2 PR description either way."
+    },
+    {
+      "label": "500m, single split (no intermediate laps recorded)",
+      "distance_m": 500,
+      "laps_s": [41.0],
+      "expected": {
+        "total_time_ms": 41000,
+        "total_time_fmt": "41.00",
+        "opening_split_m": 100,
+        "segment_distances": [500],
+        "per400_times": [32.8],
+        "metrics": {
+          "segment_count": 1, "opening_m": 100, "avg_400": null,
+          "first_400eq": 32.8, "last_400eq": 32.8, "fade_400eq": 0.0, "avg_fade_per_segment_400eq": 0.0
+        }
+      },
+      "note": "avg_400 is None/null when there's only one segment (no 'middle' segments to average) — the new implementation must reproduce this null, not 0 or NaN, since UI templates branch on it."
+    },
+    {
+      "label": "1000m, two laps (opening + one long final lap)",
+      "distance_m": 1000,
+      "laps_s": [41.5, 30.5],
+      "expected": {
+        "total_time_ms": 72000,
+        "total_time_fmt": "1:12.00",
+        "opening_split_m": 200,
+        "segment_distances": [200, 800],
+        "per400_times": [83.0, 15.25],
+        "metrics": {
+          "segment_count": 2, "opening_m": 200, "avg_400": 15.25,
+          "first_400eq": 83.0, "last_400eq": 15.25, "fade_400eq": -67.75, "avg_fade_per_segment_400eq": -67.75
+        }
+      },
+      "known_quirk": "Same normalization artifact as the 3000m case: the 800m final segment's real lap time (30.5s) is halved to a 400m-equivalent of 15.25s, which reads as an enormous (and misleading) 'fade' improvement. This is the SAME root cause as above — decide once, apply everywhere."
+    }
+  ],
+
+  "lap_input_parsing": [
+    { "input": "", "expected": { "laps_ms": [], "total_ms": null, "error": null } },
+    { "input": "30.5, 31.0 31.5", "expected": { "laps_ms": [30500, 31000, 31500], "total_ms": 93000, "error": null }, "note": "comma, space, and mixed comma+space are all accepted separators; the whole string is re-split on /[\\s,]+/ after normalizing ';', tab and CR/LF to commas." },
+    { "input": "30.5,-1", "expected": { "laps_ms": [], "total_ms": null, "error": "Ongeldige rondetijd: -1" }, "note": "a single invalid split fails the WHOLE input, not just that split — laps_ms comes back empty, not partially filled." },
+    { "input": "abc", "expected": { "laps_ms": [], "total_ms": null, "error": "Kon rondetijd niet lezen: abc" } }
+  ],
+
+  "fmt_ms": [
+    { "input": null, "expected": "-" },
+    { "input": 0, "expected": "0.00" },
+    { "input": 1250, "expected": "1.25" },
+    { "input": 65000, "expected": "1:05.00" },
+    { "input": -500, "expected": "-0.50", "note": "negative ms (used for PR-delta display) keeps the sign in front and still zero-pads seconds." }
+  ],
+
+  "season_labeling": [
+    { "date": "2024-08-31", "expected_season_label": "2023-2024", "note": "one day before the season boundary — still counts as the PREVIOUS season." },
+    { "date": "2024-09-01", "expected_season_label": "2024-2025", "note": "season start (inclusive)." },
+    { "date": "2025-04-30", "expected_season_label": "2024-2025", "note": "season end (inclusive)." },
+    { "date": "2025-05-01", "expected_season_label": "2024-2025", "note": "May-August has no season boundary of its own — it's still attributed to the season that just ended (the off-season 'belongs' to the season before it)." },
+    { "date": "2025-01-15", "expected_season_label": "2024-2025" }
+  ],
+  "season_bounds_from_label": { "input": "2024-2025", "expected": ["2024-09-01", "2025-04-30"] },
+
+  "pr_and_sb_sequencing": {
+    "note": "collect_pr_race_ids/build_pr_progress sort races by (competition_date ASC, id ASC) and flag a race as PR only if its time is STRICTLY less than the best time seen so far for that distance (ties do NOT count as a new PR) and dnf=1 rows are always excluded regardless of total_time_ms.",
+    "rows": [
+      { "id": 1, "distance_m": 1500, "total_time_ms": 140000, "dnf": 0, "competition_date": "2024-10-01" },
+      { "id": 2, "distance_m": 1500, "total_time_ms": 135000, "dnf": 0, "competition_date": "2024-11-01" },
+      { "id": 3, "distance_m": 1500, "total_time_ms": 135000, "dnf": 0, "competition_date": "2024-12-01" },
+      { "id": 4, "distance_m": 1500, "total_time_ms": 999999, "dnf": 1, "competition_date": "2025-01-01" },
+      { "id": 5, "distance_m": 1500, "total_time_ms": 133900, "dnf": 0, "competition_date": "2025-02-01" }
+    ],
+    "expected_pr_race_ids": [1, 2, 5],
+    "expected_progress": {
+      "1": { "is_pr": true,  "previous_pr_ms": null,   "delta_vs_previous_pr_ms": null,  "delta_abs_ms": null },
+      "2": { "is_pr": true,  "previous_pr_ms": 140000, "delta_vs_previous_pr_ms": -5000, "delta_abs_ms": 5000 },
+      "3": { "is_pr": false, "previous_pr_ms": 135000, "delta_vs_previous_pr_ms": 0,     "delta_abs_ms": 0 },
+      "4": { "is_pr": false, "previous_pr_ms": null,   "delta_vs_previous_pr_ms": null,  "delta_abs_ms": null },
+      "5": { "is_pr": true,  "previous_pr_ms": 135000, "delta_vs_previous_pr_ms": -1100, "delta_abs_ms": 1100 }
+    },
+    "row_1_is_pr_because": "first-ever result for that distance always sets the initial PR.",
+    "row_3_is_a_tie_and_is_NOT_flagged_as_pr": true,
+    "row_4_is_excluded_because_dnf": true
+  },
+
+  "known_bug_same_day_ordering": {
+    "description": "When two races share the same competition_date, tie-break order is DB row id (insertion order), not any real 'time of day' the race happened. If a user (or an importer) inserts the day's races out of chronological order, PR attribution silently follows insertion order instead of what actually happened on the ice.",
+    "scenario_a_insertion_matches_reality": {
+      "rows": [
+        { "id": 10, "distance_m": 500, "total_time_ms": 41000, "dnf": 0, "competition_date": "2025-03-01" },
+        { "id": 11, "distance_m": 500, "total_time_ms": 40500, "dnf": 0, "competition_date": "2025-03-01" }
+      ],
+      "expected_progress": {
+        "10": { "is_pr": true,  "previous_pr_ms": null,  "delta_vs_previous_pr_ms": null, "delta_abs_ms": null },
+        "11": { "is_pr": true,  "previous_pr_ms": 41000, "delta_vs_previous_pr_ms": -500, "delta_abs_ms": 500 }
+      }
+    },
+    "scenario_b_insertion_reversed": {
+      "rows": [
+        { "id": 10, "distance_m": 500, "total_time_ms": 40500, "dnf": 0, "competition_date": "2025-03-01" },
+        { "id": 11, "distance_m": 500, "total_time_ms": 41000, "dnf": 0, "competition_date": "2025-03-01" }
+      ],
+      "expected_progress": {
+        "10": { "is_pr": true,  "previous_pr_ms": null,  "delta_vs_previous_pr_ms": null, "delta_abs_ms": null },
+        "11": { "is_pr": false, "previous_pr_ms": 40500, "delta_vs_previous_pr_ms": 500, "delta_abs_ms": 500 }
+      }
+    },
+    "decision_needed": "REBUILD_PLAN.md section 4 requires the new schema to carry an explicit ordering signal for same-day races (e.g. a required 'heat/round sequence' or full timestamp instead of only a date) so PR/SB attribution no longer depends on insertion order. This is a behavior CHANGE from the old app, made deliberately — call it out in the Phase 2 PR."
+  },
+
+  "race_level_duplicate_matching": {
+    "description": "race_is_duplicate() (old app) considers a candidate a duplicate of an existing race in the SAME competition only if total_time_ms, lane, opponent, laps_csv, and dnf ALL match exactly. It does not consider distance_m at all beyond what's implied by matching within a competition+distance context. Two races on the same day at the same distance with different opponents/lanes are correctly treated as distinct (e.g. two heats), but two independently-typo'd imports with an empty lane/opponent and identical time/laps are silently merged.",
+    "not_duplicate_example": {
+      "existing": { "total_time_ms": 133900, "lane": "gl", "opponent": "Pietersen, Joris", "laps_csv": "41.50,30.20,30.80,31.40", "dnf": 0 },
+      "candidate": { "total_time_ms": 133900, "lane": "bl", "opponent": "Jansen, Remco", "laps_csv": "41.50,30.20,30.80,31.40", "dnf": 0 },
+      "expected_is_duplicate": false,
+      "why": "different lane/opponent — same time by coincidence (a real dead heat), correctly kept as two separate races."
+    },
+    "duplicate_example": {
+      "existing": { "total_time_ms": 133900, "lane": null, "opponent": null, "laps_csv": null, "dnf": 0 },
+      "candidate": { "total_time_ms": 133900, "lane": null, "opponent": null, "laps_csv": null, "dnf": 0 },
+      "expected_is_duplicate": true,
+      "why": "all fields match; this is the intended re-import-safety case."
+    }
+  }
+}
