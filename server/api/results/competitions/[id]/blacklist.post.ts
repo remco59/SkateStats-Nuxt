@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm'
 import { competitions, blacklist } from '../../../../db/schema'
 import { useDb } from '../../../../db/client'
 import { requireOwnedResource } from '../../../../utils/access'
-import { competitionBlacklistSignature } from '../../../../utils/dedupe'
+import { competitionIdentitySignature } from '../../../../utils/dedupe'
 
 /**
  * Delete AND blacklist this whole competition, so a future import won't
@@ -16,11 +16,10 @@ export default defineEventHandler(async (event) => {
   const { session, row: competition } = await requireOwnedResource(event, competitions, id)
 
   const db = useDb()
-  const signature = competitionBlacklistSignature(
-    competition.source as 'manual' | 'osta' | 'ssr' | 'pdf',
-    competition.date as string,
-    competition.name as string,
-  )
+  // Source-agnostic, matching the identity the import pipeline classifies
+  // incoming competitions against (plan section 6 rule 1) -- so blacklisting
+  // a manually-entered competition also stops it being re-added from OSTA/SSR.
+  const signature = competitionIdentitySignature(competition.date as string, competition.name as string)
 
   db.transaction((tx) => {
     tx.insert(blacklist)

@@ -18,16 +18,6 @@ export function competitionIdentitySignature(date: string, name: string): string
   return `${date}|${norm(name)}`
 }
 
-/** Competition-level blacklist signature ("delete and blacklist this whole competition"). */
-export function competitionBlacklistSignature(
-  source: ImportSourceName,
-  date: string,
-  name: string,
-  sourceRef?: string | null,
-): string {
-  return `${source}|${date}|${norm(name)}|${sourceRef ?? ''}`
-}
-
 export interface RaceIdentityInput {
   distanceM: number
   lane?: string | null
