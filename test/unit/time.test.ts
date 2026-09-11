@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { fmtMs, parseLapsToMs } from '../../server/utils/time'
+import { parseLapsToMs } from '../../server/utils/time'
+import { fmtMs } from '../../shared/utils/format'
 import golden from '../../reference/fixtures/calculations/golden_calculations.json'
 
 describe('parseLapsToMs (golden fixtures)', () => {

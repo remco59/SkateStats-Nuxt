@@ -6,7 +6,7 @@ import {
   per400Times,
   segmentDistances,
 } from '../../server/utils/splits'
-import { fmtMs } from '../../server/utils/time'
+import { fmtMs } from '../../shared/utils/format'
 import golden from '../../reference/fixtures/calculations/golden_calculations.json'
 
 function closeArray(actual: number[], expected: number[]) {

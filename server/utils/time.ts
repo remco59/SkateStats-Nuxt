@@ -40,19 +40,6 @@ export function parseLapsToMs(lapsStr: string): ParsedLaps {
   return { lapsMs, totalMs, error: null }
 }
 
-/** Formats ms as "m:ss.hh" (or "ss.hh" under a minute); "-" for null. */
-export function fmtMs(ms: number | null | undefined): string {
-  if (ms === null || ms === undefined) return '-'
-  const sign = ms < 0 ? '-' : ''
-  const totalSeconds = Math.abs(ms) / 1000
-  const minutes = Math.floor(totalSeconds / 60)
-  const seconds = totalSeconds - minutes * 60
-  if (minutes > 0) {
-    return `${sign}${minutes}:${seconds.toFixed(2).padStart(5, '0')}`
-  }
-  return `${sign}${seconds.toFixed(2)}`
-}
-
 /** Parses "mm:ss.hh" or "ss.hh" into integer milliseconds. */
 export function parseTimeToMs(t: string): number {
   const value = t.trim().replace(',', '.')

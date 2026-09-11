@@ -1,6 +1,6 @@
 import type { H3Event } from 'h3'
-import { eq, and, type SQL } from 'drizzle-orm'
-import type { SQLiteTable } from 'drizzle-orm/sqlite-core'
+import { eq, and } from 'drizzle-orm'
+import type { AnySQLiteColumn, SQLiteTable } from 'drizzle-orm/sqlite-core'
 import { useDb } from '../db/client'
 import { users } from '../db/schema'
 
@@ -38,8 +38,8 @@ export async function requireValidSession(event: H3Event) {
  * `table` must have a `userId` column and an `id` column.
  */
 export async function requireOwnedResource<
-  T extends SQLiteTable & { id: SQL; userId: SQL },
->(event: H3Event, table: T, id: number): Promise<Record<string, unknown>> {
+  T extends SQLiteTable & { id: AnySQLiteColumn; userId: AnySQLiteColumn },
+>(event: H3Event, table: T, id: number) {
   const session = await requireValidSession(event)
   const db = useDb()
 
@@ -53,7 +53,7 @@ export async function requireOwnedResource<
     throw createError({ statusCode: 404, statusMessage: 'Not found' })
   }
 
-  return row as Record<string, unknown>
+  return { session, row }
 }
 
 export async function requireAdmin(event: H3Event) {

@@ -1,5 +1,8 @@
 import { sql } from 'drizzle-orm'
 import { integer, sqliteTable, text, uniqueIndex, index } from 'drizzle-orm/sqlite-core'
+import { RACE_STATUSES, RACE_TAGS } from '../../shared/constants'
+
+export { RACE_STATUSES, RACE_TAGS }
 
 // Schema per REBUILD_PLAN.md section 7. Field/table names deliberately
 // close to the old app's where there's no reason to diverge, so
@@ -62,20 +65,6 @@ export const competitions = sqliteTable(
     index('idx_competition_user_date').on(t.userId, t.date),
   ],
 )
-
-export const RACE_STATUSES = ['finished', 'dnf', 'dns', 'dsq', 'dq', 'wdr', 'nc'] as const
-export type RaceStatus = (typeof RACE_STATUSES)[number]
-
-export const RACE_TAGS = [
-  'training',
-  'test',
-  'important',
-  'bad_ice',
-  'sick',
-  'injured',
-  'fallen',
-] as const
-export type RaceTag = (typeof RACE_TAGS)[number]
 
 export const races = sqliteTable(
   'races',
