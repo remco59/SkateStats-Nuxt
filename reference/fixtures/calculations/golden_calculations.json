@@ -801,5 +801,69 @@
       "sterkste_index": 3,
       "zwakste_index": 4
     }
+  },
+  "pdf_parsing": {
+    "note": "Computed against reference/fixtures/pdf/sample_sheet.txt using clean_competition_name/normalize_pdf_venue/extract_date_from_text/extract_pdf_page_date/extract_pdf_pair_blocks (old app, commit 4dc6959). The fixture's header line order (name+'uitslag' / venue / bare date / 'Van DD-MM-YYYY') was corrected from an earlier draft that didn't match what extract_pdf_results_for_skater actually expects in the first 3 lines -- caught by running this exact fixture through the old app's functions before trusting the TS port's expected values.",
+    "expected_header": {
+      "competition_name": "KNSB Gewestelijke Wedstrijd Alkmaar",
+      "header_date": "2025-01-11",
+      "venue": "IJsbaan Alkmaar (NED)",
+      "page_date": "2025-01-11"
+    },
+    "expected_pair_block": {
+      "pair_no": 3,
+      "skaters": [
+        {
+          "lane_code": "gl",
+          "name": "Jansen, Remco",
+          "cat": "JA1",
+          "pr": "1:15.00",
+          "time": "1:12.00"
+        },
+        {
+          "lane_code": "bl",
+          "name": "Pietersen, Joris",
+          "cat": "JA1",
+          "pr": "1:16.20",
+          "time": "1:14.80"
+        }
+      ],
+      "timings": [
+        {
+          "distance_m": 500,
+          "totals": [
+            "40.55",
+            "41.20"
+          ],
+          "laps": [
+            "40.55",
+            "41.20"
+          ]
+        },
+        {
+          "distance_m": 1000,
+          "totals": [
+            "1:12.00",
+            "1:14.80"
+          ],
+          "laps": [
+            "31.45",
+            "33.60"
+          ]
+        }
+      ]
+    },
+    "expected_result_for_jansen_remco": {
+      "pair_no": 3,
+      "distance_m": 1000,
+      "lane": "Binnen",
+      "opponent": "Pietersen, Joris",
+      "total_time_ms": 72000,
+      "status": "finished",
+      "laps_ms": [
+        40550,
+        31450
+      ]
+    }
   }
 }

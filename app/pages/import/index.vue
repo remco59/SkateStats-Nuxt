@@ -27,6 +27,60 @@ async function submitOstaSearch() {
   }
 }
 
+const ssrGivenName = ref('')
+const ssrFamilyName = ref('')
+const ssrSeason = ref(String(new Date().getFullYear()))
+const ssrError = ref('')
+const ssrSubmitting = ref(false)
+
+async function submitSsrSearch() {
+  ssrError.value = ''
+  ssrSubmitting.value = true
+  try {
+    const res = await $fetch('/api/import/ssr/search', {
+      method: 'POST',
+      body: { givenName: ssrGivenName.value, familyName: ssrFamilyName.value, season: ssrSeason.value },
+    })
+    router.push(`/import/preview?batchId=${res.batchId}`)
+  } catch (e: unknown) {
+    const err = e as { data?: { statusMessage?: string } }
+    ssrError.value = err.data?.statusMessage || 'Importeren mislukt.'
+  } finally {
+    ssrSubmitting.value = false
+  }
+}
+
+const pdfSkaterName = ref('')
+const pdfFile = ref<File | null>(null)
+const pdfError = ref('')
+const pdfSubmitting = ref(false)
+
+function onPdfFileChange(e: Event) {
+  const input = e.target as HTMLInputElement
+  pdfFile.value = input.files?.[0] ?? null
+}
+
+async function submitPdfUpload() {
+  pdfError.value = ''
+  if (!pdfFile.value) {
+    pdfError.value = 'Kies eerst een PDF-bestand.'
+    return
+  }
+  pdfSubmitting.value = true
+  try {
+    const body = new FormData()
+    body.append('file', pdfFile.value)
+    body.append('skaterName', pdfSkaterName.value)
+    const res = await $fetch('/api/import/pdf/upload', { method: 'POST', body })
+    router.push(`/import/preview?batchId=${res.batchId}`)
+  } catch (e: unknown) {
+    const err = e as { data?: { statusMessage?: string } }
+    pdfError.value = err.data?.statusMessage || 'Importeren mislukt.'
+  } finally {
+    pdfSubmitting.value = false
+  }
+}
+
 const { data: blacklistData, refresh: refreshBlacklist } = await useFetch('/api/import/blacklist')
 
 async function removeCompetitionBlacklist(id: number) {
@@ -66,6 +120,64 @@ async function removeRaceBlacklist(id: number) {
         Zoeken
       </button>
       <p v-if="error" class="text-sm" style="color: var(--color-danger)">{{ error }}</p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-sm font-medium" style="color: var(--color-text-muted)">SpeedSkatingResults</h2>
+      <div class="grid grid-cols-2 gap-2">
+        <input
+          v-model="ssrGivenName"
+          placeholder="Voornaam"
+          class="rounded-md px-3 py-2 text-sm"
+          style="border: 1px solid var(--color-border)"
+        >
+        <input
+          v-model="ssrFamilyName"
+          placeholder="Achternaam"
+          class="rounded-md px-3 py-2 text-sm"
+          style="border: 1px solid var(--color-border)"
+        >
+      </div>
+      <input
+        v-model="ssrSeason"
+        placeholder="Seizoen (startjaar, bv. 2024)"
+        class="w-full rounded-md px-3 py-2 text-sm"
+        style="border: 1px solid var(--color-border)"
+      >
+      <button
+        class="rounded-md px-3 py-1.5 text-sm"
+        style="background: var(--color-accent); color: var(--color-accent-contrast)"
+        :disabled="ssrSubmitting"
+        @click="submitSsrSearch"
+      >
+        Zoeken
+      </button>
+      <p v-if="ssrError" class="text-sm" style="color: var(--color-danger)">{{ ssrError }}</p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-sm font-medium" style="color: var(--color-text-muted)">PDF uitslag</h2>
+      <input
+        v-model="pdfSkaterName"
+        placeholder="Naam zoals op de uitslag (bv. Achternaam, Voornaam)"
+        class="w-full rounded-md px-3 py-2 text-sm"
+        style="border: 1px solid var(--color-border)"
+      >
+      <input
+        type="file"
+        accept="application/pdf"
+        class="w-full text-sm"
+        @change="onPdfFileChange"
+      >
+      <button
+        class="rounded-md px-3 py-1.5 text-sm"
+        style="background: var(--color-accent); color: var(--color-accent-contrast)"
+        :disabled="pdfSubmitting"
+        @click="submitPdfUpload"
+      >
+        Uploaden
+      </button>
+      <p v-if="pdfError" class="text-sm" style="color: var(--color-danger)">{{ pdfError }}</p>
     </section>
 
     <section v-if="blacklistData?.competitionItems.length" class="space-y-2">
