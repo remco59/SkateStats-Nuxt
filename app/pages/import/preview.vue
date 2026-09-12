@@ -36,16 +36,26 @@ async function commit() {
 }
 
 async function discard() {
-  await $fetch(`/api/import/preview/${batchId}/discard`, { method: 'POST' })
-  router.push('/import')
+  errorMessage.value = ''
+  try {
+    await $fetch(`/api/import/preview/${batchId}/discard`, { method: 'POST' })
+    router.push('/import')
+  } catch {
+    errorMessage.value = 'Annuleren mislukt.'
+  }
 }
 
 async function ignoreCompetition(competitionSignature: string) {
-  await $fetch(`/api/import/preview/${batchId}/blacklist-competition`, {
-    method: 'POST',
-    body: { competitionSignature },
-  })
-  router.push('/import')
+  errorMessage.value = ''
+  try {
+    await $fetch(`/api/import/preview/${batchId}/blacklist-competition`, {
+      method: 'POST',
+      body: { competitionSignature },
+    })
+    router.push('/import')
+  } catch {
+    errorMessage.value = 'Negeren mislukt.'
+  }
 }
 </script>
 
@@ -83,35 +93,38 @@ async function ignoreCompetition(competitionSignature: string) {
           </button>
         </div>
 
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="text-left" style="color: var(--color-text-muted)">
-              <th class="py-1 pr-4">Afstand</th>
-              <th class="py-1 pr-4">Tijd</th>
-              <th class="py-1 pr-4">Status</th>
-              <th class="py-1 pr-4">Actie</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="raceItem in item.races" :key="raceItem.identitySignature" style="border-top: 1px solid var(--color-border)">
-              <td class="py-1 pr-4 font-mono">{{ raceItem.race.distanceM }}m</td>
-              <td class="py-1 pr-4 font-mono">{{ fmtMs(raceItem.race.totalTimeMs) }}</td>
-              <td class="py-1 pr-4">{{ actionLabel[raceItem.action] }}</td>
-              <td class="py-1 pr-4">
-                <select
-                  v-if="raceItem.action === 'update_candidate'"
-                  v-model="updateChoices[raceItem.identitySignature]"
-                  class="rounded-md px-2 py-1 text-xs"
-                  style="border: 1px solid var(--color-border)"
-                >
-                  <option value="skip">Overslaan (standaard)</option>
-                  <option value="replace">Vervang bestaande tijd</option>
-                  <option value="keep_both">Beide behouden</option>
-                </select>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-left" style="color: var(--color-text-muted)">
+                <th class="py-1 pr-4">Afstand</th>
+                <th class="py-1 pr-4">Tijd</th>
+                <th class="py-1 pr-4">Status</th>
+                <th class="py-1 pr-4">Actie</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="raceItem in item.races" :key="raceItem.identitySignature" style="border-top: 1px solid var(--color-border)">
+                <td class="py-1 pr-4 font-mono">{{ raceItem.race.distanceM }}m</td>
+                <td class="py-1 pr-4 font-mono">{{ fmtMs(raceItem.race.totalTimeMs) }}</td>
+                <td class="py-1 pr-4">{{ actionLabel[raceItem.action] }}</td>
+                <td class="py-1 pr-4">
+                  <select
+                    v-if="raceItem.action === 'update_candidate'"
+                    v-model="updateChoices[raceItem.identitySignature]"
+                    aria-label="Actie voor deze rit"
+                    class="rounded-md px-2 py-1 text-xs"
+                    style="border: 1px solid var(--color-border)"
+                  >
+                    <option value="skip">Overslaan (standaard)</option>
+                    <option value="replace">Vervang bestaande tijd</option>
+                    <option value="keep_both">Beide behouden</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <div class="flex gap-3">

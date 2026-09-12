@@ -5,7 +5,7 @@ const route = useRoute()
 const router = useRouter()
 const id = route.params.id as string
 
-const { data: race } = await useFetch(`/api/results/races/${id}`)
+const { data: race, error: loadError } = await useFetch(`/api/results/races/${id}`)
 
 const distanceM = ref(0)
 const status = ref<(typeof RACE_STATUSES)[number]>('finished')
@@ -73,18 +73,20 @@ async function submit() {
 </script>
 
 <template>
-  <div class="max-w-lg space-y-4">
+  <div v-if="race" class="max-w-lg space-y-4">
     <h1 class="text-xl font-semibold">Bewerk rit</h1>
 
     <div class="grid grid-cols-2 gap-2">
       <input
         v-model.number="distanceM"
         type="number"
+        aria-label="Afstand (m)"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
       <select
         v-model="status"
+        aria-label="Status"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
@@ -95,12 +97,14 @@ async function submit() {
     <input
       v-model="totalTimeStr"
       placeholder="Eindtijd (m:ss.hh)"
+      aria-label="Eindtijd"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     >
     <input
       v-model="lapsCsv"
       placeholder="Rondetijden, komma-gescheiden"
+      aria-label="Rondetijden"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     >
@@ -108,6 +112,7 @@ async function submit() {
     <div class="grid grid-cols-2 gap-2">
       <select
         v-model="trackType"
+        aria-label="Baantype"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
@@ -116,6 +121,7 @@ async function submit() {
       </select>
       <select
         v-model="tag"
+        aria-label="Tag"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
@@ -128,12 +134,14 @@ async function submit() {
       <input
         v-model="lane"
         placeholder="Baan/lane"
+        aria-label="Baan/lane"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
       <input
         v-model="opponent"
         placeholder="Tegenstander"
+        aria-label="Tegenstander"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
@@ -142,18 +150,21 @@ async function submit() {
       <input
         v-model="category"
         placeholder="Categorie"
+        aria-label="Categorie"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
       <input
         v-model="className"
         placeholder="Klasse"
+        aria-label="Klasse"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
     </div>
     <textarea
       v-model="notes"
+      aria-label="Notities"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     />
@@ -167,4 +178,5 @@ async function submit() {
     </button>
     <p v-if="error" class="text-sm" style="color: var(--color-danger)">{{ error }}</p>
   </div>
+  <p v-else-if="loadError" style="color: var(--color-danger)">Rit niet gevonden.</p>
 </template>

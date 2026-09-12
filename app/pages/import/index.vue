@@ -81,15 +81,26 @@ async function submitPdfUpload() {
   }
 }
 
-const { data: blacklistData, refresh: refreshBlacklist } = await useFetch('/api/import/blacklist')
+const { data: blacklistData, error: blacklistError, refresh: refreshBlacklist } = await useFetch('/api/import/blacklist')
+const blacklistActionError = ref('')
 
 async function removeCompetitionBlacklist(id: number) {
-  await $fetch(`/api/import/blacklist/competition/${id}`, { method: 'DELETE' })
-  await refreshBlacklist()
+  blacklistActionError.value = ''
+  try {
+    await $fetch(`/api/import/blacklist/competition/${id}`, { method: 'DELETE' })
+    await refreshBlacklist()
+  } catch {
+    blacklistActionError.value = 'Verwijderen mislukt.'
+  }
 }
 async function removeRaceBlacklist(id: number) {
-  await $fetch(`/api/import/blacklist/race/${id}`, { method: 'DELETE' })
-  await refreshBlacklist()
+  blacklistActionError.value = ''
+  try {
+    await $fetch(`/api/import/blacklist/race/${id}`, { method: 'DELETE' })
+    await refreshBlacklist()
+  } catch {
+    blacklistActionError.value = 'Verwijderen mislukt.'
+  }
 }
 </script>
 
@@ -102,12 +113,14 @@ async function removeRaceBlacklist(id: number) {
       <input
         v-model="searchName"
         placeholder="Naam op OSTA (bv. Achternaam, Voornaam)"
+        aria-label="Naam op OSTA"
         class="w-full rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
       <input
         v-model="season"
         placeholder="Seizoen (startjaar, bv. 2024)"
+        aria-label="Seizoen"
         class="w-full rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
@@ -128,12 +141,14 @@ async function removeRaceBlacklist(id: number) {
         <input
           v-model="ssrGivenName"
           placeholder="Voornaam"
+          aria-label="Voornaam"
           class="rounded-md px-3 py-2 text-sm"
           style="border: 1px solid var(--color-border)"
         >
         <input
           v-model="ssrFamilyName"
           placeholder="Achternaam"
+          aria-label="Achternaam"
           class="rounded-md px-3 py-2 text-sm"
           style="border: 1px solid var(--color-border)"
         >
@@ -141,6 +156,7 @@ async function removeRaceBlacklist(id: number) {
       <input
         v-model="ssrSeason"
         placeholder="Seizoen (startjaar, bv. 2024)"
+        aria-label="Seizoen"
         class="w-full rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
@@ -160,12 +176,14 @@ async function removeRaceBlacklist(id: number) {
       <input
         v-model="pdfSkaterName"
         placeholder="Naam zoals op de uitslag (bv. Achternaam, Voornaam)"
+        aria-label="Naam zoals op de uitslag"
         class="w-full rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
       <input
         type="file"
         accept="application/pdf"
+        aria-label="PDF-bestand"
         class="w-full text-sm"
         @change="onPdfFileChange"
       >
@@ -179,6 +197,9 @@ async function removeRaceBlacklist(id: number) {
       </button>
       <p v-if="pdfError" class="text-sm" style="color: var(--color-danger)">{{ pdfError }}</p>
     </section>
+
+    <p v-if="blacklistError" class="text-sm" style="color: var(--color-danger)">Kon blacklist niet laden.</p>
+    <p v-if="blacklistActionError" class="text-sm" style="color: var(--color-danger)">{{ blacklistActionError }}</p>
 
     <section v-if="blacklistData?.competitionItems.length" class="space-y-2">
       <h2 class="text-sm font-medium" style="color: var(--color-text-muted)">

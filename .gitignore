@@ -30,3 +30,9 @@ data/
 *.sqlite-wal
 *.sqlite-shm
 .tsbuildinfo
+
+# Playwright e2e
+test/e2e/.tmp-e2e.db*
+test-results/
+playwright-report/
+blob-report/

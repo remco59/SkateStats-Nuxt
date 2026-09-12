@@ -28,7 +28,14 @@ const path = computed(() => {
 </script>
 
 <template>
-  <svg :viewBox="`0 0 ${width} ${height}`" :width="width" :height="height" class="w-full h-auto">
+  <svg
+    :viewBox="`0 0 ${width} ${height}`"
+    :width="width"
+    :height="height"
+    class="w-full h-auto"
+    role="img"
+    aria-label="Verschil per onderdeel ten opzichte van de vergelijkingsrit"
+  >
     <line :y1="path.zeroY" :y2="path.zeroY" x1="0" :x2="width" stroke="var(--color-border)" stroke-dasharray="4 4" />
     <path :d="path.line" fill="none" stroke="var(--color-accent)" stroke-width="2" />
   </svg>
