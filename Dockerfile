@@ -5,6 +5,10 @@ WORKDIR /app
 # @playwright/test (e2e-only, plan Phase 10) would otherwise try to
 # download a browser during npm ci -- not needed for the app build itself.
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+# better-sqlite3 ships no prebuilt binary for this platform/version, so npm ci
+# compiles it from source -- needs python3 + a C++ toolchain, absent from the
+# base alpine image.
+RUN apk add --no-cache python3 make g++
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
@@ -30,7 +34,8 @@ ENV NODE_ENV=production
 RUN addgroup -S skatestats && adduser -S skatestats -G skatestats
 COPY --from=build /app/.output ./.output
 COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/server/db/migrations ./server/db/migrations
+COPY --from=build /app/server/db ./server/db
+COPY --from=build /app/shared ./shared
 COPY --from=build /app/scripts ./scripts
 COPY --from=build /app/package.json ./package.json
 RUN mkdir -p /data && chown -R skatestats:skatestats /data /app
