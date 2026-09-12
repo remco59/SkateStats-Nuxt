@@ -28,32 +28,32 @@ async function submit() {
       placeholder="Naam"
       aria-label="Naam"
       class="w-full rounded-md px-3 py-2 text-sm"
-      style="border: 1px solid var(--color-border)"
+      style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
     >
     <input
       v-model="venue"
       placeholder="Locatie"
       aria-label="Locatie"
       class="w-full rounded-md px-3 py-2 text-sm"
-      style="border: 1px solid var(--color-border)"
+      style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
     >
     <input
       v-model="date"
       type="date"
       aria-label="Datum"
       class="w-full rounded-md px-3 py-2 text-sm"
-      style="border: 1px solid var(--color-border)"
+      style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
     >
     <textarea
       v-model="notes"
       placeholder="Notities"
       aria-label="Notities"
       class="w-full rounded-md px-3 py-2 text-sm"
-      style="border: 1px solid var(--color-border)"
+      style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
     />
     <button
       class="rounded-md px-3 py-1.5 text-sm"
-      style="background: var(--color-accent); color: var(--color-accent-contrast)"
+      style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
       @click="submit"
     >
       Aanmaken

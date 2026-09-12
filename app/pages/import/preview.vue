@@ -72,7 +72,7 @@ async function ignoreCompetition(competitionSignature: string) {
         v-for="item in preview.items"
         :key="item.competitionSignature"
         class="rounded-lg p-4 space-y-3"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
         <div class="flex items-center justify-between">
           <div>
@@ -114,7 +114,7 @@ async function ignoreCompetition(competitionSignature: string) {
                     v-model="updateChoices[raceItem.identitySignature]"
                     aria-label="Actie voor deze rit"
                     class="rounded-md px-2 py-1 text-xs"
-                    style="border: 1px solid var(--color-border)"
+                    style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
                   >
                     <option value="skip">Overslaan (standaard)</option>
                     <option value="replace">Vervang bestaande tijd</option>
@@ -130,7 +130,7 @@ async function ignoreCompetition(competitionSignature: string) {
       <div class="flex gap-3">
         <button
           class="rounded-md px-4 py-2 text-sm"
-          style="background: var(--color-accent); color: var(--color-accent-contrast)"
+          style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
           :disabled="submitting"
           @click="commit"
         >
@@ -138,7 +138,7 @@ async function ignoreCompetition(competitionSignature: string) {
         </button>
         <button
           class="rounded-md px-4 py-2 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
           @click="discard"
         >
           Annuleren

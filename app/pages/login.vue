@@ -36,10 +36,10 @@ async function submit() {
   >
     <form
       class="w-full max-w-sm rounded-lg p-6 space-y-4"
-      style="border: 1px solid var(--color-border)"
+      style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       @submit.prevent="submit"
     >
-      <h1 class="text-lg font-semibold" style="color: var(--color-accent)">SkateStats</h1>
+      <h1 class="font-heading text-2xl font-semibold gradient-text">SkateStats</h1>
       <div class="space-y-1">
         <label class="text-sm" for="username">Gebruikersnaam</label>
         <input
@@ -67,7 +67,7 @@ async function submit() {
         type="submit"
         :disabled="submitting"
         class="w-full rounded-md py-2 text-sm font-medium"
-        style="background: var(--color-accent); color: var(--color-accent-contrast)"
+        style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
       >
         Inloggen
       </button>

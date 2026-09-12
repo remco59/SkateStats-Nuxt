@@ -19,41 +19,55 @@ const navLinks = [
 <template>
   <div class="min-h-screen flex flex-col">
     <a href="#main-content" class="skip-link">Ga naar inhoud</a>
-    <header
-      class="border-b sticky top-0 z-10"
-      style="background: var(--color-bg); border-color: var(--color-border)"
-    >
+    <header class="glass sticky top-0 z-10" style="border-radius: 0; border-width: 0 0 1px 0">
       <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
-        <NuxtLink to="/" class="font-semibold" style="color: var(--color-accent)">
+        <NuxtLink to="/" class="font-heading font-semibold gradient-text tracking-tight">
           SkateStats
         </NuxtLink>
-        <nav class="hidden md:flex items-center gap-5 text-sm" aria-label="Hoofdnavigatie">
+        <nav
+          class="hidden md:flex items-center gap-5 font-mono text-xs uppercase tracking-wider"
+          aria-label="Hoofdnavigatie"
+        >
           <NuxtLink
             v-for="link in navLinks"
             :key="link.to"
             :to="link.to"
-            class="hover:opacity-80"
+            class="transition-colors hover:text-[var(--color-accent)]"
+            style="color: var(--color-text-muted)"
+            active-class="!text-[var(--color-accent)]"
           >
             {{ link.label }}
           </NuxtLink>
         </nav>
         <div class="flex items-center gap-3 text-sm">
-          <NuxtLink to="/account" class="hover:opacity-80">{{ user?.skaterName }}</NuxtLink>
-          <NuxtLink v-if="user?.isAdmin" to="/admin/users" class="hover:opacity-80">
+          <NuxtLink to="/account" class="hover:text-[var(--color-accent)] transition-colors">
+            {{ user?.skaterName }}
+          </NuxtLink>
+          <NuxtLink
+            v-if="user?.isAdmin"
+            to="/admin/users"
+            class="hover:text-[var(--color-accent)] transition-colors"
+          >
             Admin
           </NuxtLink>
-          <button
-            type="button"
-            class="px-3 py-1.5 rounded-md text-sm"
-            style="border: 1px solid var(--color-border)"
-            @click="logout"
-          >
+          <button type="button" class="btn btn-ghost !min-h-0 !py-1.5 !px-3 text-sm" @click="logout">
             Uitloggen
           </button>
         </div>
       </div>
-      <nav class="md:hidden flex items-center gap-4 px-4 pb-2 text-sm overflow-x-auto" aria-label="Mobiele navigatie">
-        <NuxtLink v-for="link in navLinks" :key="link.to" :to="link.to">{{ link.label }}</NuxtLink>
+      <nav
+        class="md:hidden flex items-center gap-4 px-4 pb-2 font-mono text-xs uppercase tracking-wider overflow-x-auto"
+        aria-label="Mobiele navigatie"
+      >
+        <NuxtLink
+          v-for="link in navLinks"
+          :key="link.to"
+          :to="link.to"
+          style="color: var(--color-text-muted)"
+          active-class="!text-[var(--color-accent)]"
+        >
+          {{ link.label }}
+        </NuxtLink>
       </nav>
     </header>
 
@@ -62,8 +76,8 @@ const navLinks = [
     </main>
 
     <footer
-      class="text-xs text-center py-6"
-      style="color: var(--color-text-muted)"
+      class="font-mono text-xs text-center py-6 uppercase tracking-widest"
+      style="color: var(--color-text-faint)"
     >
       SkateStats
     </footer>

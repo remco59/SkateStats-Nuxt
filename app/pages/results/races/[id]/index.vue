@@ -46,14 +46,14 @@ async function deleteAndBlacklist() {
         <NuxtLink
           :to="`/results/races/${id}/edit`"
           class="rounded-md px-3 py-1.5 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
           Bewerken
         </NuxtLink>
         <NuxtLink
           :to="`/results/races/${id}/compare`"
           class="rounded-md px-3 py-1.5 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
           Vergelijken
         </NuxtLink>
@@ -76,7 +76,7 @@ async function deleteAndBlacklist() {
 
     <p v-if="actionError" class="text-sm" style="color: var(--color-danger)">{{ actionError }}</p>
 
-    <section class="rounded-lg p-4" style="border: 1px solid var(--color-border)">
+    <section class="rounded-lg p-4" style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)">
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
         <div>
           <div style="color: var(--color-text-muted)">Status</div>

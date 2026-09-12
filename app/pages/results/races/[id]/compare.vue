@@ -29,7 +29,7 @@ function selectCompare() {
         id="compareRaceSelect"
         v-model="compareRaceId"
         class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         @change="selectCompare"
       >
         <option value="">Kies een rit op dezelfde afstand</option>

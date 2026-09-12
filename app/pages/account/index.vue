@@ -126,11 +126,11 @@ async function deleteAccount() {
       <input
         v-model="skaterName"
         class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
       <button
         class="rounded-md px-3 py-1.5 text-sm"
-        style="background: var(--color-accent); color: var(--color-accent-contrast)"
+        style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
         :disabled="profileSaving"
         @click="saveProfile"
       >
@@ -148,18 +148,18 @@ async function deleteAccount() {
         type="password"
         placeholder="Huidig wachtwoord"
         class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
       <input
         v-model="newPassword"
         type="password"
         placeholder="Nieuw wachtwoord (min. 8 tekens)"
         class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
       <button
         class="rounded-md px-3 py-1.5 text-sm"
-        style="background: var(--color-accent); color: var(--color-accent-contrast)"
+        style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
         @click="changePassword"
       >
         Wachtwoord wijzigen
@@ -182,14 +182,14 @@ async function deleteAccount() {
           v-for="p in ostaProfiles"
           :key="p.id"
           class="flex items-center justify-between gap-2 text-sm rounded-md p-2"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
           <span>{{ p.searchName }} (pid {{ p.pid }}, seizoen {{ p.season }})</span>
           <div class="flex items-center gap-2 shrink-0">
             <select
               :value="p.monitorMode"
               class="rounded-md px-2 py-1 text-xs"
-              style="border: 1px solid var(--color-border)"
+              style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
               @change="updateOstaMonitorMode(p.id, ($event.target as HTMLSelectElement).value)"
             >
               <option value="notify">Melden</option>
@@ -204,24 +204,24 @@ async function deleteAccount() {
           v-model="newOstaPid"
           placeholder="OSTA pid"
           class="rounded-md px-3 py-2 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
         <input
           v-model="newOstaSearchName"
           placeholder="Naam op OSTA"
           class="rounded-md px-3 py-2 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
         <input
           v-model="newOstaSeason"
           placeholder="Seizoen"
           class="rounded-md px-3 py-2 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
       </div>
       <button
         class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         @click="addOstaProfile"
       >
         Profiel koppelen
@@ -238,7 +238,7 @@ async function deleteAccount() {
       <a
         href="/api/account/export"
         class="inline-block rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
         Exporteren
       </a>
@@ -251,7 +251,7 @@ async function deleteAccount() {
         >
         <button
           class="rounded-md px-3 py-1.5 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
           :disabled="importing"
           @click="importBackup"
         >
