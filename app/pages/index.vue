@@ -25,13 +25,13 @@ const dismissed = ref(false)
         <NuxtLink
           :to="`/import/preview?batchId=${ostaDetection.batchId}`"
           class="rounded-md px-3 py-1.5 text-sm"
-          style="background: var(--color-accent); color: var(--color-accent-contrast)"
+          style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
         >
           Bekijken
         </NuxtLink>
         <button
           class="rounded-md px-3 py-1.5 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
           @click="dismissed = true"
         >
           Later
@@ -39,7 +39,7 @@ const dismissed = ref(false)
       </div>
     </section>
 
-    <section v-if="data && data.raceCount === 0" class="rounded-lg p-4" style="border: 1px solid var(--color-border)">
+    <section v-if="data && data.raceCount === 0" class="rounded-lg p-4" style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)">
       <p style="color: var(--color-text-muted)">
         Er is nog geen data. <NuxtLink to="/import" class="underline">Importeer</NuxtLink> of
         <NuxtLink to="/results/races/new" class="underline">voeg handmatig een rit toe</NuxtLink>.
@@ -49,7 +49,7 @@ const dismissed = ref(false)
     <section
       v-if="data && (data.notifications.recentPrs.length || data.notifications.recentSbs.length || data.notifications.streakCount > 1)"
       class="rounded-lg p-4 space-y-2"
-      style="border: 1px solid var(--color-border)"
+      style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
     >
       <h2 class="text-sm font-medium" style="color: var(--color-text-muted)">Notificaties</h2>
       <p v-if="data.notifications.streakCount > 1" class="text-sm">
@@ -67,7 +67,7 @@ const dismissed = ref(false)
       </p>
     </section>
 
-    <section v-if="data" class="rounded-lg p-4" style="border: 1px solid var(--color-border)">
+    <section v-if="data" class="rounded-lg p-4" style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)">
       <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 text-sm">
         <div>
           <div style="color: var(--color-text-muted)">Wedstrijden</div>
@@ -93,7 +93,7 @@ const dismissed = ref(false)
     </section>
 
     <div class="grid md:grid-cols-2 gap-6">
-      <section class="rounded-lg p-4" style="border: 1px solid var(--color-border)">
+      <section class="rounded-lg p-4" style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)">
         <h2 class="text-sm font-medium mb-2" style="color: var(--color-text-muted)">Beste tijden per afstand</h2>
         <table v-if="data?.bestTimes.length" class="w-full text-sm">
           <thead>
@@ -119,7 +119,7 @@ const dismissed = ref(false)
         <p v-else style="color: var(--color-text-muted)">Nog geen geldige tijden.</p>
       </section>
 
-      <section class="rounded-lg p-4" style="border: 1px solid var(--color-border)">
+      <section class="rounded-lg p-4" style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)">
         <h2 class="text-sm font-medium mb-2" style="color: var(--color-text-muted)">Laatste wedstrijd</h2>
         <template v-if="data?.latestCompetition">
           <p class="text-sm">
@@ -163,7 +163,7 @@ const dismissed = ref(false)
     <section v-if="data?.trends.length">
       <h2 class="text-sm font-medium mb-3" style="color: var(--color-text-muted)">Ontwikkeling per afstand</h2>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div v-for="trend in data.trends" :key="trend.distanceM" class="rounded-lg p-3" style="border: 1px solid var(--color-border)">
+        <div v-for="trend in data.trends" :key="trend.distanceM" class="rounded-lg p-3" style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)">
           <div class="text-sm font-mono mb-1">{{ trend.distanceM }}m</div>
           <TrendSparkline :points="trend.points" />
         </div>

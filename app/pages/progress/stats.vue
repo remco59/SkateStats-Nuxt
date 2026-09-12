@@ -29,7 +29,7 @@ const trendLabel: Record<string, string> = {
         v-model="season"
         aria-label="Filter op seizoen"
         class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         @change="applyFilters"
       >
         <option value="">Alle seizoenen</option>
@@ -39,7 +39,7 @@ const trendLabel: Record<string, string> = {
         v-model="distanceM"
         aria-label="Filter op afstand"
         class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         @change="applyFilters"
       >
         <option value="">Alle afstanden</option>
@@ -49,11 +49,11 @@ const trendLabel: Record<string, string> = {
 
     <p v-if="error" class="text-sm" style="color: var(--color-danger)">Kon statistieken niet laden.</p>
 
-    <section v-if="data && data.basic.raceCount === 0" class="rounded-lg p-4" style="border: 1px solid var(--color-border)">
+    <section v-if="data && data.basic.raceCount === 0" class="rounded-lg p-4" style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)">
       <p style="color: var(--color-text-muted)">Nog geen data voor dit filter.</p>
     </section>
 
-    <section v-if="data && data.basic.raceCount > 0" class="rounded-lg p-4" style="border: 1px solid var(--color-border)">
+    <section v-if="data && data.basic.raceCount > 0" class="rounded-lg p-4" style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)">
       <h2 class="text-sm font-medium mb-3" style="color: var(--color-text-muted)">Basisstatistieken</h2>
       <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 text-sm">
         <div>

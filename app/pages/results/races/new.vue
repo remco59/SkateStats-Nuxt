@@ -80,7 +80,7 @@ async function submit() {
         v-model="competitionId"
         aria-label="Wedstrijd"
         class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
         <option value="">Kies een wedstrijd</option>
         <option v-for="c in competitionsData?.competitions" :key="c.id" :value="c.id">
@@ -97,21 +97,21 @@ async function submit() {
           placeholder="Naam wedstrijd"
           aria-label="Naam wedstrijd"
           class="w-full rounded-md px-3 py-2 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
         <input
           v-model="newVenue"
           placeholder="Locatie"
           aria-label="Locatie"
           class="w-full rounded-md px-3 py-2 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
         <input
           v-model="newDate"
           type="date"
           aria-label="Datum"
           class="w-full rounded-md px-3 py-2 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
       </template>
     </div>
@@ -123,13 +123,13 @@ async function submit() {
         placeholder="Afstand (m)"
         aria-label="Afstand (m)"
         class="rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
       <select
         v-model="status"
         aria-label="Status"
         class="rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
         <option v-for="s in RACE_STATUSES" :key="s" :value="s">{{ RACE_STATUS_LABELS[s] }}</option>
       </select>
@@ -140,14 +140,14 @@ async function submit() {
       placeholder="Eindtijd (m:ss.hh) -- optioneel als rondetijden zijn ingevuld"
       aria-label="Eindtijd"
       class="w-full rounded-md px-3 py-2 text-sm"
-      style="border: 1px solid var(--color-border)"
+      style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
     >
     <input
       v-model="lapsCsv"
       placeholder="Rondetijden, komma-gescheiden (bv. 41.5,30.2,30.8,31.4)"
       aria-label="Rondetijden"
       class="w-full rounded-md px-3 py-2 text-sm"
-      style="border: 1px solid var(--color-border)"
+      style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
     >
 
     <div class="grid grid-cols-2 gap-2">
@@ -155,7 +155,7 @@ async function submit() {
         v-model="trackType"
         aria-label="Baantype"
         class="rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
         <option value="indoor">Binnenbaan</option>
         <option value="outdoor">Buitenbaan</option>
@@ -164,7 +164,7 @@ async function submit() {
         v-model="tag"
         aria-label="Tag"
         class="rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
         <option value="">Geen tag</option>
         <option v-for="t in RACE_TAGS" :key="t" :value="t">{{ RACE_TAG_LABELS[t] }}</option>
@@ -177,14 +177,14 @@ async function submit() {
         placeholder="Baan/lane"
         aria-label="Baan/lane"
         class="rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
       <input
         v-model="opponent"
         placeholder="Tegenstander"
         aria-label="Tegenstander"
         class="rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
     </div>
     <div class="grid grid-cols-2 gap-2">
@@ -193,14 +193,14 @@ async function submit() {
         placeholder="Categorie"
         aria-label="Categorie"
         class="rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
       <input
         v-model="className"
         placeholder="Klasse"
         aria-label="Klasse"
         class="rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
     </div>
     <textarea
@@ -208,12 +208,12 @@ async function submit() {
       placeholder="Notities"
       aria-label="Notities"
       class="w-full rounded-md px-3 py-2 text-sm"
-      style="border: 1px solid var(--color-border)"
+      style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
     />
 
     <button
       class="rounded-md px-3 py-1.5 text-sm"
-      style="background: var(--color-accent); color: var(--color-accent-contrast)"
+      style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
       @click="submit"
     >
       Aanmaken

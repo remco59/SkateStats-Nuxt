@@ -115,18 +115,18 @@ async function removeRaceBlacklist(id: number) {
         placeholder="Naam op OSTA (bv. Achternaam, Voornaam)"
         aria-label="Naam op OSTA"
         class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
       <input
         v-model="season"
         placeholder="Seizoen (startjaar, bv. 2024)"
         aria-label="Seizoen"
         class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
       <button
         class="rounded-md px-3 py-1.5 text-sm"
-        style="background: var(--color-accent); color: var(--color-accent-contrast)"
+        style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
         :disabled="submitting"
         @click="submitOstaSearch"
       >
@@ -143,14 +143,14 @@ async function removeRaceBlacklist(id: number) {
           placeholder="Voornaam"
           aria-label="Voornaam"
           class="rounded-md px-3 py-2 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
         <input
           v-model="ssrFamilyName"
           placeholder="Achternaam"
           aria-label="Achternaam"
           class="rounded-md px-3 py-2 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
       </div>
       <input
@@ -158,11 +158,11 @@ async function removeRaceBlacklist(id: number) {
         placeholder="Seizoen (startjaar, bv. 2024)"
         aria-label="Seizoen"
         class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
       <button
         class="rounded-md px-3 py-1.5 text-sm"
-        style="background: var(--color-accent); color: var(--color-accent-contrast)"
+        style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
         :disabled="ssrSubmitting"
         @click="submitSsrSearch"
       >
@@ -178,7 +178,7 @@ async function removeRaceBlacklist(id: number) {
         placeholder="Naam zoals op de uitslag (bv. Achternaam, Voornaam)"
         aria-label="Naam zoals op de uitslag"
         class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
       <input
         type="file"
@@ -189,7 +189,7 @@ async function removeRaceBlacklist(id: number) {
       >
       <button
         class="rounded-md px-3 py-1.5 text-sm"
-        style="background: var(--color-accent); color: var(--color-accent-contrast)"
+        style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
         :disabled="pdfSubmitting"
         @click="submitPdfUpload"
       >

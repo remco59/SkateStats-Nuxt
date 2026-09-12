@@ -80,14 +80,14 @@ async function resetPassword(userId: number) {
         placeholder="Gebruikersnaam"
         aria-label="Gebruikersnaam"
         class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
       <input
         v-model="newSkaterName"
         placeholder="Naam schaatser"
         aria-label="Naam schaatser"
         class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
       <input
         v-model="newPassword"
@@ -95,14 +95,14 @@ async function resetPassword(userId: number) {
         placeholder="Wachtwoord"
         aria-label="Wachtwoord"
         class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
       <label class="flex items-center gap-2 text-sm">
         <input v-model="newIsAdmin" type="checkbox" > Beheerder
       </label>
       <button
         class="rounded-md px-3 py-1.5 text-sm"
-        style="background: var(--color-accent); color: var(--color-accent-contrast)"
+        style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
         @click="createUser"
       >
         Aanmaken

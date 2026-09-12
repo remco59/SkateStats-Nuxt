@@ -1,42 +1,57 @@
 <script setup lang="ts">
+import { use } from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
+import { LineChart } from 'echarts/charts'
+import { GridComponent, TooltipComponent, MarkLineComponent } from 'echarts/components'
+import VChart from 'vue-echarts'
+import type { EChartsOption } from 'echarts'
+
+use([CanvasRenderer, LineChart, GridComponent, TooltipComponent, MarkLineComponent])
+
 const props = defineProps<{
   values: (number | null)[]
 }>()
 
-const width = 480
 const height = 140
-const padding = 10
 
-const path = computed(() => {
-  const points = props.values.map((v, i) => ({ v, i })).filter((p) => p.v !== null) as { v: number; i: number }[]
-  if (points.length < 2) return { line: '', zeroY: height / 2 }
-
-  const vals = points.map((p) => p.v)
-  const min = Math.min(...vals, 0)
-  const max = Math.max(...vals, 0)
-  const range = max - min || 1
-  const stepX = (width - padding * 2) / (props.values.length - 1)
-
-  const y = (v: number) => padding + (1 - (v - min) / range) * (height - padding * 2)
-
-  const line = points
-    .map((p, idx) => `${idx === 0 ? 'M' : 'L'}${(padding + p.i * stepX).toFixed(1)},${y(p.v).toFixed(1)}`)
-    .join(' ')
-
-  return { line, zeroY: y(0) }
-})
+const option = computed<EChartsOption>(() => ({
+  grid: { top: 10, right: 10, bottom: 10, left: 10 },
+  xAxis: { type: 'category', show: false, data: props.values.map((_, i) => i) },
+  yAxis: { type: 'value', show: false },
+  tooltip: {
+    trigger: 'axis',
+    formatter: (params) => {
+      const p = Array.isArray(params) ? params[0] : params
+      const v = (p?.value ?? null) as number | null
+      return v == null ? '' : v.toFixed(0)
+    },
+  },
+  series: [
+    {
+      type: 'line',
+      data: props.values,
+      connectNulls: true,
+      showSymbol: false,
+      lineStyle: { color: 'var(--color-accent)', width: 2 },
+      itemStyle: { color: 'var(--color-accent)' },
+      markLine: {
+        symbol: 'none',
+        silent: true,
+        label: { show: false },
+        lineStyle: { color: 'var(--color-border)', type: 'dashed' },
+        data: [{ yAxis: 0 }],
+      },
+    },
+  ],
+}))
 </script>
 
 <template>
-  <svg
-    :viewBox="`0 0 ${width} ${height}`"
-    :width="width"
-    :height="height"
-    class="w-full h-auto"
-    role="img"
+  <VChart
+    class="w-full"
+    :style="{ height: `${height}px` }"
+    :option="option"
+    :autoresize="true"
     aria-label="Verschil per onderdeel ten opzichte van de vergelijkingsrit"
-  >
-    <line :y1="path.zeroY" :y2="path.zeroY" x1="0" :x2="width" stroke="var(--color-border)" stroke-dasharray="4 4" />
-    <path :d="path.line" fill="none" stroke="var(--color-accent)" stroke-width="2" />
-  </svg>
+  />
 </template>

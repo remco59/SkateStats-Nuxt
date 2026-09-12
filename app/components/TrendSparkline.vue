@@ -1,42 +1,51 @@
 <script setup lang="ts">
+import { use } from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
+import { LineChart } from 'echarts/charts'
+import { GridComponent, TooltipComponent } from 'echarts/components'
+import VChart from 'vue-echarts'
+import type { EChartsOption } from 'echarts'
+
+use([CanvasRenderer, LineChart, GridComponent, TooltipComponent])
+
 const props = defineProps<{
   points: { date: string; totalTimeMs: number; raceId: number }[]
 }>()
 
-const width = 320
 const height = 60
-const padding = 6
 
-const path = computed(() => {
-  if (props.points.length < 2) return ''
-  const times = props.points.map((p) => p.totalTimeMs)
-  const min = Math.min(...times)
-  const max = Math.max(...times)
-  const range = max - min || 1
-  const stepX = (width - padding * 2) / (props.points.length - 1)
-
-  return props.points
-    .map((p, i) => {
-      const x = padding + i * stepX
-      // Faster (lower) times plot higher on the chart.
-      const y = padding + ((p.totalTimeMs - min) / range) * (height - padding * 2)
-      return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`
-    })
-    .join(' ')
-})
+const option = computed<EChartsOption>(() => ({
+  grid: { top: 6, right: 6, bottom: 6, left: 6 },
+  xAxis: { type: 'category', show: false, data: props.points.map((p) => p.date) },
+  yAxis: { type: 'value', show: false, inverse: true },
+  tooltip: {
+    trigger: 'axis',
+    formatter: (params) => {
+      const p = Array.isArray(params) ? params[0] : params
+      return fmtMs((p?.value ?? 0) as number)
+    },
+  },
+  series: [
+    {
+      type: 'line',
+      data: props.points.map((p) => p.totalTimeMs),
+      showSymbol: false,
+      smooth: false,
+      lineStyle: { color: 'var(--color-accent)', width: 2 },
+      itemStyle: { color: 'var(--color-accent)' },
+    },
+  ],
+}))
 </script>
 
 <template>
-  <svg
+  <VChart
     v-if="points.length >= 2"
-    :viewBox="`0 0 ${width} ${height}`"
-    :width="width"
-    :height="height"
-    class="overflow-visible"
-    role="img"
+    class="w-full"
+    :style="{ height: `${height}px` }"
+    :option="option"
+    :autoresize="true"
     :aria-label="`Ontwikkeling over ${points.length} wedstrijden, van ${fmtMs(points[0]!.totalTimeMs)} naar ${fmtMs(points[points.length - 1]!.totalTimeMs)}`"
-  >
-    <path :d="path" fill="none" stroke="var(--color-accent)" stroke-width="2" />
-  </svg>
+  />
   <p v-else class="text-xs" style="color: var(--color-text-muted)">Nog niet genoeg data.</p>
 </template>

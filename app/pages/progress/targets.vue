@@ -67,7 +67,7 @@ function forecastLabel(forecast: Record<string, unknown>): string {
           v-model.number="distanceM"
           aria-label="Afstand"
           class="rounded-md px-3 py-2 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
           <option v-for="d in COMMON_DISTANCES" :key="d" :value="d">{{ d }}m</option>
         </select>
@@ -76,11 +76,11 @@ function forecastLabel(forecast: Record<string, unknown>): string {
           placeholder="Tijd (m:ss.hh)"
           aria-label="Doeltijd"
           class="flex-1 rounded-md px-3 py-2 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
         <button
           class="rounded-md px-3 py-1.5 text-sm"
-          style="background: var(--color-accent); color: var(--color-accent-contrast)"
+          style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
           @click="saveTarget"
         >
           Opslaan
@@ -93,7 +93,7 @@ function forecastLabel(forecast: Record<string, unknown>): string {
       <p style="color: var(--color-text-muted)">Nog geen actieve targets.</p>
     </section>
 
-    <section v-for="card in data?.cards" :key="card.target.distanceM" class="rounded-lg p-4 space-y-3" style="border: 1px solid var(--color-border)">
+    <section v-for="card in data?.cards" :key="card.target.distanceM" class="rounded-lg p-4 space-y-3" style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)">
       <div class="flex items-center justify-between">
         <h3 class="font-mono text-lg">{{ card.target.distanceM }}m</h3>
         <button class="text-sm underline" style="color: var(--color-danger)" @click="deleteTarget(card.target.distanceM)">

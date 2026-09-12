@@ -42,7 +42,7 @@ async function selectCandidate(pid: string) {
         v-for="c in data.candidates"
         :key="c.pid"
         class="rounded-lg p-3 flex items-center justify-between"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
       >
         <div>
           <div class="font-medium">{{ c.name }}</div>
@@ -52,7 +52,7 @@ async function selectCandidate(pid: string) {
         </div>
         <button
           class="rounded-md px-3 py-1.5 text-sm"
-          style="background: var(--color-accent); color: var(--color-accent-contrast)"
+          style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
           @click="selectCandidate(c.pid)"
         >
           Kies

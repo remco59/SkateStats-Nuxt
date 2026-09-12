@@ -45,7 +45,7 @@ async function deleteAndBlacklist() {
         <NuxtLink
           :to="`/results/competitions/${id}/edit`"
           class="rounded-md px-3 py-1.5 text-sm"
-          style="border: 1px solid var(--color-border)"
+          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
           Bewerken
         </NuxtLink>

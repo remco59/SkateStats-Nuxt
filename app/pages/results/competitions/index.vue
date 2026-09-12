@@ -31,7 +31,7 @@ function applyFilters() {
       <NuxtLink
         to="/results/competitions/new"
         class="rounded-md px-3 py-1.5 text-sm"
-        style="background: var(--color-accent); color: var(--color-accent-contrast)"
+        style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
       >
         Nieuwe wedstrijd
       </NuxtLink>
@@ -42,14 +42,14 @@ function applyFilters() {
         v-model="q"
         placeholder="Zoek naam of locatie"
         class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         @keyup.enter="applyFilters"
       >
       <select
         v-model="venue"
         aria-label="Filter op locatie"
         class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         @change="applyFilters"
       >
         <option value="">Alle locaties</option>
@@ -59,19 +59,19 @@ function applyFilters() {
         v-model="dateFrom"
         type="date"
         class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         @change="applyFilters"
       >
       <input
         v-model="dateTo"
         type="date"
         class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         @change="applyFilters"
       >
       <button
         class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border)"
+        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         @click="applyFilters"
       >
         Filter
