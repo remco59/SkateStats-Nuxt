@@ -4,7 +4,7 @@ import { RACE_STATUSES, RACE_STATUS_LABELS, RACE_TAGS, RACE_TAG_LABELS } from '#
 const route = useRoute()
 const router = useRouter()
 
-const { data: competitionsData } = await useFetch('/api/results/competitions')
+const { data: competitionsData, error: competitionsError } = await useFetch('/api/results/competitions')
 
 const useExisting = ref(!!route.query.competitionId)
 const competitionId = ref(route.query.competitionId ? String(route.query.competitionId) : '')
@@ -78,6 +78,7 @@ async function submit() {
       <select
         v-if="useExisting"
         v-model="competitionId"
+        aria-label="Wedstrijd"
         class="w-full rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
@@ -86,23 +87,29 @@ async function submit() {
           {{ c.name }} ({{ c.date }})
         </option>
       </select>
+      <p v-if="useExisting && competitionsError" class="text-sm" style="color: var(--color-danger)">
+        Kon wedstrijden niet laden.
+      </p>
 
       <template v-else>
         <input
           v-model="newName"
           placeholder="Naam wedstrijd"
+          aria-label="Naam wedstrijd"
           class="w-full rounded-md px-3 py-2 text-sm"
           style="border: 1px solid var(--color-border)"
         >
         <input
           v-model="newVenue"
           placeholder="Locatie"
+          aria-label="Locatie"
           class="w-full rounded-md px-3 py-2 text-sm"
           style="border: 1px solid var(--color-border)"
         >
         <input
           v-model="newDate"
           type="date"
+          aria-label="Datum"
           class="w-full rounded-md px-3 py-2 text-sm"
           style="border: 1px solid var(--color-border)"
         >
@@ -114,11 +121,13 @@ async function submit() {
         v-model.number="distanceM"
         type="number"
         placeholder="Afstand (m)"
+        aria-label="Afstand (m)"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
       <select
         v-model="status"
+        aria-label="Status"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
@@ -129,12 +138,14 @@ async function submit() {
     <input
       v-model="totalTimeStr"
       placeholder="Eindtijd (m:ss.hh) -- optioneel als rondetijden zijn ingevuld"
+      aria-label="Eindtijd"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     >
     <input
       v-model="lapsCsv"
       placeholder="Rondetijden, komma-gescheiden (bv. 41.5,30.2,30.8,31.4)"
+      aria-label="Rondetijden"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     >
@@ -142,6 +153,7 @@ async function submit() {
     <div class="grid grid-cols-2 gap-2">
       <select
         v-model="trackType"
+        aria-label="Baantype"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
@@ -150,6 +162,7 @@ async function submit() {
       </select>
       <select
         v-model="tag"
+        aria-label="Tag"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
@@ -162,12 +175,14 @@ async function submit() {
       <input
         v-model="lane"
         placeholder="Baan/lane"
+        aria-label="Baan/lane"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
       <input
         v-model="opponent"
         placeholder="Tegenstander"
+        aria-label="Tegenstander"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
@@ -176,12 +191,14 @@ async function submit() {
       <input
         v-model="category"
         placeholder="Categorie"
+        aria-label="Categorie"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
       <input
         v-model="className"
         placeholder="Klasse"
+        aria-label="Klasse"
         class="rounded-md px-3 py-2 text-sm"
         style="border: 1px solid var(--color-border)"
       >
@@ -189,6 +206,7 @@ async function submit() {
     <textarea
       v-model="notes"
       placeholder="Notities"
+      aria-label="Notities"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     />

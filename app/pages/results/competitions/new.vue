@@ -26,24 +26,28 @@ async function submit() {
     <input
       v-model="name"
       placeholder="Naam"
+      aria-label="Naam"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     >
     <input
       v-model="venue"
       placeholder="Locatie"
+      aria-label="Locatie"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     >
     <input
       v-model="date"
       type="date"
+      aria-label="Datum"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     >
     <textarea
       v-model="notes"
       placeholder="Notities"
+      aria-label="Notities"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     />

@@ -33,6 +33,8 @@ const path = computed(() => {
     :width="width"
     :height="height"
     class="overflow-visible"
+    role="img"
+    :aria-label="`Ontwikkeling over ${points.length} wedstrijden, van ${fmtMs(points[0]!.totalTimeMs)} naar ${fmtMs(points[points.length - 1]!.totalTimeMs)}`"
   >
     <path :d="path" fill="none" stroke="var(--color-accent)" stroke-width="2" />
   </svg>

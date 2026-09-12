@@ -5,18 +5,29 @@ const route = useRoute()
 const router = useRouter()
 const id = route.params.id as string
 
-const { data: race } = await useFetch(`/api/results/races/${id}`)
+const { data: race, error } = await useFetch(`/api/results/races/${id}`)
+const actionError = ref('')
 
 async function deleteRace() {
   if (!confirm('Deze rit verwijderen?')) return
-  await $fetch(`/api/results/races/${id}`, { method: 'DELETE' })
-  router.push('/results/races')
+  actionError.value = ''
+  try {
+    await $fetch(`/api/results/races/${id}`, { method: 'DELETE' })
+    router.push('/results/races')
+  } catch {
+    actionError.value = 'Verwijderen mislukt.'
+  }
 }
 
 async function deleteAndBlacklist() {
   if (!confirm('Deze rit verwijderen en blacklisten (niet opnieuw voorstellen bij import)?')) return
-  await $fetch(`/api/results/races/${id}/blacklist`, { method: 'POST' })
-  router.push('/results/races')
+  actionError.value = ''
+  try {
+    await $fetch(`/api/results/races/${id}/blacklist`, { method: 'POST' })
+    router.push('/results/races')
+  } catch {
+    actionError.value = 'Verwijderen mislukt.'
+  }
 }
 </script>
 
@@ -62,6 +73,8 @@ async function deleteAndBlacklist() {
         </button>
       </div>
     </div>
+
+    <p v-if="actionError" class="text-sm" style="color: var(--color-danger)">{{ actionError }}</p>
 
     <section class="rounded-lg p-4" style="border: 1px solid var(--color-border)">
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
@@ -111,31 +124,33 @@ async function deleteAndBlacklist() {
 
     <section v-if="race.splitRows.length">
       <h2 class="text-sm font-medium mb-2" style="color: var(--color-text-muted)">Splits</h2>
-      <table class="w-full text-sm">
-        <thead>
-          <tr class="text-left" style="color: var(--color-text-muted)">
-            <th class="py-1 pr-4">#</th>
-            <th class="py-1 pr-4">Afstand</th>
-            <th class="py-1 pr-4">Tijd</th>
-            <th class="py-1 pr-4">Per 400m</th>
-            <th class="py-1 pr-4">Delta</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="row in race.splitRows" :key="row.index" style="border-top: 1px solid var(--color-border)">
-            <td class="py-1 pr-4">{{ row.index }}</td>
-            <td class="py-1 pr-4">{{ row.distanceM }}m</td>
-            <td class="py-1 pr-4 font-mono">{{ row.seconds.toFixed(2) }}</td>
-            <td class="py-1 pr-4 font-mono">{{ row.per400Eq?.toFixed(2) ?? '-' }}</td>
-            <td class="py-1 pr-4 font-mono">
-              <span v-if="row.deltaPrev400Eq === null">-</span>
-              <span v-else :style="{ color: row.deltaPrev400Eq <= 0 ? 'var(--color-success)' : 'var(--color-danger)' }">
-                {{ row.deltaPrev400Eq > 0 ? '+' : '' }}{{ row.deltaPrev400Eq.toFixed(2) }}
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-left" style="color: var(--color-text-muted)">
+              <th class="py-1 pr-4">#</th>
+              <th class="py-1 pr-4">Afstand</th>
+              <th class="py-1 pr-4">Tijd</th>
+              <th class="py-1 pr-4">Per 400m</th>
+              <th class="py-1 pr-4">Delta</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="row in race.splitRows" :key="row.index" style="border-top: 1px solid var(--color-border)">
+              <td class="py-1 pr-4">{{ row.index }}</td>
+              <td class="py-1 pr-4">{{ row.distanceM }}m</td>
+              <td class="py-1 pr-4 font-mono">{{ row.seconds.toFixed(2) }}</td>
+              <td class="py-1 pr-4 font-mono">{{ row.per400Eq?.toFixed(2) ?? '-' }}</td>
+              <td class="py-1 pr-4 font-mono">
+                <span v-if="row.deltaPrev400Eq === null">-</span>
+                <span v-else :style="{ color: row.deltaPrev400Eq <= 0 ? 'var(--color-success)' : 'var(--color-danger)' }">
+                  {{ row.deltaPrev400Eq > 0 ? '+' : '' }}{{ row.deltaPrev400Eq.toFixed(2) }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <p class="text-xs mt-2" style="color: var(--color-text-muted)">
         Gemiddelde per 400m: {{ race.metrics.avg400?.toFixed(2) ?? '-' }} &middot;
         Fade: {{ race.metrics.fade400Eq?.toFixed(2) ?? '-' }}
@@ -147,4 +162,5 @@ async function deleteAndBlacklist() {
       <p class="text-sm whitespace-pre-line">{{ race.notes }}</p>
     </section>
   </div>
+  <p v-else-if="error" style="color: var(--color-danger)">Rit niet gevonden.</p>
 </template>

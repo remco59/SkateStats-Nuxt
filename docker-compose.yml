@@ -5,6 +5,11 @@ services:
     restart: unless-stopped
     env_file: ./.env
     environment:
+      # NUXT_DB_PATH is what the running server actually reads (Nuxt
+      # runtime-config env override); SKATESTATS_DB is what
+      # bootstrap-admin.ts/migration-spike.ts read when run via `exec`.
+      # Both must point at the same file, inside the mounted /data volume.
+      - NUXT_DB_PATH=/data/skatestats.sqlite
       - SKATESTATS_DB=/data/skatestats.sqlite
       - PORT=3000
       - HOST=0.0.0.0

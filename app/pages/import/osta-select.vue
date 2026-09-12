@@ -7,7 +7,7 @@ const searchName = String(route.query.searchName ?? '')
 const season = String(route.query.season ?? '')
 const error = ref('')
 
-const { data } = await useFetch('/api/import/osta/search', {
+const { data, error: loadError } = await useFetch('/api/import/osta/search', {
   method: 'POST',
   body: { searchName, season },
 })
@@ -59,6 +59,10 @@ async function selectCandidate(pid: string) {
         </button>
       </li>
     </ul>
+    <p v-if="loadError" class="text-sm" style="color: var(--color-danger)">Zoeken mislukt.</p>
+    <p v-else-if="data?.candidates && !data.candidates.length" style="color: var(--color-text-muted)">
+      Geen profielen gevonden.
+    </p>
     <p v-if="error" class="text-sm" style="color: var(--color-danger)">{{ error }}</p>
   </div>
 </template>

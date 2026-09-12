@@ -23,14 +23,23 @@ async function saveTarget() {
     error.value = 'Ongeldige tijd.'
     return
   }
-  await $fetch('/api/progress/targets', { method: 'POST', body: { distanceM: distanceM.value, targetTimeMs } })
-  targetTimeStr.value = ''
-  await refresh()
+  try {
+    await $fetch('/api/progress/targets', { method: 'POST', body: { distanceM: distanceM.value, targetTimeMs } })
+    targetTimeStr.value = ''
+    await refresh()
+  } catch {
+    error.value = 'Opslaan mislukt.'
+  }
 }
 
 async function deleteTarget(distance: number) {
-  await $fetch(`/api/progress/targets/${distance}`, { method: 'DELETE' })
-  await refresh()
+  error.value = ''
+  try {
+    await $fetch(`/api/progress/targets/${distance}`, { method: 'DELETE' })
+    await refresh()
+  } catch {
+    error.value = 'Verwijderen mislukt.'
+  }
 }
 
 function forecastLabel(forecast: Record<string, unknown>): string {
@@ -56,6 +65,7 @@ function forecastLabel(forecast: Record<string, unknown>): string {
       <div class="flex gap-2">
         <select
           v-model.number="distanceM"
+          aria-label="Afstand"
           class="rounded-md px-3 py-2 text-sm"
           style="border: 1px solid var(--color-border)"
         >
@@ -64,6 +74,7 @@ function forecastLabel(forecast: Record<string, unknown>): string {
         <input
           v-model="targetTimeStr"
           placeholder="Tijd (m:ss.hh)"
+          aria-label="Doeltijd"
           class="flex-1 rounded-md px-3 py-2 text-sm"
           style="border: 1px solid var(--color-border)"
         >

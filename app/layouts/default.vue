@@ -18,6 +18,7 @@ const navLinks = [
 
 <template>
   <div class="min-h-screen flex flex-col">
+    <a href="#main-content" class="skip-link">Ga naar inhoud</a>
     <header
       class="border-b sticky top-0 z-10"
       style="background: var(--color-bg); border-color: var(--color-border)"
@@ -26,7 +27,7 @@ const navLinks = [
         <NuxtLink to="/" class="font-semibold" style="color: var(--color-accent)">
           SkateStats
         </NuxtLink>
-        <nav class="hidden md:flex items-center gap-5 text-sm">
+        <nav class="hidden md:flex items-center gap-5 text-sm" aria-label="Hoofdnavigatie">
           <NuxtLink
             v-for="link in navLinks"
             :key="link.to"
@@ -51,12 +52,12 @@ const navLinks = [
           </button>
         </div>
       </div>
-      <nav class="md:hidden flex items-center gap-4 px-4 pb-2 text-sm overflow-x-auto">
+      <nav class="md:hidden flex items-center gap-4 px-4 pb-2 text-sm overflow-x-auto" aria-label="Mobiele navigatie">
         <NuxtLink v-for="link in navLinks" :key="link.to" :to="link.to">{{ link.label }}</NuxtLink>
       </nav>
     </header>
 
-    <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-6">
+    <main id="main-content" class="flex-1 max-w-6xl w-full mx-auto px-4 py-6">
       <slot />
     </main>
 

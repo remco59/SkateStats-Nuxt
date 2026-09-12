@@ -3,7 +3,7 @@ const route = useRoute()
 const router = useRouter()
 const id = route.params.id as string
 
-const { data } = await useFetch(`/api/results/competitions/${id}`)
+const { data, error: loadError } = await useFetch(`/api/results/competitions/${id}`)
 
 const name = ref('')
 const venue = ref('')
@@ -34,26 +34,30 @@ async function submit() {
 </script>
 
 <template>
-  <div class="max-w-lg space-y-4">
+  <div v-if="data" class="max-w-lg space-y-4">
     <h1 class="text-xl font-semibold">Bewerk wedstrijd</h1>
     <input
       v-model="name"
+      aria-label="Naam"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     >
     <input
       v-model="venue"
+      aria-label="Locatie"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     >
     <input
       v-model="date"
       type="date"
+      aria-label="Datum"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     >
     <textarea
       v-model="notes"
+      aria-label="Notities"
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border)"
     />
@@ -66,4 +70,5 @@ async function submit() {
     </button>
     <p v-if="error" class="text-sm" style="color: var(--color-danger)">{{ error }}</p>
   </div>
+  <p v-else-if="loadError" style="color: var(--color-danger)">Wedstrijd niet gevonden.</p>
 </template>
