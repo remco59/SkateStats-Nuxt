@@ -1,15 +1,69 @@
 <script setup lang="ts">
 const { data } = await useFetch('/api/dashboard/overview')
+
+// Loaded client-side after the page renders, like the old app's async OSTA
+// banner -- avoids blocking the dashboard's first paint on an outbound
+// OSTA fetch per linked profile.
+const { data: ostaDetection } = useFetch('/api/dashboard/osta-detection', { server: false })
+const dismissed = ref(false)
 </script>
 
 <template>
   <div class="space-y-8">
     <h1 class="text-xl font-semibold">Overzicht</h1>
 
+    <section
+      v-if="ostaDetection?.hasNew && !dismissed"
+      class="rounded-lg p-4 flex items-center justify-between gap-4"
+      style="border: 1px solid var(--color-accent); background: color-mix(in srgb, var(--color-accent) 8%, transparent)"
+    >
+      <p class="text-sm">
+        Nieuwe OSTA-data gevonden: {{ ostaDetection.newCompetitionsCount }} wedstrijden,
+        {{ ostaDetection.newRacesCount }} ritten.
+      </p>
+      <div class="flex gap-2 shrink-0">
+        <NuxtLink
+          :to="`/import/preview?batchId=${ostaDetection.batchId}`"
+          class="rounded-md px-3 py-1.5 text-sm"
+          style="background: var(--color-accent); color: var(--color-accent-contrast)"
+        >
+          Bekijken
+        </NuxtLink>
+        <button
+          class="rounded-md px-3 py-1.5 text-sm"
+          style="border: 1px solid var(--color-border)"
+          @click="dismissed = true"
+        >
+          Later
+        </button>
+      </div>
+    </section>
+
     <section v-if="data && data.raceCount === 0" class="rounded-lg p-4" style="border: 1px solid var(--color-border)">
       <p style="color: var(--color-text-muted)">
         Er is nog geen data. <NuxtLink to="/import" class="underline">Importeer</NuxtLink> of
         <NuxtLink to="/results/races/new" class="underline">voeg handmatig een rit toe</NuxtLink>.
+      </p>
+    </section>
+
+    <section
+      v-if="data && (data.notifications.recentPrs.length || data.notifications.recentSbs.length || data.notifications.streakCount > 1)"
+      class="rounded-lg p-4 space-y-2"
+      style="border: 1px solid var(--color-border)"
+    >
+      <h2 class="text-sm font-medium" style="color: var(--color-text-muted)">Notificaties</h2>
+      <p v-if="data.notifications.streakCount > 1" class="text-sm">
+        🔥 Reeks van {{ data.notifications.streakCount }} PR's/SB's op rij!
+      </p>
+      <p v-for="r in data.notifications.recentPrs" :key="`pr-${r.raceId}`" class="text-sm">
+        Nieuw PR op {{ r.distanceM }}m:
+        <NuxtLink :to="`/results/races/${r.raceId}`" class="underline font-mono">{{ fmtMs(r.totalTimeMs) }}</NuxtLink>
+        ({{ fmtDate(r.competitionDate) }})
+      </p>
+      <p v-for="r in data.notifications.recentSbs" :key="`sb-${r.raceId}`" class="text-sm">
+        Nieuw seizoensrecord op {{ r.distanceM }}m:
+        <NuxtLink :to="`/results/races/${r.raceId}`" class="underline font-mono">{{ fmtMs(r.totalTimeMs) }}</NuxtLink>
+        ({{ fmtDate(r.competitionDate) }})
       </p>
     </section>
 
