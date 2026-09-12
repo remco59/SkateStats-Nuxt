@@ -43,6 +43,37 @@ async function changePassword() {
   }
 }
 
+const { data: ostaProfiles, refresh: refreshOstaProfiles } = await useFetch('/api/account/osta-profiles')
+const newOstaPid = ref('')
+const newOstaSearchName = ref('')
+const newOstaSeason = ref(String(new Date().getFullYear()))
+const ostaError = ref('')
+
+async function addOstaProfile() {
+  ostaError.value = ''
+  try {
+    await $fetch('/api/account/osta-profiles', {
+      method: 'POST',
+      body: { pid: newOstaPid.value, searchName: newOstaSearchName.value, season: newOstaSeason.value },
+    })
+    newOstaPid.value = ''
+    newOstaSearchName.value = ''
+    await refreshOstaProfiles()
+  } catch {
+    ostaError.value = 'Toevoegen mislukt.'
+  }
+}
+
+async function updateOstaMonitorMode(id: number, monitorMode: string) {
+  await $fetch(`/api/account/osta-profiles/${id}`, { method: 'PATCH', body: { monitorMode } })
+  await refreshOstaProfiles()
+}
+
+async function removeOstaProfile(id: number) {
+  await $fetch(`/api/account/osta-profiles/${id}`, { method: 'DELETE' })
+  await refreshOstaProfiles()
+}
+
 const deleteConfirm = ref(false)
 const deleteError = ref('')
 async function deleteAccount() {
@@ -111,6 +142,63 @@ async function deleteAccount() {
       <p v-if="passwordError" class="text-sm" style="color: var(--color-danger)">
         {{ passwordError }}
       </p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-sm font-medium" style="color: var(--color-text-muted)">OSTA monitor</h2>
+      <p class="text-xs" style="color: var(--color-text-muted)">
+        Gekoppelde profielen worden op het dashboard gecontroleerd op nieuwe wedstrijden.
+      </p>
+      <ul v-if="ostaProfiles?.length" class="space-y-2">
+        <li
+          v-for="p in ostaProfiles"
+          :key="p.id"
+          class="flex items-center justify-between gap-2 text-sm rounded-md p-2"
+          style="border: 1px solid var(--color-border)"
+        >
+          <span>{{ p.searchName }} (pid {{ p.pid }}, seizoen {{ p.season }})</span>
+          <div class="flex items-center gap-2 shrink-0">
+            <select
+              :value="p.monitorMode"
+              class="rounded-md px-2 py-1 text-xs"
+              style="border: 1px solid var(--color-border)"
+              @change="updateOstaMonitorMode(p.id, ($event.target as HTMLSelectElement).value)"
+            >
+              <option value="notify">Melden</option>
+              <option value="off">Uit</option>
+            </select>
+            <button class="underline text-xs" @click="removeOstaProfile(p.id)">Verwijderen</button>
+          </div>
+        </li>
+      </ul>
+      <div class="grid grid-cols-3 gap-2">
+        <input
+          v-model="newOstaPid"
+          placeholder="OSTA pid"
+          class="rounded-md px-3 py-2 text-sm"
+          style="border: 1px solid var(--color-border)"
+        >
+        <input
+          v-model="newOstaSearchName"
+          placeholder="Naam op OSTA"
+          class="rounded-md px-3 py-2 text-sm"
+          style="border: 1px solid var(--color-border)"
+        >
+        <input
+          v-model="newOstaSeason"
+          placeholder="Seizoen"
+          class="rounded-md px-3 py-2 text-sm"
+          style="border: 1px solid var(--color-border)"
+        >
+      </div>
+      <button
+        class="rounded-md px-3 py-1.5 text-sm"
+        style="border: 1px solid var(--color-border)"
+        @click="addOstaProfile"
+      >
+        Profiel koppelen
+      </button>
+      <p v-if="ostaError" class="text-sm" style="color: var(--color-danger)">{{ ostaError }}</p>
     </section>
 
     <section class="space-y-3">

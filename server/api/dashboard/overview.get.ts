@@ -1,9 +1,11 @@
 import { requireValidSession } from '../../utils/access'
 import { listUserRacesWithContext } from '../../utils/race-service'
+import { buildNotificationCenterContext } from '../../utils/notifications'
 
 export default defineEventHandler(async (event) => {
   const session = await requireValidSession(event)
   const races = listUserRacesWithContext(session.user.id)
+  const notifications = buildNotificationCenterContext(races)
 
   const finished = races.filter((r) => r.status === 'finished' && r.totalTimeMs !== null)
   const prCount = finished.filter((r) => r.isPr).length
@@ -74,5 +76,20 @@ export default defineEventHandler(async (event) => {
     trends: [...trendByDistance.entries()]
       .sort((a, b) => a[0] - b[0])
       .map(([distanceM, points]) => ({ distanceM, points })),
+    notifications: {
+      recentPrs: notifications.recentPrs.map((r) => ({
+        raceId: r.id,
+        distanceM: r.distanceM,
+        totalTimeMs: r.totalTimeMs,
+        competitionDate: r.competitionDate,
+      })),
+      recentSbs: notifications.recentSbs.map((r) => ({
+        raceId: r.id,
+        distanceM: r.distanceM,
+        totalTimeMs: r.totalTimeMs,
+        competitionDate: r.competitionDate,
+      })),
+      streakCount: notifications.streakCount,
+    },
   }
 })
