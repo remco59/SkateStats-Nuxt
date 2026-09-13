@@ -60,7 +60,7 @@ const trendLabel: Record<string, string> = {
           <div class="stat-label">PR's</div>
           <div class="stat-value" style="color: var(--color-accent)">{{ data.basic.pbCount }}</div>
         </div>
-        <div>
+        <div class="col-span-2 sm:col-span-1">
           <div class="stat-label">SB's</div>
           <div class="stat-value">{{ data.basic.sbCount }}</div>
         </div>

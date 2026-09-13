@@ -51,15 +51,15 @@ const displayNotes = computed(() => {
 <template>
   <div v-if="race" class="space-y-6 max-w-2xl">
     <div class="flex flex-wrap items-start justify-between gap-4">
-      <div>
-        <h1 class="text-2xl font-heading font-semibold">{{ race.distanceM }}m &middot; {{ race.competitionName }}</h1>
+      <div class="min-w-0">
+        <h1 class="text-2xl font-heading font-semibold break-words">{{ race.distanceM }}m &middot; {{ race.competitionName }}</h1>
         <p class="text-sm mt-1" style="color: var(--color-text-muted)">
           {{ race.venue || '-' }} &middot;
           <span class="font-mono">{{ fmtDate(race.competitionDate) }}</span> &middot;
           {{ race.trackType === 'outdoor' ? 'Buitenbaan' : 'Binnenbaan' }}
         </p>
       </div>
-      <div class="flex items-center gap-2">
+      <div class="flex flex-wrap items-center gap-2">
         <NuxtLink :to="`/results/races/${id}/edit`" class="btn btn-secondary btn-sm">
           Bewerken
         </NuxtLink>
