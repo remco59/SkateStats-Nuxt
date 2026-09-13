@@ -29,120 +29,138 @@ async function deleteAndBlacklist() {
     actionError.value = 'Verwijderen mislukt.'
   }
 }
+
+const sourceLabels: Record<string, string> = {
+  osta: 'OSTA',
+  ssr: 'SpeedSkatingResults',
+  pdf: 'PDF',
+  manual: 'Handmatig',
+}
+
+const autoImportNoteRegex = /^Geimporteerd van (OSTA|SpeedSkatingResults)(: https?:\/\/\S+)?$/
+
+const sourceLabel = computed(() => (race.value ? sourceLabels[race.value.source] ?? race.value.source : ''))
+const sourceIsLink = computed(() => !!race.value?.sourceRef && /^https?:\/\//.test(race.value.sourceRef))
+const displayNotes = computed(() => {
+  const notes = race.value?.notes
+  if (!notes || autoImportNoteRegex.test(notes)) return null
+  return notes
+})
 </script>
 
 <template>
   <div v-if="race" class="space-y-6 max-w-2xl">
-    <div class="flex items-start justify-between">
+    <div class="flex flex-wrap items-start justify-between gap-4">
       <div>
-        <h1 class="text-xl font-semibold">{{ race.distanceM }}m &middot; {{ race.competitionName }}</h1>
-        <p class="text-sm" style="color: var(--color-text-muted)">
+        <h1 class="text-2xl font-heading font-semibold">{{ race.distanceM }}m &middot; {{ race.competitionName }}</h1>
+        <p class="text-sm mt-1" style="color: var(--color-text-muted)">
           {{ race.venue || '-' }} &middot;
           <span class="font-mono">{{ fmtDate(race.competitionDate) }}</span> &middot;
           {{ race.trackType === 'outdoor' ? 'Buitenbaan' : 'Binnenbaan' }}
         </p>
       </div>
-      <div class="flex gap-2">
-        <NuxtLink
-          :to="`/results/races/${id}/edit`"
-          class="rounded-md px-3 py-1.5 text-sm"
-          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
-        >
+      <div class="flex items-center gap-2">
+        <NuxtLink :to="`/results/races/${id}/edit`" class="btn btn-secondary btn-sm">
           Bewerken
         </NuxtLink>
-        <NuxtLink
-          :to="`/results/races/${id}/compare`"
-          class="rounded-md px-3 py-1.5 text-sm"
-          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
-        >
+        <NuxtLink :to="`/results/races/${id}/compare`" class="btn btn-secondary btn-sm">
           Vergelijken
         </NuxtLink>
-        <button
-          class="rounded-md px-3 py-1.5 text-sm"
-          style="border: 1px solid var(--color-danger); color: var(--color-danger)"
-          @click="deleteRace"
-        >
-          Verwijderen
-        </button>
-        <button
-          class="rounded-md px-3 py-1.5 text-sm"
-          style="border: 1px solid var(--color-danger); color: var(--color-danger)"
-          @click="deleteAndBlacklist"
-        >
-          Verwijder + blacklist
-        </button>
+        <details class="menu">
+          <summary class="btn btn-secondary btn-sm" aria-label="Meer acties">&hellip;</summary>
+          <div class="menu-panel">
+            <button type="button" class="btn btn-danger btn-sm" @click="deleteRace">
+              Verwijderen
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" @click="deleteAndBlacklist">
+              Verwijder + blacklist
+            </button>
+          </div>
+        </details>
       </div>
     </div>
 
     <p v-if="actionError" class="text-sm" style="color: var(--color-danger)">{{ actionError }}</p>
 
-    <section class="rounded-lg p-4" style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)">
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+    <section class="card">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-5">
         <div>
-          <div style="color: var(--color-text-muted)">Status</div>
-          <div>{{ raceStatusLabel(race.status) }}</div>
+          <div class="stat-label">Status</div>
+          <div class="mt-0.5">{{ raceStatusLabel(race.status) }}</div>
         </div>
         <div>
-          <div style="color: var(--color-text-muted)">Eindtijd</div>
-          <div class="font-mono">
+          <div class="stat-label">Eindtijd</div>
+          <div class="stat-value mt-0.5">
             {{ fmtMs(race.totalTimeMs) }}
-            <span v-if="race.isPr" class="text-xs" style="color: var(--color-accent)">PR</span>
-            <span v-else-if="race.isSb" class="text-xs" style="color: var(--color-success)">SB</span>
+            <span v-if="race.isPr" class="text-xs font-sans font-semibold" style="color: var(--color-accent)">PR</span>
+            <span v-else-if="race.isSb" class="text-xs font-sans font-semibold" style="color: var(--color-success)">SB</span>
           </div>
         </div>
         <div>
-          <div style="color: var(--color-text-muted)">T.o.v. vorige PR</div>
-          <div class="font-mono">
-            <span v-if="race.deltaVsPreviousPrMs === null">-</span>
+          <div class="stat-label">T.o.v. vorige PR</div>
+          <div class="stat-value-sm mt-0.5">
+            <span v-if="race.deltaVsPreviousPrMs === null" style="color: var(--color-text-faint)">-</span>
             <span v-else :style="{ color: race.deltaVsPreviousPrMs <= 0 ? 'var(--color-success)' : 'var(--color-danger)' }">
               {{ race.deltaVsPreviousPrMs > 0 ? '+' : '' }}{{ fmtMs(race.deltaVsPreviousPrMs) }}
             </span>
           </div>
         </div>
         <div>
-          <div style="color: var(--color-text-muted)">Tag</div>
-          <div>{{ raceTagLabel(race.tag) }}</div>
+          <div class="stat-label">Tag</div>
+          <div class="mt-0.5">{{ raceTagLabel(race.tag) }}</div>
         </div>
         <div v-if="race.lane">
-          <div style="color: var(--color-text-muted)">Baan</div>
-          <div>{{ race.lane }}</div>
+          <div class="stat-label">Baan</div>
+          <div class="mt-0.5">{{ race.lane }}</div>
         </div>
         <div v-if="race.opponent">
-          <div style="color: var(--color-text-muted)">Tegenstander</div>
-          <div>{{ race.opponent }}</div>
+          <div class="stat-label">Tegenstander</div>
+          <div class="mt-0.5">{{ race.opponent }}</div>
         </div>
         <div v-if="race.category">
-          <div style="color: var(--color-text-muted)">Categorie</div>
-          <div>{{ race.category }}</div>
+          <div class="stat-label">Categorie</div>
+          <div class="mt-0.5">{{ race.category }}</div>
         </div>
         <div>
-          <div style="color: var(--color-text-muted)">Bron</div>
-          <div class="capitalize">{{ race.source }}</div>
+          <div class="stat-label">Bron</div>
+          <div class="mt-0.5">
+            <a
+              v-if="sourceIsLink"
+              :href="race.sourceRef!"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:underline"
+              style="color: var(--color-accent)"
+            >
+              {{ sourceLabel }} &#8599;
+            </a>
+            <span v-else>{{ sourceLabel }}</span>
+          </div>
         </div>
       </div>
     </section>
 
     <section v-if="race.splitRows.length">
-      <h2 class="text-sm font-medium mb-2" style="color: var(--color-text-muted)">Splits</h2>
+      <h2 class="section-heading mb-2">Splits</h2>
       <div class="overflow-x-auto">
-        <table class="w-full text-sm">
+        <table class="table">
           <thead>
-            <tr class="text-left" style="color: var(--color-text-muted)">
-              <th class="py-1 pr-4">#</th>
-              <th class="py-1 pr-4">Afstand</th>
-              <th class="py-1 pr-4">Tijd</th>
-              <th class="py-1 pr-4">Per 400m</th>
-              <th class="py-1 pr-4">Delta</th>
+            <tr>
+              <th>#</th>
+              <th>Afstand</th>
+              <th>Tijd</th>
+              <th>Per 400m</th>
+              <th>Delta</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="row in race.splitRows" :key="row.index" style="border-top: 1px solid var(--color-border)">
-              <td class="py-1 pr-4">{{ row.index }}</td>
-              <td class="py-1 pr-4">{{ row.distanceM }}m</td>
-              <td class="py-1 pr-4 font-mono">{{ row.seconds.toFixed(2) }}</td>
-              <td class="py-1 pr-4 font-mono">{{ row.per400Eq?.toFixed(2) ?? '-' }}</td>
-              <td class="py-1 pr-4 font-mono">
-                <span v-if="row.deltaPrev400Eq === null">-</span>
+            <tr v-for="row in race.splitRows" :key="row.index">
+              <td style="color: var(--color-text-muted)">{{ row.index }}</td>
+              <td style="color: var(--color-text-muted)">{{ row.distanceM }}m</td>
+              <td class="font-mono">{{ row.seconds.toFixed(2) }}</td>
+              <td class="font-mono" style="color: var(--color-text-muted)">{{ row.per400Eq?.toFixed(2) ?? '-' }}</td>
+              <td class="font-mono">
+                <span v-if="row.deltaPrev400Eq === null" style="color: var(--color-text-faint)">-</span>
                 <span v-else :style="{ color: row.deltaPrev400Eq <= 0 ? 'var(--color-success)' : 'var(--color-danger)' }">
                   {{ row.deltaPrev400Eq > 0 ? '+' : '' }}{{ row.deltaPrev400Eq.toFixed(2) }}
                 </span>
@@ -157,9 +175,9 @@ async function deleteAndBlacklist() {
       </p>
     </section>
 
-    <section v-if="race.notes">
-      <h2 class="text-sm font-medium mb-2" style="color: var(--color-text-muted)">Notities</h2>
-      <p class="text-sm whitespace-pre-line">{{ race.notes }}</p>
+    <section v-if="displayNotes">
+      <h2 class="section-heading mb-2">Notities</h2>
+      <p class="text-sm whitespace-pre-line" style="color: var(--color-text-muted)">{{ displayNotes }}</p>
     </section>
   </div>
   <p v-else-if="error" style="color: var(--color-danger)">Rit niet gevonden.</p>

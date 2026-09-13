@@ -12,7 +12,7 @@ const props = defineProps<{
   points: { date: string; totalTimeMs: number; raceId: number }[]
 }>()
 
-const height = 60
+const height = 88
 
 const accentColor = ref('#f7931a')
 
@@ -54,5 +54,11 @@ const option = computed<EChartsOption>(() => ({
     :autoresize="true"
     :aria-label="`Ontwikkeling over ${points.length} wedstrijden, van ${fmtMs(points[0]!.totalTimeMs)} naar ${fmtMs(points[points.length - 1]!.totalTimeMs)}`"
   />
-  <p v-else class="text-xs" style="color: var(--color-text-muted)">Nog niet genoeg data.</p>
+  <p
+    v-else
+    class="text-xs flex items-center justify-center"
+    :style="{ height: `${height}px`, color: 'var(--color-text-faint)' }"
+  >
+    Nog niet genoeg data
+  </p>
 </template>
