@@ -1,5 +1,5 @@
 {
-  "generated_by": "Called directly against app/main.py at commit 4dc69595620a268137be4c19f554301e14b8e6da (functions: opening_split_m, segment_distances, per400_times, build_split_rows, compute_race_metrics, parse_laps_to_ms, fmt_ms, season_label_for_date, collect_pr_race_ids, build_pr_progress). These are real outputs of the old app, not hand-derived \u2014 use them as the acceptance test fixtures for the ported TypeScript versions. Known-bug cases are flagged explicitly; do not silently 'fix' them without a decision (see REBUILD_PLAN.md section 4).",
+  "generated_by": "Called directly against app/main.py at commit 4dc69595620a268137be4c19f554301e14b8e6da (functions: opening_split_m, segment_distances, per400_times, build_split_rows, compute_race_metrics, parse_laps_to_ms, fmt_ms, season_label_for_date, collect_pr_race_ids, build_pr_progress). These are real outputs of the old app, not hand-derived — use them as the acceptance test fixtures for the ported TypeScript versions. Known-bug cases are flagged explicitly; do not silently 'fix' them without a decision (see REBUILD_PLAN.md section 4).",
   "split_math": [
     {
       "label": "1500m, clean 4-lap race",
@@ -38,7 +38,7 @@
       }
     },
     {
-      "label": "3000m, clean 7-lap race \u2014 KNOWN QUIRK",
+      "label": "3000m, clean 7-lap race — KNOWN QUIRK",
       "distance_m": 3000,
       "laps_s": [
         43.0,
@@ -81,7 +81,7 @@
           "avg_fade_per_segment_400eq": -11.483333333333334
         }
       },
-      "known_quirk": "segment_distances() assigns the LEFTOVER distance (800m here) to the final segment when the lap count doesn't evenly divide the remaining distance into 400m chunks, but the recorded lap TIME (34.2s) is still just the raw last lap time \u2014 so per400_times normalizes it down to 17.1s (34.2 * 400/800), making the last split look implausibly fast and the fade/last_400eq numbers misleading whenever a race has an odd number of laps for its distance. Decide in Phase 2 whether the rebuild reproduces this exactly (byte-for-byte parity with the old app) or fixes it (e.g. by refusing to guess segment distances when they don't evenly divide, and showing the raw lap instead) \u2014 do not silently pick one; put it in the phase 2 PR description either way."
+      "known_quirk": "segment_distances() assigns the LEFTOVER distance (800m here) to the final segment when the lap count doesn't evenly divide the remaining distance into 400m chunks, but the recorded lap TIME (34.2s) is still just the raw last lap time — so per400_times normalizes it down to 17.1s (34.2 * 400/800), making the last split look implausibly fast and the fade/last_400eq numbers misleading whenever a race has an odd number of laps for its distance. Decide in Phase 2 whether the rebuild reproduces this exactly (byte-for-byte parity with the old app) or fixes it (e.g. by refusing to guess segment distances when they don't evenly divide, and showing the raw lap instead) — do not silently pick one; put it in the phase 2 PR description either way."
     },
     {
       "label": "500m, single split (no intermediate laps recorded)",
@@ -109,7 +109,7 @@
           "avg_fade_per_segment_400eq": 0.0
         }
       },
-      "note": "avg_400 is None/null when there's only one segment (no 'middle' segments to average) \u2014 the new implementation must reproduce this null, not 0 or NaN, since UI templates branch on it."
+      "note": "avg_400 is None/null when there's only one segment (no 'middle' segments to average) — the new implementation must reproduce this null, not 0 or NaN, since UI templates branch on it."
     },
     {
       "label": "1000m, two laps (opening + one long final lap)",
@@ -140,7 +140,7 @@
           "avg_fade_per_segment_400eq": -67.75
         }
       },
-      "known_quirk": "Same normalization artifact as the 3000m case: the 800m final segment's real lap time (30.5s) is halved to a 400m-equivalent of 15.25s, which reads as an enormous (and misleading) 'fade' improvement. This is the SAME root cause as above \u2014 decide once, apply everywhere."
+      "known_quirk": "Same normalization artifact as the 3000m case: the 800m final segment's real lap time (30.5s) is halved to a 400m-equivalent of 15.25s, which reads as an enormous (and misleading) 'fade' improvement. This is the SAME root cause as above — decide once, apply everywhere."
     }
   ],
   "lap_input_parsing": [
@@ -172,7 +172,7 @@
         "total_ms": null,
         "error": "Ongeldige rondetijd: -1"
       },
-      "note": "a single invalid split fails the WHOLE input, not just that split \u2014 laps_ms comes back empty, not partially filled."
+      "note": "a single invalid split fails the WHOLE input, not just that split — laps_ms comes back empty, not partially filled."
     },
     {
       "input": "abc",
@@ -210,7 +210,7 @@
     {
       "date": "2024-08-31",
       "expected_season_label": "2023-2024",
-      "note": "one day before the season boundary \u2014 still counts as the PREVIOUS season."
+      "note": "one day before the season boundary — still counts as the PREVIOUS season."
     },
     {
       "date": "2024-09-01",
@@ -225,7 +225,7 @@
     {
       "date": "2025-05-01",
       "expected_season_label": "2024-2025",
-      "note": "May-August has no season boundary of its own \u2014 it's still attributed to the season that just ended (the off-season 'belongs' to the season before it)."
+      "note": "May-August has no season boundary of its own — it's still attributed to the season that just ended (the off-season 'belongs' to the season before it)."
     },
     {
       "date": "2025-01-15",
@@ -385,7 +385,7 @@
         }
       }
     },
-    "decision_needed": "REBUILD_PLAN.md section 4 requires the new schema to carry an explicit ordering signal for same-day races (e.g. a required 'heat/round sequence' or full timestamp instead of only a date) so PR/SB attribution no longer depends on insertion order. This is a behavior CHANGE from the old app, made deliberately \u2014 call it out in the Phase 2 PR."
+    "decision_needed": "REBUILD_PLAN.md section 4 requires the new schema to carry an explicit ordering signal for same-day races (e.g. a required 'heat/round sequence' or full timestamp instead of only a date) so PR/SB attribution no longer depends on insertion order. This is a behavior CHANGE from the old app, made deliberately — call it out in the Phase 2 PR."
   },
   "race_level_duplicate_matching": {
     "description": "race_is_duplicate() (old app) considers a candidate a duplicate of an existing race in the SAME competition only if total_time_ms, lane, opponent, laps_csv, and dnf ALL match exactly. It does not consider distance_m at all beyond what's implied by matching within a competition+distance context. Two races on the same day at the same distance with different opponents/lanes are correctly treated as distinct (e.g. two heats), but two independently-typo'd imports with an empty lane/opponent and identical time/laps are silently merged.",
@@ -405,7 +405,7 @@
         "dnf": 0
       },
       "expected_is_duplicate": false,
-      "why": "different lane/opponent \u2014 same time by coincidence (a real dead heat), correctly kept as two separate races."
+      "why": "different lane/opponent — same time by coincidence (a real dead heat), correctly kept as two separate races."
     },
     "duplicate_example": {
       "existing": {
@@ -803,66 +803,71 @@
     }
   },
   "pdf_parsing": {
-    "note": "Computed against reference/fixtures/pdf/sample_sheet.txt using clean_competition_name/normalize_pdf_venue/extract_date_from_text/extract_pdf_page_date/extract_pdf_pair_blocks (old app, commit 4dc6959). The fixture's header line order (name+'uitslag' / venue / bare date / 'Van DD-MM-YYYY') was corrected from an earlier draft that didn't match what extract_pdf_results_for_skater actually expects in the first 3 lines -- caught by running this exact fixture through the old app's functions before trusting the TS port's expected values.",
+    "note": "Computed against reference/fixtures/pdf/sample_sheet.txt, which is REAL pdf-parse text output extracted from a real KNSB Rituitslag PDF (see https://github.com/remco59/SkateStats-Nuxt/issues/7) -- not a hand-built synthetic fixture. Values below are the actual output of findPdfCompetitionMeta/extractPdfPairBlocks/extractPdfResultsForSkater in server/utils/import/pdf.ts against this fixture, verified against the source PDF by eye.",
     "expected_header": {
-      "competition_name": "KNSB Gewestelijke Wedstrijd Alkmaar",
-      "header_date": "2025-01-11",
-      "venue": "IJsbaan Alkmaar (NED)",
-      "page_date": "2025-01-11"
+      "competition_name": "SoftELS IUT 2026",
+      "venue": "Heerenveen (NED)",
+      "date": "2026-03-15"
     },
     "expected_pair_block": {
-      "pair_no": 3,
+      "pair_no": 25,
       "skaters": [
         {
-          "lane_code": "gl",
-          "name": "Jansen, Remco",
-          "cat": "JA1",
-          "pr": "1:15.00",
-          "time": "1:12.00"
+          "lane_code": "wt",
+          "bib": "82",
+          "name": "Anna Steenpoorte",
+          "cat": "DN2"
         },
         {
-          "lane_code": "bl",
-          "name": "Pietersen, Joris",
-          "cat": "JA1",
-          "pr": "1:16.20",
-          "time": "1:14.80"
+          "lane_code": "rd",
+          "bib": "89",
+          "name": "Remco Land",
+          "cat": "HN4"
         }
       ],
-      "timings": [
+      "results": [
         {
-          "distance_m": 500,
-          "totals": [
-            "40.55",
-            "41.20"
-          ],
+          "token": "57.04",
+          "is_status": false,
           "laps": [
-            "40.55",
-            "41.20"
-          ]
+            "14.93",
+            "42.11"
+          ],
+          "distance_m": 500
         },
         {
-          "distance_m": 1000,
-          "totals": [
-            "1:12.00",
-            "1:14.80"
-          ],
+          "token": "55.40",
+          "is_status": false,
           "laps": [
-            "31.45",
-            "33.60"
-          ]
+            "13.71",
+            "41.69"
+          ],
+          "distance_m": 500
         }
       ]
     },
-    "expected_result_for_jansen_remco": {
-      "pair_no": 3,
-      "distance_m": 1000,
-      "lane": "Binnen",
-      "opponent": "Pietersen, Joris",
-      "total_time_ms": 72000,
+    "expected_result_for_remco_land": {
+      "pair_no": 25,
+      "distance_m": 500,
+      "lane": "Buiten",
+      "opponent": "Anna Steenpoorte",
+      "total_time_ms": 55400,
       "status": "finished",
       "laps_ms": [
-        40550,
-        31450
+        13710,
+        41690
+      ]
+    },
+    "expected_result_for_anna_steenpoorte": {
+      "pair_no": 25,
+      "distance_m": 500,
+      "lane": "Binnen",
+      "opponent": "Remco Land",
+      "total_time_ms": 57040,
+      "status": "finished",
+      "laps_ms": [
+        14930,
+        42110
       ]
     }
   }
