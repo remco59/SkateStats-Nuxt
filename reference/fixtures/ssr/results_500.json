@@ -1,0 +1,14 @@
+{
+  "_comment": "Real speedskatingresults.com response, captured 2026-09-13 for skater_results.php?skater=121536&season=2025&distance=500 (issue #7). Replaces a synthetic fixture whose time field used 'mm:ss.hh' (colon) formatting -- real SSR times use 'm.ss,hh' (dot-separated minutes, comma decimal), e.g. '1.00,28' = 1:00.28. parseSsrTimeValue already handled this correctly (it was written defensively without a real sample); no code change was needed for this format. Also confirms season=2025 (2025/2026 season) is the correct startjaar for these March 2026 races -- season=2026 returns zero results, matching OSTA's semantics.",
+  "skater": 121536,
+  "distance": 500,
+  "season": 2025,
+  "results": [
+    { "time": "55,40", "date": "2026-03-15", "location": "Heerenveen (NED)", "name": "SoftELS IUT 2026", "link": "http://speedskatingresults.com/index.php?p=3&e=31957&r=20003&s=121536" },
+    { "time": "56,50", "date": "2026-02-22", "location": "Enschede (NED)", "name": "OldenburgerFritom Skeuveltoernooi 2026", "link": "http://speedskatingresults.com/index.php?p=3&e=31738&r=12&s=121536" },
+    { "time": "56,87", "date": "2026-03-08", "location": "Groningen (NED)", "name": "Tjas Clubwedstrijd/GSSK", "link": "http://speedskatingresults.com/index.php?p=3&e=31890&r=20001&s=121536" },
+    { "time": "57,42", "date": "2026-01-17", "location": "Groningen (NED)", "name": "Tjas Clubwedstrijd", "link": "http://speedskatingresults.com/index.php?p=3&e=31353&r=20001&s=121536" },
+    { "time": "1.00,28", "date": "2025-12-17", "location": "Collalbo (ITA)", "name": "D.S.V. de Skeuvel and TJAS", "link": "http://speedskatingresults.com/index.php?p=3&e=31129&r=20001&s=121536" },
+    { "time": "1.07,12", "date": "2025-11-29", "location": "Groningen (NED)", "name": "Tjas Clubwedstrijd", "link": "http://speedskatingresults.com/index.php?p=3&e=30859&r=20002&s=121536" }
+  ]
+}

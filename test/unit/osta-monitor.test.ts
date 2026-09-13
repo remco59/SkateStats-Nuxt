@@ -12,17 +12,22 @@ function fixture(name: string): string {
   return readFileSync(join(FIXTURES, name), 'utf-8')
 }
 
+const LAND_PID = '86651033-b5c2-4819-2162-08ddeb0685e4'
+const SOFTELS_500_ID = 'e8db8523-9ac1-4287-b8c7-a24859a259e0'
+
 describe('OSTA monitor detection (plan section 8)', () => {
   beforeEach(() => {
     vi.stubGlobal(
       'fetch',
       vi.fn(async (url: string) => {
         const parsed = new URL(url)
-        if (parsed.searchParams.has('ZoekStr')) return new Response(fixture('search_results.html'))
-        if (parsed.searchParams.get('pid') === 'NL12345' && parsed.searchParams.has('Seizoen')) {
+        if (parsed.searchParams.has('ZoekStr')) return new Response(fixture('search_results_single.html'))
+        if (parsed.searchParams.get('pid') === LAND_PID && parsed.searchParams.has('Seizoen')) {
           return new Response(fixture('results_list.html'))
         }
-        if (parsed.searchParams.get('ritid') === '9002') return new Response(fixture('race_detail.html'))
+        if (parsed.pathname.endsWith('/rit.php') && parsed.searchParams.get('ID') === SOFTELS_500_ID) {
+          return new Response(fixture('race_detail.html'))
+        }
         return new Response('<html><body><div id="main"></div></body></html>')
       }),
     )
@@ -38,9 +43,9 @@ describe('OSTA monitor detection (plan section 8)', () => {
     db.insert(ostaProfileLinks)
       .values({
         userId: user.id,
-        pid: 'NL12345',
-        searchName: 'Jansen, Remco',
-        season: '2024',
+        pid: LAND_PID,
+        searchName: 'Land, Remco',
+        season: '2025',
         monitorMode: 'notify',
         createdAt: new Date().toISOString(),
       })
@@ -48,7 +53,7 @@ describe('OSTA monitor detection (plan section 8)', () => {
 
     const first = await detectOstaUpdatesForUser(db, user.id)
     expect(first.hasNew).toBe(true)
-    expect(first.newCompetitionsCount).toBe(2)
+    expect(first.newCompetitionsCount).toBe(4)
     expect(first.batchId).not.toBeNull()
     expect(first.errors).toEqual([])
 

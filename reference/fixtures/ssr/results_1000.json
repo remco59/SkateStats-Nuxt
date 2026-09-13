@@ -1,0 +1,10 @@
+{
+  "_comment": "Real speedskatingresults.com response, captured 2026-09-13 for skater_results.php?skater=121536&season=2025&distance=1000 (issue #7). One row (SoftELS IUT 2026, 2026-03-15) shares a competition with a results_500.json row on the same date -- exercises grouping distinct distances of the same event into one competition via ssrCompetitionKey's event-id-from-link logic.",
+  "skater": 121536,
+  "distance": 1000,
+  "season": 2025,
+  "results": [
+    { "time": "1.52,97", "date": "2026-03-15", "location": "Heerenveen (NED)", "name": "SoftELS IUT 2026", "link": "http://speedskatingresults.com/index.php?p=3&e=31957&r=20004&s=121536" },
+    { "time": "2.02,39", "date": "2026-02-22", "location": "Enschede (NED)", "name": "OldenburgerFritom Skeuveltoernooi 2026", "link": "http://speedskatingresults.com/index.php?p=3&e=31738&r=13&s=121536" }
+  ]
+}

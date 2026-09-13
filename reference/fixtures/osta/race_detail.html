@@ -1,20 +1,32 @@
 <!--
-  Synthetic fixture matching osta_build_laps_csv + osta_extract_competition_name
-  (app/main.py, commit 4dc6959, L5423-5460): p.wedinfo holds
-  "YYYY-MM-DD <wid> <competition name>"; table.rit rows are
-  [lap_number, cumulative_time, lap_time]. Corresponds to ritid=9002
-  (1500m, laps [41.5, 30.2, 30.8, 31.4], total 2:13.90) from results_list.html.
+  Real OSTA response, captured 2026-09-13 for
+  `rit.php?pid=86651033-b5c2-4819-2162-08ddeb0685e4&ID=e8db8523-9ac1-4287-b8c7-a24859a259e0`
+  (issue #7) -- the 500m detail page for the 15-03-2026 SoftELS IUT 2026
+  row in results_list.html. Confirms table.rit's real shape: the first
+  data row carries a 4th <td> (a rowspan'd Grafiek/graph image cell) the
+  synthetic fixture didn't have, and only the last row's "Rondetijd" cell
+  is non-empty for a 2-split race (the leadoff split's lap time equals its
+  cumulative time, so OSTA leaves Rondetijd blank on that row) -- both
+  already handled correctly by ostaBuildLapsCsv's cumulative-time fallback.
 -->
 <html>
   <body>
     <div id="main">
-      <p class="wedinfo">2024-11-16 501 KNSB Bekerwedstrijd Heerenveen</p>
-      <table class="rit">
-        <tr><th>Ronde</th><th>Cumulatief</th><th>Rondetijd</th></tr>
-        <tr><td>1</td><td>41.50</td><td>41.50</td></tr>
-        <tr><td>2</td><td>1:11.70</td><td>30.20</td></tr>
-        <tr><td>3</td><td>1:42.50</td><td>30.80</td></tr>
-        <tr><td>4</td><td>2:13.90</td><td>31.40</td></tr>
+      <h1>Remco Land</h1>
+      <p class="wedinfo">2026-03-15 1530 SoftELS IUT 2026</p>
+      <table border="0" class="rit">
+        <tr><th align="right">Afstand</th><th align="right">Tussentijd</th><th align="right">Rondetijd</th><th>Grafiek</th></tr>
+        <tr>
+          <td align="right">100</td>
+          <td align="right">13.71</td>
+          <td align="right"></td>
+          <td align="center" rowspan="2"><img src="gif.php?ID=e8db8523-9ac1-4287-b8c7-a24859a259e0&amp;Rit=1" alt="Grafiek"></td>
+        </tr>
+        <tr>
+          <td align="right">500</td>
+          <td align="right">55.40</td>
+          <td align="right">41.69</td>
+        </tr>
       </table>
     </div>
   </body>

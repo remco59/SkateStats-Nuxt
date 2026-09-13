@@ -1,16 +1,16 @@
 <!--
-  Synthetic fixture matching ssr_lookup_skater_id (app/main.py, commit 4dc6959,
-  L5961-6008): skater_lookup.php?givenname=&familyname= returns <skater> nodes
-  with id/givenname/familyname/country/gender/category. One match here;
-  duplicate the <skater> block to test the "multiple matches" error path.
+  Real speedskatingresults.com response, captured 2026-09-13 for
+  `skater_lookup.php?givenname=Remco&familyname=Land` (issue #7). Confirms
+  the id/givenname/familyname/country/gender/category shape the synthetic
+  fixture already assumed correctly -- ssrLookupSkaterId needed no fix.
 -->
 <skaters>
   <skater>
-    <id>123456</id>
+    <id>121536</id>
+    <familyname>Land</familyname>
     <givenname>Remco</givenname>
-    <familyname>Jansen</familyname>
     <country>NED</country>
-    <gender>M</gender>
-    <category>Junior A</category>
+    <gender>m</gender>
+    <category>SA</category>
   </skater>
 </skaters>

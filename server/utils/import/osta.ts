@@ -76,8 +76,23 @@ async function fetchSoup(path: string, params?: Record<string, string | number |
   return cheerio.load(html)
 }
 
+/**
+ * OSTA's ZoekStr search matches names in "Voornaam Achternaam" order and
+ * breaks entirely (falls back to a WedNr/relation-number lookup, which
+ * always misses) if the query contains a comma. The rest of this app's UI
+ * follows the "Achternaam, Voornaam" convention (see the PDF importer), so
+ * reorder that convention into what OSTA actually expects before querying.
+ */
 export function defaultOstaSearchName(skaterName: string): string {
-  return skaterName.trim()
+  const trimmed = skaterName.trim()
+  const commaIndex = trimmed.indexOf(',')
+  if (commaIndex === -1) return trimmed
+
+  const familyName = trimmed.slice(0, commaIndex).trim()
+  const givenName = trimmed.slice(commaIndex + 1).trim()
+  if (!familyName || !givenName) return trimmed.replace(/,/g, ' ').replace(/\s+/g, ' ').trim()
+
+  return `${givenName} ${familyName}`
 }
 
 export function normalizeOstaVenue(rawValue: string | null): string | null {
@@ -192,14 +207,15 @@ function ostaExtractCompetitionName($detail: cheerio.CheerioAPI, fallbackName: s
   return match ? match[1]!.trim() : fallbackName
 }
 
-/** date must already be normalized to YYYY-MM-DD by the caller (parseDateAny). */
+/** OSTA renders season-results dates as D-M-YYYY (e.g. "2-11-2025", "15-03-2026"), not zero-padded. */
 function parseOstaDate(text: string): string {
-  // OSTA dates render as YYYY-MM-DD already in the fixtures/live site.
   const trimmed = text.trim()
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+  const match = trimmed.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/)
+  if (!match) {
     throw new Error(`Onbekend datumformaat: ${text}`)
   }
-  return trimmed
+  const [, day, month, year] = match
+  return `${year}-${month!.padStart(2, '0')}-${day!.padStart(2, '0')}`
 }
 
 export async function extractOstaResultsForPid(
