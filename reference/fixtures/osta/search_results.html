@@ -1,26 +1,47 @@
 <!--
-  Synthetic fixture matching the selectors in osta_lookup_candidates
-  (app/main.py, commit 4dc6959, L5354-5408): table.naam rows, one <a href>
-  profile link per row with a `pid` query param, category/seasons/club in
-  the following <td> cells. Two rows on purpose, to exercise the
-  OstaMultipleMatchesError / profile-selection path.
+  Real OSTA response, captured 2026-09-13 for `index.php?ZoekStr=Kjeld Nuis`
+  (issue #7: the synthetic fixture this replaced had the name inside the
+  profile link rendered "Achternaam, Voornaam" -- real OSTA renders it
+  "Voornaam Achternaam", and that order also turns out to be what
+  `ZoekStr` itself requires: a comma anywhere in the query breaks the
+  search entirely, see server/utils/import/osta.ts's defaultOstaSearchName).
+  This one real skater (a public Olympic speed skater) happens to have
+  four separate OSTA profile records for the same name -- a real
+  multi-candidate/OstaMultipleMatchesError scenario, not a contrived one.
 -->
 <html>
   <body>
     <div id="main">
       <table class="naam">
-        <tr><th>Naam</th><th>Categorie</th><th>Seizoenen</th><th>Club</th></tr>
         <tr>
-          <td><a href="index.php?pid=NL12345">Jansen, Remco</a></td>
-          <td>Junioren A</td>
-          <td>2023-2024, 2024-2025</td>
-          <td>IJsclub Voorbeeld</td>
+          <th>Naam</td>
+          <th>Categorie</td>
+          <th>Seizoen(en)</td>
+          <th>Vereniging</td>
         </tr>
         <tr>
-          <td><a href="index.php?pid=NL67890">Jansen, R.</a></td>
-          <td>Senioren</td>
-          <td>2021-2022</td>
-          <td>Andere Club</td>
+          <td><a href="?pid=6726">Kjeld Nuis</a></td>
+          <td>HC1-HSA</td>
+          <td>2003-2015</td>
+          <td>IJsvereniging Leiden</td>
+        </tr>
+        <tr>
+          <td><a href="?pid=63050472092709388">Kjeld Nuis</a></td>
+          <td>HSA</td>
+          <td>2014-2015</td>
+          <td>Internationaal</td>
+        </tr>
+        <tr>
+          <td><a href="?pid=63050472092709245">Kjeld Nuis</a></td>
+          <td>HSA</td>
+          <td>2014-2015</td>
+          <td>Internationaal</td>
+        </tr>
+        <tr>
+          <td><a href="?pid=822026c3-a2e6-4a2b-a2e8-6c5e2d7fbf7b">Kjeld Nuis</a></td>
+          <td>HSA-HSB</td>
+          <td>2016-2026</td>
+          <td>IJsvereniging Leiden</td>
         </tr>
       </table>
     </div>

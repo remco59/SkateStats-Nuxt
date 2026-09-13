@@ -1,0 +1,27 @@
+<!--
+  Real OSTA response, captured 2026-09-13 for `index.php?ZoekStr=Remco Land`
+  (issue #7). A single-candidate ZoekStr match redirects straight to the
+  skater's profile/season page instead of a table.naam candidate list --
+  this is the fallback path in ostaLookupCandidates (form#tijden input[name=pid]
+  + div#main h1). It was previously untested against real markup; this is
+  the exact scenario from the reported bug (search "Remco Land", not
+  "Land, Remco" -- see defaultOstaSearchName). The real page also includes
+  a populated table.datum for the current season, trimmed here since
+  results_list.html already covers that selector with its own real capture.
+-->
+<html>
+  <body>
+    <div id="main">
+      <form id="tijden">
+        <input type="hidden" name="pid" value="86651033-b5c2-4819-2162-08ddeb0685e4">
+        <select size="1" name="Seizoen">
+          <option selected value="">Kies seizoen</option>
+          <option value="ALL">Alle seizoenen</option>
+          <option value="2025">2025/2026</option>
+        </select>
+      </form>
+      <h1>Remco Land</h1>
+      <div class="seizoen"><h2>2025-2026 HN4</h2><h3>10316213, GSSV TJAS</h3></div>
+    </div>
+  </body>
+</html>

@@ -1,39 +1,32 @@
 <!--
-  Synthetic fixture matching extract_osta_results_for_pid
-  (app/main.py, commit 4dc6959, L5463-5548): table.datum rows with
-  [date, venue_code, distance, time(link to detail page), category, competition(link)].
-  Row 2 and 3 are the same competition (two distances skated on the same day),
-  to exercise multi-race-per-competition grouping.
+  Real OSTA response, captured 2026-09-13 for
+  `index.php?pid=86651033-b5c2-4819-2162-08ddeb0685e4&Seizoen=2025&perAfstand=0`
+  (issue #7). Season 2025 = the 2025/2026 winter season; races run
+  Nov 2025 - Mar 2026, confirming OSTA's "Seizoen" param is the season's
+  *start* year, not the calendar year a race falls in (see
+  server/utils/import/osta.ts extractOstaResultsForPid).
+
+  Replaces a synthetic fixture whose dates were "YYYY-MM-DD" -- the real
+  table.datum date cells render "D-M-YYYY" with no zero-padding (e.g.
+  "2-11-2025", "15-03-2026"), which the old parseOstaDate rejected
+  outright, silently dropping every real row. Also exercises real
+  same-day multi-race grouping (15-03-2026: 500m + 1000m, same
+  "SoftELS IUT 2026" competition) and same-day/same-distance re-skates
+  (8-03-2026: two separate 500m races at the same meet).
 -->
 <html>
   <body>
     <div id="main">
+      <h1>Remco Land</h1>
       <table class="datum">
         <tr><th>Datum</th><th>Baan</th><th>Afstand</th><th>Tijd</th><th>Cat</th><th>Wedstrijd</th></tr>
-        <tr>
-          <td>2024-11-16</td>
-          <td>HV</td>
-          <td>500</td>
-          <td><a href="index.php?pid=NL12345&ritid=9001">40.55</a></td>
-          <td>JA</td>
-          <td><a href="index.php?wid=501">KNSB Bekerwedstrijd Heerenveen</a></td>
-        </tr>
-        <tr>
-          <td>2024-11-16</td>
-          <td>HV</td>
-          <td>1500</td>
-          <td><a href="index.php?pid=NL12345&ritid=9002">2:13.90</a></td>
-          <td>JA</td>
-          <td><a href="index.php?wid=501">KNSB Bekerwedstrijd Heerenveen</a></td>
-        </tr>
-        <tr>
-          <td>2025-01-11</td>
-          <td>AK</td>
-          <td>1000</td>
-          <td><a href="index.php?pid=NL12345&ritid=9003">1:12.00</a></td>
-          <td>JA</td>
-          <td><a href="index.php?wid=502">Gewestelijke Wedstrijd Alkmaar</a></td>
-        </tr>
+        <tr class="PR"><td>15-03-2026</td><td>HV</td><td>500</td><td><a href="rit.php?pid=86651033-b5c2-4819-2162-08ddeb0685e4&amp;ID=e8db8523-9ac1-4287-b8c7-a24859a259e0">55.40</a></td><td></td><td class="l"><a href="OSTAT/index.php?ID=d6f4256a-354b-498d-b215-f96b86ed84c9">SoftELS IUT 2026</a></td></tr>
+        <tr class="PR"><td>15-03-2026</td><td>HV</td><td>1000</td><td><a href="rit.php?pid=86651033-b5c2-4819-2162-08ddeb0685e4&amp;ID=3e15a48b-6b43-4984-af6f-a127f84ae9f6">1:52.97</a></td><td></td><td class="l"><a href="OSTAT/index.php?ID=d6f4256a-354b-498d-b215-f96b86ed84c9">SoftELS IUT 2026</a></td></tr>
+        <tr class="tijd"><td>8-03-2026</td><td>GR</td><td>500</td><td><a href="rit.php?pid=86651033-b5c2-4819-2162-08ddeb0685e4&amp;ID=31d87c8b-256c-412c-9f6c-19abec533a13">58.17</a></td><td></td><td class="l"><a href="OSTAT/index.php?ID=04739ebf-c80b-4415-b60e-c9315396425c">Tjas clubwedstrijd/GSSK 8 maart 2026</a></td></tr>
+        <tr class="tijd"><td>8-03-2026</td><td>GR</td><td>500</td><td><a href="rit.php?pid=86651033-b5c2-4819-2162-08ddeb0685e4&amp;ID=99bc4344-cab2-4264-b74f-576d6a7d76f0">56.87</a></td><td></td><td class="l"><a href="OSTAT/index.php?ID=04739ebf-c80b-4415-b60e-c9315396425c">Tjas clubwedstrijd/GSSK 8 maart 2026</a></td></tr>
+        <tr class="tijd"><td>2-11-2025</td><td>HV</td><td>1000</td><td><a href="rit.php?pid=86651033-b5c2-4819-2162-08ddeb0685e4&amp;ID=2d37dde8-d178-486f-b6a1-efce613fcc27">1:08.44</a></td><td></td><td class="l"><a href="OSTAT/index.php?ID=888644f2-c631-4bae-9afd-17d92043f55d">Daikin NK Afstanden</a></td></tr>
+        <tr class="tijd"><td>29-11-2025</td><td>GR</td><td>500</td><td><a href="rit.php?pid=86651033-b5c2-4819-2162-08ddeb0685e4&amp;ID=45b2875e-84ea-4457-b800-5992a62f13f9">1:07.25</a></td><td></td><td class="l"><a href="OSTAT/index.php?ID=9a986d5a-ff96-4f8a-814f-3e7f6bca72e9">Tjas clubwedstrijd 29 november 2025</a></td></tr>
+        <tr class="tijd"><td>29-11-2025</td><td>GR</td><td>500</td><td><a href="rit.php?pid=86651033-b5c2-4819-2162-08ddeb0685e4&amp;ID=c634bf8e-9582-4fb2-852d-e2a573e69678">1:07.12</a></td><td></td><td class="l"><a href="OSTAT/index.php?ID=9a986d5a-ff96-4f8a-814f-3e7f6bca72e9">Tjas clubwedstrijd 29 november 2025</a></td></tr>
       </table>
     </div>
   </body>

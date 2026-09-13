@@ -1,0 +1,38 @@
+<!--
+  Real speedskatingresults.com response, captured 2026-09-13 for
+  `skater_lookup.php?givenname=Erik&familyname=Jansen` (issue #7). Three
+  real, distinct skaters share this name; SSR disambiguates them with a
+  <suffix> (birth year) element the synthetic fixture didn't have and
+  ssrLookupSkaterId didn't parse, so the multi-match error message listed
+  otherwise-identical-looking candidates. See ssrLookupSkaterId's suffix
+  handling in server/utils/import/ssr.ts.
+-->
+<skaters>
+  <skater>
+    <id>9413</id>
+    <familyname>Jansen</familyname>
+    <givenname>Erik</givenname>
+    <suffix>1963</suffix>
+    <country>NED</country>
+    <gender>m</gender>
+    <category>60</category>
+  </skater>
+  <skater>
+    <id>120381</id>
+    <familyname>Jansen</familyname>
+    <givenname>Erik</givenname>
+    <suffix>1977</suffix>
+    <country>NED</country>
+    <gender>m</gender>
+    <category>50</category>
+  </skater>
+  <skater>
+    <id>49141</id>
+    <familyname>Jansen</familyname>
+    <givenname>Erik</givenname>
+    <suffix>1990</suffix>
+    <country>NED</country>
+    <gender>m</gender>
+    <category>35</category>
+  </skater>
+</skaters>

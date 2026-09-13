@@ -21,6 +21,7 @@ export interface SsrSkaterCandidate {
   id: string
   givenname: string
   familyname: string
+  suffix: string
   country: string
   gender: string
   category: string
@@ -123,6 +124,7 @@ export async function ssrLookupSkaterId(givenName: string, familyName: string): 
       id: String(s.id ?? '').trim(),
       givenname: String(s.givenname ?? '').trim(),
       familyname: String(s.familyname ?? '').trim(),
+      suffix: String(s.suffix ?? '').trim(),
       country: String(s.country ?? '').trim(),
       gender: String(s.gender ?? '').trim(),
       category: String(s.category ?? '').trim(),
@@ -131,9 +133,13 @@ export async function ssrLookupSkaterId(givenName: string, familyName: string): 
 
   if (!candidates.length) throw new Error('Geen SSR schaatser gevonden met deze naam.')
   if (candidates.length > 1) {
+    // SSR disambiguates same-name skaters with a birth-year `suffix` (e.g.
+    // multiple "Erik Jansen" entries) -- surface it so the error message is
+    // actually useful for picking the right one, instead of listing
+    // otherwise-identical-looking candidates.
     const labels = candidates
       .slice(0, 5)
-      .map((c) => `${c.givenname} ${c.familyname} (${c.country || '-'}, id ${c.id})`)
+      .map((c) => `${c.givenname} ${c.familyname}${c.suffix ? ` (${c.suffix})` : ''} (${c.country || '-'}, id ${c.id})`)
       .join(', ')
     throw new Error(`Meerdere SSR schaatsers gevonden: ${labels}`)
   }
