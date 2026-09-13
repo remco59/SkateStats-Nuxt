@@ -6,7 +6,13 @@ export default defineEventHandler(async (event) => {
   const session = await requireValidSession(event)
   const query = getQuery(event)
   const season = query.season ? String(query.season) : undefined
-  const distanceM = query.distanceM ? Number(query.distanceM) : null
+  let distanceM: number | null = null
+  if (query.distanceM !== undefined && query.distanceM !== '') {
+    distanceM = Number(query.distanceM)
+    if (!Number.isFinite(distanceM)) {
+      throw createError({ statusCode: 400, statusMessage: 'distanceM moet een getal zijn.' })
+    }
+  }
 
   const races = listUserRacesWithContext(session.user.id)
   const statsInputs = races.map((r) => ({
