@@ -127,8 +127,36 @@ describe('import pipeline de-duplication (plan section 6)', () => {
     expect(resultSkip.skippedRaces).toBe(1)
 
     // An explicit 'replace' choice applies the correction.
-    const resultReplace = commitPreviewBatch(db, user.id, preview, { [raceItem.identitySignature]: 'replace' })
+    const resultReplace = commitPreviewBatch(db, user.id, preview, { [raceItem.updateChoiceKey]: 'replace' })
     expect(resultReplace.updatedRaces).toBe(1)
+  })
+
+  it('an update_candidate choice for one competition does not leak into another competition with an identical race identitySignature', () => {
+    const db = createTestDb()
+    const user = seedUser(db)
+
+    // Two different competitions whose sole race has the exact same
+    // distance/lane/opponent/time/status/laps -- same identitySignature,
+    // different competitionSignature.
+    const compA = comp({ name: 'Wedstrijd A', date: '2024-11-16' })
+    const compB = comp({ name: 'Wedstrijd B', date: '2024-11-23' })
+    commitPreviewBatch(db, user.id, classifyImportPayload(db, user.id, payload([compA])))
+    commitPreviewBatch(db, user.id, classifyImportPayload(db, user.id, payload([compB])))
+
+    const correctedA = comp({ name: 'Wedstrijd A', date: '2024-11-16', results: [{ ...comp().results[0]!, totalTimeMs: 133850 }] })
+    const correctedB = comp({ name: 'Wedstrijd B', date: '2024-11-23', results: [{ ...comp().results[0]!, totalTimeMs: 133850 }] })
+    const preview = classifyImportPayload(db, user.id, payload([correctedA, correctedB]))
+    const raceItemA = preview.items[0]!.races[0]!
+    const raceItemB = preview.items[1]!.races[0]!
+    expect(raceItemA.action).toBe('update_candidate')
+    expect(raceItemB.action).toBe('update_candidate')
+    expect(raceItemA.identitySignature).toBe(raceItemB.identitySignature)
+    expect(raceItemA.updateChoiceKey).not.toBe(raceItemB.updateChoiceKey)
+
+    // Choosing 'replace' only for A's key must not also replace B's race.
+    const result = commitPreviewBatch(db, user.id, preview, { [raceItemA.updateChoiceKey]: 'replace' })
+    expect(result.updatedRaces).toBe(1)
+    expect(result.skippedRaces).toBe(1)
   })
 
   it('rule 4: deleting one race blacklists only that race, not the whole competition', () => {

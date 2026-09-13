@@ -57,6 +57,13 @@ export interface RacePreviewItem {
   action: RacePreviewAction
   existingRaceId?: number
   identitySignature: string
+  /**
+   * Key to use for `updateChoices` lookups. `identitySignature` alone is only
+   * unique within one competition (see dedupe.ts), so this scopes it by the
+   * competition it belongs to to avoid cross-competition collisions when a
+   * batch contains multiple competitions with identically-shaped races.
+   */
+  updateChoiceKey: string
 }
 
 export type CompetitionPreviewAction = 'new_competition' | 'attach_to_existing' | 'blacklisted'
@@ -101,11 +108,15 @@ export function classifyImportPayload(db: Db, userId: number, payload: ParsedImp
         competition,
         action: 'blacklisted',
         competitionSignature,
-        races: competition.results.map((race) => ({
-          race,
-          action: 'blacklisted',
-          identitySignature: raceIdentitySignature(raceIdentityInput(race)),
-        })),
+        races: competition.results.map((race) => {
+          const identitySignature = raceIdentitySignature(raceIdentityInput(race))
+          return {
+            race,
+            action: 'blacklisted',
+            identitySignature,
+            updateChoiceKey: `${competitionSignature}::${identitySignature}`,
+          }
+        }),
       }
     }
 
@@ -127,12 +138,13 @@ export function classifyImportPayload(db: Db, userId: number, payload: ParsedImp
 
     const raceItems: RacePreviewItem[] = competition.results.map((race) => {
       const identitySignature = raceIdentitySignature(raceIdentityInput(race))
+      const updateChoiceKey = `${competitionSignature}::${identitySignature}`
 
       const isRaceBlacklisted = blacklistedRaces.some(
         (b) => b.competitionSignature === competitionSignature && b.raceIdentitySignature === identitySignature,
       )
       if (isRaceBlacklisted) {
-        return { race, action: 'blacklisted', identitySignature }
+        return { race, action: 'blacklisted', identitySignature, updateChoiceKey }
       }
 
       for (const existingRace of existingRacesForMatch) {
@@ -148,14 +160,20 @@ export function classifyImportPayload(db: Db, userId: number, payload: ParsedImp
           raceIdentityInput(race),
         )
         if (comparison === 'identical') {
-          return { race, action: 'identical', existingRaceId: existingRace.id, identitySignature }
+          return { race, action: 'identical', existingRaceId: existingRace.id, identitySignature, updateChoiceKey }
         }
         if (comparison === 'update_candidate') {
-          return { race, action: 'update_candidate', existingRaceId: existingRace.id, identitySignature }
+          return {
+            race,
+            action: 'update_candidate',
+            existingRaceId: existingRace.id,
+            identitySignature,
+            updateChoiceKey,
+          }
         }
       }
 
-      return { race, action: 'new', identitySignature }
+      return { race, action: 'new', identitySignature, updateChoiceKey }
     })
 
     return {
@@ -210,9 +228,10 @@ export interface CommitResult {
 
 /**
  * Commits a preview batch in one transaction (rule 6). `updateChoices`
- * maps a race's identitySignature to an explicit choice for
- * 'update_candidate' rows -- anything not in the map defaults to 'skip'
- * (never auto-overwrite, per rule 3). Re-classifying and re-committing
+ * maps a race's updateChoiceKey (competitionSignature scoped identitySignature)
+ * to an explicit choice for 'update_candidate' rows -- anything not in the
+ * map defaults to 'skip' (never auto-overwrite, per rule 3). Re-classifying
+ * and re-committing
  * the SAME parsed payload after a successful commit is a no-op (rule 5):
  * every previously-new race now matches an existing one and classifies
  * as 'identical'.
@@ -258,7 +277,7 @@ export function commitPreviewBatch(
         }
 
         if (raceItem.action === 'update_candidate') {
-          const choice = updateChoices[raceItem.identitySignature] ?? 'skip'
+          const choice = updateChoices[raceItem.updateChoiceKey] ?? 'skip'
           if (choice === 'skip') {
             result.skippedRaces += 1
             continue

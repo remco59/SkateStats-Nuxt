@@ -104,14 +104,14 @@ async function ignoreCompetition(competitionSignature: string) {
               </tr>
             </thead>
             <tbody>
-              <tr v-for="raceItem in item.races" :key="raceItem.identitySignature" style="border-top: 1px solid var(--color-border)">
+              <tr v-for="raceItem in item.races" :key="raceItem.updateChoiceKey" style="border-top: 1px solid var(--color-border)">
                 <td class="py-1 pr-4 font-mono">{{ raceItem.race.distanceM }}m</td>
                 <td class="py-1 pr-4 font-mono">{{ fmtMs(raceItem.race.totalTimeMs) }}</td>
                 <td class="py-1 pr-4">{{ actionLabel[raceItem.action] }}</td>
                 <td class="py-1 pr-4">
                   <select
                     v-if="raceItem.action === 'update_candidate'"
-                    v-model="updateChoices[raceItem.identitySignature]"
+                    v-model="updateChoices[raceItem.updateChoiceKey]"
                     aria-label="Actie voor deze rit"
                     class="rounded-md px-2 py-1 text-xs"
                     style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
