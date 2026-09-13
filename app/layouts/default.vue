@@ -1,12 +1,29 @@
 <script setup lang="ts">
 const { user, clear } = useUserSession()
 const router = useRouter()
+const route = useRoute()
+
+const mobileMenuOpen = ref(false)
 
 async function logout() {
+  mobileMenuOpen.value = false
   await $fetch('/api/auth/logout', { method: 'POST' })
   await clear()
   router.push('/login')
 }
+
+function closeMobileMenu() {
+  mobileMenuOpen.value = false
+}
+
+watch(() => route.fullPath, closeMobileMenu)
+
+function onKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape') closeMobileMenu()
+}
+
+onMounted(() => window.addEventListener('keydown', onKeydown))
+onUnmounted(() => window.removeEventListener('keydown', onKeydown))
 
 const navLinks = [
   { to: '/', label: 'Dashboard' },
@@ -19,13 +36,14 @@ const navLinks = [
 <template>
   <div class="min-h-screen flex flex-col">
     <a href="#main-content" class="skip-link">Ga naar inhoud</a>
-    <header class="glass sticky top-0 z-10" style="border-radius: 0; border-width: 0 0 1px 0">
+    <header class="glass sticky top-0 z-20" style="border-radius: 0; border-width: 0 0 1px 0">
       <div class="page h-14 flex items-center justify-between gap-4">
-        <NuxtLink to="/" class="font-heading font-semibold gradient-text tracking-tight">
+        <NuxtLink to="/" class="font-heading font-semibold gradient-text tracking-tight shrink-0">
           SkateStats
         </NuxtLink>
+
         <nav
-          class="hidden md:flex items-center gap-1 font-mono text-xs uppercase tracking-wider"
+          class="hidden md:flex items-center gap-1 font-mono text-xs uppercase tracking-wider min-w-0"
           aria-label="Hoofdnavigatie"
         >
           <NuxtLink
@@ -38,7 +56,8 @@ const navLinks = [
             {{ link.label }}
           </NuxtLink>
         </nav>
-        <div class="flex items-center gap-1 text-sm">
+
+        <div class="hidden md:flex items-center gap-1 text-sm min-w-0">
           <NuxtLink to="/account" class="nav-link inline-flex items-center !normal-case !tracking-normal !font-sans">
             {{ user?.skaterName }}
           </NuxtLink>
@@ -62,24 +81,65 @@ const navLinks = [
             Uitloggen
           </button>
         </div>
-      </div>
-      <nav
-        class="md:hidden flex items-center gap-1 px-4 pb-2 font-mono text-xs uppercase tracking-wider overflow-x-auto"
-        aria-label="Mobiele navigatie"
-      >
-        <NuxtLink
-          v-for="link in navLinks"
-          :key="link.to"
-          :to="link.to"
-          class="nav-link inline-flex items-center shrink-0"
-          active-class="nav-link-active"
+
+        <button
+          type="button"
+          class="md:hidden menu-toggle"
+          aria-controls="mobile-menu"
+          aria-label="Menu"
+          :aria-expanded="mobileMenuOpen"
+          @click="mobileMenuOpen = !mobileMenuOpen"
         >
-          {{ link.label }}
-        </NuxtLink>
-      </nav>
+          <svg v-if="!mobileMenuOpen" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+          <svg v-else width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <path d="M5 5l12 12M17 5L5 17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+
+      <div v-if="mobileMenuOpen" id="mobile-menu" class="md:hidden mobile-menu">
+        <nav class="flex flex-col gap-1 px-4 py-3" aria-label="Mobiele navigatie">
+          <NuxtLink
+            v-for="link in navLinks"
+            :key="link.to"
+            :to="link.to"
+            class="nav-link nav-link-block"
+            active-class="nav-link-active"
+          >
+            {{ link.label }}
+          </NuxtLink>
+        </nav>
+        <div class="mobile-menu-divider" />
+        <div class="flex flex-col gap-1 px-4 py-3">
+          <NuxtLink to="/account" class="nav-link nav-link-block !normal-case !tracking-normal !font-sans">
+            {{ user?.skaterName }}
+          </NuxtLink>
+          <NuxtLink
+            v-if="user?.isAdmin"
+            to="/admin/users"
+            class="nav-link nav-link-block"
+            active-class="nav-link-active"
+          >
+            Gebruikers
+          </NuxtLink>
+          <NuxtLink
+            v-if="user?.isAdmin"
+            to="/admin/system"
+            class="nav-link nav-link-block"
+            active-class="nav-link-active"
+          >
+            Systeem
+          </NuxtLink>
+          <button type="button" class="btn btn-ghost btn-sm mt-2 w-full" @click="logout">
+            Uitloggen
+          </button>
+        </div>
+      </div>
     </header>
 
-    <main id="main-content" class="flex-1 page w-full py-6">
+    <main id="main-content" class="flex-1 page w-full py-6 min-w-0">
       <slot />
     </main>
   </div>
@@ -101,5 +161,45 @@ const navLinks = [
 .nav-link-active {
   color: var(--color-accent) !important;
   background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+}
+
+.nav-link-block {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  text-transform: none;
+  letter-spacing: normal;
+  padding: 0.6rem 0.75rem;
+}
+
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.menu-toggle:hover {
+  background: var(--highlight-soft);
+}
+
+.mobile-menu {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  max-height: calc(100vh - 3.5rem);
+  overflow-y: auto;
+}
+
+.mobile-menu-divider {
+  height: 1px;
+  margin: 0 var(--space-4);
+  background: var(--color-border);
 }
 </style>
