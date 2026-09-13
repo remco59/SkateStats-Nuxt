@@ -34,14 +34,14 @@ async function deleteAndBlacklist() {
 <template>
   <div v-if="data" class="space-y-6">
     <div class="flex flex-wrap items-start justify-between gap-4">
-      <div>
-        <h1 class="text-2xl font-heading font-semibold">{{ data.competition.name }}</h1>
+      <div class="min-w-0">
+        <h1 class="text-2xl font-heading font-semibold break-words">{{ data.competition.name }}</h1>
         <p class="text-sm mt-1" style="color: var(--color-text-muted)">
           {{ data.competition.venue || '-' }} &middot;
           <span class="font-mono">{{ fmtDate(data.competition.date) }}</span>
         </p>
       </div>
-      <div class="flex items-center gap-2">
+      <div class="flex flex-wrap items-center gap-2">
         <NuxtLink :to="`/results/races/new?competitionId=${id}`" class="btn btn-primary btn-sm">
           + Rit toevoegen
         </NuxtLink>

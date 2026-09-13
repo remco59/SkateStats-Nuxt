@@ -88,7 +88,7 @@ function trendContext(points: { totalTimeMs: number }[]) {
           <div class="stat-label">Favoriete locatie</div>
           <div class="stat-value-sm">{{ data.favoriteVenue || '-' }}</div>
         </div>
-        <div>
+        <div class="col-span-2 sm:col-span-1">
           <div class="stat-label">Favoriete afstand</div>
           <div class="stat-value-sm">{{ data.favoriteDistance ? `${data.favoriteDistance}m` : '-' }}</div>
         </div>
@@ -98,27 +98,29 @@ function trendContext(points: { totalTimeMs: number }[]) {
     <div class="grid md:grid-cols-2 gap-5">
       <section class="card">
         <h2 class="section-heading mb-3">Beste tijden per afstand</h2>
-        <table v-if="data?.bestTimes.length" class="table">
-          <thead>
-            <tr>
-              <th>Afstand</th>
-              <th>Beste tijd</th>
-              <th>Datum</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="r in data.bestTimes" :key="r.distanceM" class="table-row-link">
-              <td class="font-mono">
-                <NuxtLink :to="`/results/races/${r.raceId}`" class="stretched-link">{{ r.distanceM }}m</NuxtLink>
-              </td>
-              <td class="font-mono stat-value-sm">
-                {{ fmtMs(r.totalTimeMs) }}
-                <span v-if="r.isRecentPr" class="text-xs" style="color: var(--color-accent)">PR</span>
-              </td>
-              <td class="font-mono" style="color: var(--color-text-muted)">{{ fmtDate(r.competitionDate) }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div v-if="data?.bestTimes.length" class="overflow-x-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Afstand</th>
+                <th>Beste tijd</th>
+                <th>Datum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="r in data.bestTimes" :key="r.distanceM" class="table-row-link">
+                <td class="font-mono">
+                  <NuxtLink :to="`/results/races/${r.raceId}`" class="stretched-link">{{ r.distanceM }}m</NuxtLink>
+                </td>
+                <td class="font-mono stat-value-sm">
+                  {{ fmtMs(r.totalTimeMs) }}
+                  <span v-if="r.isRecentPr" class="text-xs" style="color: var(--color-accent)">PR</span>
+                </td>
+                <td class="font-mono" style="color: var(--color-text-muted)">{{ fmtDate(r.competitionDate) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <p v-else style="color: var(--color-text-muted)">Nog geen geldige tijden.</p>
       </section>
 
@@ -137,30 +139,32 @@ function trendContext(points: { totalTimeMs: number }[]) {
               <span class="font-mono">{{ fmtDate(data.latestCompetition.date) }}</span>
             </span>
           </p>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Rit</th>
-                <th>Eindtijd</th>
-                <th>T.o.v. PR</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="r in data.latestCompetition.races" :key="r.raceId" class="table-row-link">
-                <td class="font-mono">
-                  <NuxtLink :to="`/results/races/${r.raceId}`" class="stretched-link">{{ r.distanceM }}m</NuxtLink>
-                </td>
-                <td class="font-mono stat-value-sm">{{ fmtMs(r.totalTimeMs) }}</td>
-                <td class="font-mono">
-                  <span v-if="r.isPr" style="color: var(--color-accent)">PR</span>
-                  <span v-else-if="r.deltaVsPreviousPrMs === null" style="color: var(--color-text-muted)">-</span>
-                  <span v-else :style="{ color: r.deltaVsPreviousPrMs <= 0 ? 'var(--color-success)' : 'var(--color-danger)' }">
-                    {{ r.deltaVsPreviousPrMs > 0 ? '+' : '' }}{{ fmtMs(r.deltaVsPreviousPrMs) }}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Rit</th>
+                  <th>Eindtijd</th>
+                  <th>T.o.v. PR</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="r in data.latestCompetition.races" :key="r.raceId" class="table-row-link">
+                  <td class="font-mono">
+                    <NuxtLink :to="`/results/races/${r.raceId}`" class="stretched-link">{{ r.distanceM }}m</NuxtLink>
+                  </td>
+                  <td class="font-mono stat-value-sm">{{ fmtMs(r.totalTimeMs) }}</td>
+                  <td class="font-mono">
+                    <span v-if="r.isPr" style="color: var(--color-accent)">PR</span>
+                    <span v-else-if="r.deltaVsPreviousPrMs === null" style="color: var(--color-text-muted)">-</span>
+                    <span v-else :style="{ color: r.deltaVsPreviousPrMs <= 0 ? 'var(--color-success)' : 'var(--color-danger)' }">
+                      {{ r.deltaVsPreviousPrMs > 0 ? '+' : '' }}{{ fmtMs(r.deltaVsPreviousPrMs) }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </template>
         <p v-else style="color: var(--color-text-muted)">Nog geen ritten.</p>
       </section>

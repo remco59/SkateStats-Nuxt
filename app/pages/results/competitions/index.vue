@@ -26,7 +26,7 @@ function applyFilters() {
 
 <template>
   <div class="space-y-6">
-    <div class="flex items-center justify-between gap-4">
+    <div class="flex flex-wrap items-center justify-between gap-3">
       <h1 class="text-2xl font-heading font-semibold">Wedstrijden</h1>
       <NuxtLink to="/results/competitions/new" class="btn btn-primary btn-sm">
         Nieuwe wedstrijd
