@@ -22,26 +22,14 @@ const trendLabel: Record<string, string> = {
 
 <template>
   <div class="space-y-8">
-    <h1 class="text-xl font-semibold">Statistieken</h1>
+    <h1 class="text-2xl font-heading font-semibold">Statistieken</h1>
 
-    <div class="flex flex-wrap gap-2">
-      <select
-        v-model="season"
-        aria-label="Filter op seizoen"
-        class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
-        @change="applyFilters"
-      >
+    <div class="filter-bar">
+      <select v-model="season" aria-label="Filter op seizoen" class="field" style="width: auto" @change="applyFilters">
         <option value="">Alle seizoenen</option>
         <option v-for="s in data?.seasonOptions" :key="s" :value="s">{{ s }}</option>
       </select>
-      <select
-        v-model="distanceM"
-        aria-label="Filter op afstand"
-        class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
-        @change="applyFilters"
-      >
+      <select v-model="distanceM" aria-label="Filter op afstand" class="field" style="width: auto" @change="applyFilters">
         <option value="">Alle afstanden</option>
         <option v-for="d in data?.distanceOptions" :key="d" :value="d">{{ d }}m</option>
       </select>
@@ -49,64 +37,66 @@ const trendLabel: Record<string, string> = {
 
     <p v-if="error" class="text-sm" style="color: var(--color-danger)">Kon statistieken niet laden.</p>
 
-    <section v-if="data && data.basic.raceCount === 0" class="rounded-lg p-4" style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)">
-      <p style="color: var(--color-text-muted)">Nog geen data voor dit filter.</p>
+    <section v-if="data && data.basic.raceCount === 0" class="empty-state">
+      Nog geen data voor dit filter.
     </section>
 
-    <section v-if="data && data.basic.raceCount > 0" class="rounded-lg p-4" style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)">
-      <h2 class="text-sm font-medium mb-3" style="color: var(--color-text-muted)">Basisstatistieken</h2>
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 text-sm">
+    <section v-if="data && data.basic.raceCount > 0" class="card">
+      <h2 class="section-heading mb-3">Basisstatistieken</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-5">
         <div>
-          <div style="color: var(--color-text-muted)">Wedstrijden</div>
-          <div class="font-mono text-lg">{{ data.basic.competitionCount }}</div>
+          <div class="stat-label">Wedstrijden</div>
+          <div class="stat-value">{{ data.basic.competitionCount }}</div>
         </div>
         <div>
-          <div style="color: var(--color-text-muted)">Ritten</div>
-          <div class="font-mono text-lg">{{ data.basic.raceCount }}</div>
+          <div class="stat-label">Ritten</div>
+          <div class="stat-value">{{ data.basic.raceCount }}</div>
         </div>
         <div>
-          <div style="color: var(--color-text-muted)">Kilometers</div>
-          <div class="font-mono text-lg">{{ data.basic.totalKm.toFixed(1) }} km</div>
+          <div class="stat-label">Kilometers</div>
+          <div class="stat-value">{{ data.basic.totalKm.toFixed(1) }} km</div>
         </div>
         <div>
-          <div style="color: var(--color-text-muted)">PR's</div>
-          <div class="font-mono text-lg">{{ data.basic.pbCount }}</div>
+          <div class="stat-label">PR's</div>
+          <div class="stat-value" style="color: var(--color-accent)">{{ data.basic.pbCount }}</div>
         </div>
         <div>
-          <div style="color: var(--color-text-muted)">SB's</div>
-          <div class="font-mono text-lg">{{ data.basic.sbCount }}</div>
+          <div class="stat-label">SB's</div>
+          <div class="stat-value">{{ data.basic.sbCount }}</div>
         </div>
       </div>
     </section>
 
     <section v-if="data?.distanceRows.length">
-      <h2 class="text-sm font-medium mb-2" style="color: var(--color-text-muted)">Per afstand</h2>
+      <h2 class="section-heading mb-2">Per afstand</h2>
       <div class="overflow-x-auto">
-        <table class="w-full text-sm">
+        <table class="table">
           <thead>
-            <tr class="text-left" style="color: var(--color-text-muted)">
-              <th class="py-1 pr-4">Afstand</th>
-              <th class="py-1 pr-4">PR</th>
-              <th class="py-1 pr-4">SB</th>
-              <th class="py-1 pr-4">Gem.</th>
-              <th class="py-1 pr-4">Mediaan</th>
-              <th class="py-1 pr-4">Std.dev</th>
-              <th class="py-1 pr-4">Spreiding</th>
-              <th class="py-1 pr-4">Trend</th>
+            <tr>
+              <th>Afstand</th>
+              <th>PR</th>
+              <th>SB</th>
+              <th>Gem.</th>
+              <th>Mediaan</th>
+              <th>Std.dev</th>
+              <th>Spreiding</th>
+              <th>Trend</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="row in data.distanceRows" :key="row.distanceM" style="border-top: 1px solid var(--color-border)">
-              <td class="py-2 pr-4 font-mono">{{ row.distanceM }}m</td>
-              <td class="py-2 pr-4 font-mono">
+            <tr v-for="row in data.distanceRows" :key="row.distanceM">
+              <td class="font-mono">{{ row.distanceM }}m</td>
+              <td class="font-mono font-semibold" style="color: var(--color-accent)">
                 <NuxtLink :to="`/results/races/${row.pbRaceId}`" class="hover:underline">{{ fmtMs(row.pbMs) }}</NuxtLink>
               </td>
-              <td class="py-2 pr-4 font-mono">{{ fmtMs(row.seasonBestMs) }}</td>
-              <td class="py-2 pr-4 font-mono">{{ fmtMs(row.averageMs) }}</td>
-              <td class="py-2 pr-4 font-mono">{{ fmtMs(row.medianMs) }}</td>
-              <td class="py-2 pr-4 font-mono">{{ fmtMs(row.stdDevMs) }}</td>
-              <td class="py-2 pr-4 font-mono">{{ fmtMs(row.rangeMs) }}</td>
-              <td class="py-2 pr-4">{{ trendLabel[row.trend] }}</td>
+              <td class="font-mono" :style="{ color: row.seasonBestMs == null ? 'var(--color-text-faint)' : 'var(--color-text)' }">
+                {{ fmtMs(row.seasonBestMs) }}
+              </td>
+              <td class="font-mono" style="color: var(--color-text-muted)">{{ fmtMs(row.averageMs) }}</td>
+              <td class="font-mono" style="color: var(--color-text-muted)">{{ fmtMs(row.medianMs) }}</td>
+              <td class="font-mono" style="color: var(--color-text-muted)">{{ fmtMs(row.stdDevMs) }}</td>
+              <td class="font-mono" style="color: var(--color-text-muted)">{{ fmtMs(row.rangeMs) }}</td>
+              <td>{{ trendLabel[row.trend] }}</td>
             </tr>
           </tbody>
         </table>
@@ -114,26 +104,26 @@ const trendLabel: Record<string, string> = {
     </section>
 
     <section v-if="data?.trackRows.length">
-      <h2 class="text-sm font-medium mb-2" style="color: var(--color-text-muted)">Baanstatistieken</h2>
-      <p v-if="data.bestTrack" class="text-sm" style="color: var(--color-text-muted)">
+      <h2 class="section-heading mb-2">Baanstatistieken</h2>
+      <p v-if="data.bestTrack" class="text-sm mb-2" style="color: var(--color-text-muted)">
         Beste baan: {{ data.bestTrack.name }} ({{ data.bestTrack.deltaMs > 0 ? '+' : '' }}{{ fmtMs(data.bestTrack.deltaMs) }} t.o.v. gemiddeld)
       </p>
       <div class="overflow-x-auto">
-        <table class="w-full text-sm mt-2">
+        <table class="table">
           <thead>
-            <tr class="text-left" style="color: var(--color-text-muted)">
-              <th class="py-1 pr-4">Baan</th>
-              <th class="py-1 pr-4">Ritten</th>
-              <th class="py-1 pr-4">Gem. (500m-eq)</th>
-              <th class="py-1 pr-4">Beste (500m-eq)</th>
+            <tr>
+              <th>Baan</th>
+              <th>Ritten</th>
+              <th>Gem. (500m-eq)</th>
+              <th>Beste (500m-eq)</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="row in data.trackRows" :key="row.venue" style="border-top: 1px solid var(--color-border)">
-              <td class="py-2 pr-4">{{ row.venue }}</td>
-              <td class="py-2 pr-4 font-mono">{{ row.raceCount }}</td>
-              <td class="py-2 pr-4 font-mono">{{ fmtMs(row.avg500EqMs) }}</td>
-              <td class="py-2 pr-4 font-mono">{{ fmtMs(row.best500EqMs) }}</td>
+            <tr v-for="row in data.trackRows" :key="row.venue">
+              <td>{{ row.venue }}</td>
+              <td class="font-mono" style="color: var(--color-text-muted)">{{ row.raceCount }}</td>
+              <td class="font-mono" style="color: var(--color-text-muted)">{{ fmtMs(row.avg500EqMs) }}</td>
+              <td class="font-mono font-semibold">{{ fmtMs(row.best500EqMs) }}</td>
             </tr>
           </tbody>
         </table>
