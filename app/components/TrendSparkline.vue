@@ -14,6 +14,13 @@ const props = defineProps<{
 
 const height = 60
 
+const accentColor = ref('#f7931a')
+
+onMounted(() => {
+  const resolved = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim()
+  if (resolved) accentColor.value = resolved
+})
+
 const option = computed<EChartsOption>(() => ({
   grid: { top: 6, right: 6, bottom: 6, left: 6 },
   xAxis: { type: 'category', show: false, data: props.points.map((p) => p.date) },
@@ -31,8 +38,8 @@ const option = computed<EChartsOption>(() => ({
       data: props.points.map((p) => p.totalTimeMs),
       showSymbol: false,
       smooth: false,
-      lineStyle: { color: 'var(--color-accent)', width: 2 },
-      itemStyle: { color: 'var(--color-accent)' },
+      lineStyle: { color: accentColor.value, width: 2 },
+      itemStyle: { color: accentColor.value },
     },
   ],
 }))

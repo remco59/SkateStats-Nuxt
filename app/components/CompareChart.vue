@@ -14,6 +14,17 @@ const props = defineProps<{
 
 const height = 140
 
+const accentColor = ref('#f7931a')
+const borderColor = ref('rgba(255, 255, 255, 0.1)')
+
+onMounted(() => {
+  const styles = getComputedStyle(document.documentElement)
+  const resolvedAccent = styles.getPropertyValue('--color-accent').trim()
+  const resolvedBorder = styles.getPropertyValue('--color-border').trim()
+  if (resolvedAccent) accentColor.value = resolvedAccent
+  if (resolvedBorder) borderColor.value = resolvedBorder
+})
+
 const option = computed<EChartsOption>(() => ({
   grid: { top: 10, right: 10, bottom: 10, left: 10 },
   xAxis: { type: 'category', show: false, data: props.values.map((_, i) => i) },
@@ -32,13 +43,13 @@ const option = computed<EChartsOption>(() => ({
       data: props.values,
       connectNulls: true,
       showSymbol: false,
-      lineStyle: { color: 'var(--color-accent)', width: 2 },
-      itemStyle: { color: 'var(--color-accent)' },
+      lineStyle: { color: accentColor.value, width: 2 },
+      itemStyle: { color: accentColor.value },
       markLine: {
         symbol: 'none',
         silent: true,
         label: { show: false },
-        lineStyle: { color: 'var(--color-border)', type: 'dashed' },
+        lineStyle: { color: borderColor.value, type: 'dashed' },
         data: [{ yAxis: 0 }],
       },
     },
