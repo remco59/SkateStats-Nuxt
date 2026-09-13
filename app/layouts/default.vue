@@ -47,8 +47,17 @@ const navLinks = [
             v-if="user?.isAdmin"
             to="/admin/users"
             class="hover:text-[var(--color-accent)] transition-colors"
+            active-class="!text-[var(--color-accent)]"
           >
-            Admin
+            Gebruikers
+          </NuxtLink>
+          <NuxtLink
+            v-if="user?.isAdmin"
+            to="/admin/system"
+            class="hover:text-[var(--color-accent)] transition-colors"
+            active-class="!text-[var(--color-accent)]"
+          >
+            Systeem
           </NuxtLink>
           <button type="button" class="btn btn-ghost !min-h-0 !py-1.5 !px-3 text-sm" @click="logout">
             Uitloggen

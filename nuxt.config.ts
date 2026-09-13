@@ -8,6 +8,8 @@ export default defineNuxtConfig({
     dbPath: process.env.SKATESTATS_DB || './data/skatestats.sqlite',
     ownerName: process.env.SKATESTATS_OWNER_NAME || 'Owner',
     adminUsername: process.env.SKATESTATS_ADMIN_USERNAME || 'admin',
+    updaterUrl: process.env.UPDATER_URL || 'http://updater:4001',
+    updaterSecret: process.env.UPDATER_SECRET || '',
     public: {
       appTitle: process.env.SKATESTATS_TITLE || 'SkateStats',
     },
