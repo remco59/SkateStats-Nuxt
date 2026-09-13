@@ -23,3 +23,22 @@ services:
       interval: 30s
       timeout: 5s
       retries: 5
+
+  # Runs `git pull` + `docker compose up --build` against the host's
+  # Docker socket on behalf of the admin panel's "update" button. Kept as
+  # a separate container -- not code inside the skatestats service --
+  # because that socket access is root-equivalent on the host and must
+  # never sit on the same container that serves public HTTP traffic. Not
+  # given a `ports:` entry, so it's reachable only from `skatestats` over
+  # the compose-internal network, never from the host or internet.
+  updater:
+    build: ./docker/updater
+    container_name: skatestats-updater
+    restart: unless-stopped
+    environment:
+      - UPDATER_SECRET=${UPDATER_SECRET}
+      - APP_SERVICE=skatestats
+      - REPO_DIR=/repo
+    volumes:
+      - .:/repo
+      - /var/run/docker.sock:/var/run/docker.sock
