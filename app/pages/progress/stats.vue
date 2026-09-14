@@ -22,7 +22,7 @@ const trendLabel: Record<string, string> = {
 
 <template>
   <div class="space-y-8">
-    <h1 class="text-2xl font-heading font-semibold">Statistieken</h1>
+    <h1 class="page-title">Statistieken</h1>
 
     <div class="filter-bar">
       <select v-model="season" aria-label="Filter op seizoen" class="field" style="width: auto" @change="applyFilters">
@@ -43,26 +43,28 @@ const trendLabel: Record<string, string> = {
 
     <section v-if="data && data.basic.raceCount > 0" class="card">
       <h2 class="section-heading mb-3">Basisstatistieken</h2>
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-5">
+      <div class="grid grid-cols-3 gap-x-4 gap-y-6">
         <div>
           <div class="stat-label">Wedstrijden</div>
-          <div class="stat-value">{{ data.basic.competitionCount }}</div>
+          <div class="stat-value-lg">{{ data.basic.competitionCount }}</div>
         </div>
         <div>
           <div class="stat-label">Ritten</div>
-          <div class="stat-value">{{ data.basic.raceCount }}</div>
-        </div>
-        <div>
-          <div class="stat-label">Kilometers</div>
-          <div class="stat-value">{{ data.basic.totalKm.toFixed(1) }} km</div>
+          <div class="stat-value-lg">{{ data.basic.raceCount }}</div>
         </div>
         <div>
           <div class="stat-label">PR's</div>
-          <div class="stat-value" style="color: var(--color-accent)">{{ data.basic.pbCount }}</div>
+          <div class="stat-value-lg" style="color: var(--color-accent)">{{ data.basic.pbCount }}</div>
         </div>
-        <div class="col-span-2 sm:col-span-1">
+      </div>
+      <div class="flex flex-wrap gap-x-8 gap-y-3 mt-5 pt-4" style="border-top: 1px solid var(--highlight-soft)">
+        <div>
+          <div class="stat-label">Kilometers</div>
+          <div class="text-secondary font-mono mt-0.5">{{ data.basic.totalKm.toFixed(1) }} km</div>
+        </div>
+        <div>
           <div class="stat-label">SB's</div>
-          <div class="stat-value">{{ data.basic.sbCount }}</div>
+          <div class="text-secondary font-mono mt-0.5">{{ data.basic.sbCount }}</div>
         </div>
       </div>
     </section>
@@ -74,29 +76,29 @@ const trendLabel: Record<string, string> = {
           <thead>
             <tr>
               <th>Afstand</th>
-              <th>PR</th>
-              <th>SB</th>
-              <th>Gem.</th>
-              <th>Mediaan</th>
-              <th>Std.dev</th>
-              <th>Spreiding</th>
+              <th class="num">PR</th>
+              <th class="num">SB</th>
+              <th class="num">Gem.</th>
+              <th class="num">Mediaan</th>
+              <th class="num">Std.dev</th>
+              <th class="num">Spreiding</th>
               <th>Trend</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="row in data.distanceRows" :key="row.distanceM">
               <td class="font-mono">{{ row.distanceM }}m</td>
-              <td class="font-mono font-semibold" style="color: var(--color-accent)">
+              <td class="num font-mono font-semibold" style="color: var(--color-accent)">
                 <NuxtLink :to="`/results/races/${row.pbRaceId}`" class="hover:underline">{{ fmtMs(row.pbMs) }}</NuxtLink>
               </td>
-              <td class="font-mono" :style="{ color: row.seasonBestMs == null ? 'var(--color-text-faint)' : 'var(--color-text)' }">
+              <td class="num font-mono" :class="row.seasonBestMs == null ? 'delta-neutral' : ''">
                 {{ fmtMs(row.seasonBestMs) }}
               </td>
-              <td class="font-mono" style="color: var(--color-text-muted)">{{ fmtMs(row.averageMs) }}</td>
-              <td class="font-mono" style="color: var(--color-text-muted)">{{ fmtMs(row.medianMs) }}</td>
-              <td class="font-mono" style="color: var(--color-text-muted)">{{ fmtMs(row.stdDevMs) }}</td>
-              <td class="font-mono" style="color: var(--color-text-muted)">{{ fmtMs(row.rangeMs) }}</td>
-              <td>{{ trendLabel[row.trend] }}</td>
+              <td class="num font-mono text-secondary">{{ fmtMs(row.averageMs) }}</td>
+              <td class="num font-mono text-secondary">{{ fmtMs(row.medianMs) }}</td>
+              <td class="num font-mono text-secondary">{{ fmtMs(row.stdDevMs) }}</td>
+              <td class="num font-mono text-secondary">{{ fmtMs(row.rangeMs) }}</td>
+              <td class="text-secondary">{{ trendLabel[row.trend] }}</td>
             </tr>
           </tbody>
         </table>
@@ -105,7 +107,7 @@ const trendLabel: Record<string, string> = {
 
     <section v-if="data?.trackRows.length">
       <h2 class="section-heading mb-2">Baanstatistieken</h2>
-      <p v-if="data.bestTrack" class="text-sm mb-2" style="color: var(--color-text-muted)">
+      <p v-if="data.bestTrack" class="text-secondary mb-2">
         Beste baan: {{ data.bestTrack.name }} ({{ data.bestTrack.deltaMs > 0 ? '+' : '' }}{{ fmtMs(data.bestTrack.deltaMs) }} t.o.v. gemiddeld)
       </p>
       <div class="overflow-x-auto">
@@ -113,17 +115,17 @@ const trendLabel: Record<string, string> = {
           <thead>
             <tr>
               <th>Baan</th>
-              <th>Ritten</th>
-              <th>Gem. (500m-eq)</th>
-              <th>Beste (500m-eq)</th>
+              <th class="num">Ritten</th>
+              <th class="num">Gem. (500m-eq)</th>
+              <th class="num">Beste (500m-eq)</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="row in data.trackRows" :key="row.venue">
               <td>{{ row.venue }}</td>
-              <td class="font-mono" style="color: var(--color-text-muted)">{{ row.raceCount }}</td>
-              <td class="font-mono" style="color: var(--color-text-muted)">{{ fmtMs(row.avg500EqMs) }}</td>
-              <td class="font-mono font-semibold">{{ fmtMs(row.best500EqMs) }}</td>
+              <td class="num font-mono text-secondary">{{ row.raceCount }}</td>
+              <td class="num font-mono text-secondary">{{ fmtMs(row.avg500EqMs) }}</td>
+              <td class="num font-mono font-semibold">{{ fmtMs(row.best500EqMs) }}</td>
             </tr>
           </tbody>
         </table>

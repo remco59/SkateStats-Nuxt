@@ -10,6 +10,7 @@ use([CanvasRenderer, LineChart, GridComponent, TooltipComponent])
 
 const props = defineProps<{
   points: { date: string; totalTimeMs: number; raceId: number }[]
+  distanceM?: number
 }>()
 
 const height = 88
@@ -22,7 +23,7 @@ onMounted(() => {
 })
 
 const option = computed<EChartsOption>(() => ({
-  grid: { top: 6, right: 6, bottom: 6, left: 6 },
+  grid: { top: 10, right: 8, bottom: 10, left: 8 },
   xAxis: { type: 'category', show: false, data: props.points.map((p) => p.date) },
   yAxis: { type: 'value', show: false, inverse: true },
   tooltip: {
@@ -54,11 +55,14 @@ const option = computed<EChartsOption>(() => ({
     :autoresize="true"
     :aria-label="`Ontwikkeling over ${points.length} wedstrijden, van ${fmtMs(points[0]!.totalTimeMs)} naar ${fmtMs(points[points.length - 1]!.totalTimeMs)}`"
   />
-  <p
+  <div
     v-else
-    class="text-xs flex items-center justify-center"
-    :style="{ height: `${height}px`, color: 'var(--color-text-faint)' }"
+    class="flex flex-col items-center justify-center text-center gap-0.5 px-2"
+    :style="{ height: `${height}px` }"
   >
-    Nog niet genoeg data
-  </p>
+    <p class="empty-state-title">Nog geen trend beschikbaar</p>
+    <p class="empty-state-hint">
+      Voeg meer{{ distanceM ? ` ${distanceM}m-` : ' ' }}ritten toe om ontwikkeling te zien.
+    </p>
+  </div>
 </template>

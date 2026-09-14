@@ -114,25 +114,25 @@ async function removeRaceBlacklist(id: number) {
 
 <template>
   <div class="space-y-8">
-    <h1 class="text-2xl font-heading font-semibold">Importeren</h1>
+    <h1 class="page-title">Importeren</h1>
 
     <div class="grid md:grid-cols-3 gap-5 items-start">
       <section class="card space-y-3">
         <div>
-          <h2 class="font-medium">OSTA</h2>
+          <h2 class="card-title">OSTA</h2>
           <p class="text-xs" style="color: var(--color-text-muted)">Zoek en importeer wedstrijden van osta.nl.</p>
         </div>
         <input v-model="searchName" placeholder="Naam op OSTA (bv. Achternaam, Voornaam)" aria-label="Naam op OSTA" class="field">
         <input v-model="season" placeholder="Seizoen (startjaar, bv. 2024)" aria-label="Seizoen" class="field">
         <button type="button" class="btn btn-primary w-full" :disabled="submitting" @click="submitOstaSearch">
-          Zoeken
+          {{ submitting ? 'Bezig...' : 'Zoeken' }}
         </button>
         <p v-if="error" class="text-sm" style="color: var(--color-danger)">{{ error }}</p>
       </section>
 
       <section class="card space-y-3">
         <div>
-          <h2 class="font-medium">SpeedSkatingResults</h2>
+          <h2 class="card-title">SpeedSkatingResults</h2>
           <p class="text-xs" style="color: var(--color-text-muted)">Zoek en importeer wedstrijden van speedskatingresults.com.</p>
         </div>
         <div class="grid grid-cols-2 gap-2">
@@ -141,14 +141,14 @@ async function removeRaceBlacklist(id: number) {
         </div>
         <input v-model="ssrSeason" placeholder="Seizoen (startjaar, bv. 2024)" aria-label="Seizoen" class="field">
         <button type="button" class="btn btn-primary w-full" :disabled="ssrSubmitting" @click="submitSsrSearch">
-          Zoeken
+          {{ ssrSubmitting ? 'Bezig...' : 'Zoeken' }}
         </button>
         <p v-if="ssrError" class="text-sm" style="color: var(--color-danger)">{{ ssrError }}</p>
       </section>
 
       <section class="card space-y-3">
         <div>
-          <h2 class="font-medium">PDF-uitslag</h2>
+          <h2 class="card-title">PDF-uitslag</h2>
           <p class="text-xs" style="color: var(--color-text-muted)">Upload een PDF-uitslag om ritten te importeren.</p>
         </div>
         <input v-model="pdfSkaterName" placeholder="Naam zoals op de uitslag (bv. Achternaam, Voornaam)" aria-label="Naam zoals op de uitslag" class="field">
@@ -175,7 +175,7 @@ async function removeRaceBlacklist(id: number) {
           <p v-else style="color: var(--color-text-muted)">Sleep een PDF hierheen of klik om te kiezen</p>
         </div>
         <button type="button" class="btn btn-primary w-full" :disabled="pdfSubmitting" @click="submitPdfUpload">
-          Uploaden
+          {{ pdfSubmitting ? 'Bezig...' : 'Uploaden' }}
         </button>
         <p v-if="pdfError" class="text-sm" style="color: var(--color-danger)">{{ pdfError }}</p>
       </section>

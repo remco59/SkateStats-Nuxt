@@ -35,8 +35,8 @@ async function deleteAndBlacklist() {
   <div v-if="data" class="space-y-6">
     <div class="flex flex-wrap items-start justify-between gap-4">
       <div class="min-w-0">
-        <h1 class="text-2xl font-heading font-semibold break-words">{{ data.competition.name }}</h1>
-        <p class="text-sm mt-1" style="color: var(--color-text-muted)">
+        <h1 class="page-title break-words">{{ data.competition.name }}</h1>
+        <p class="text-secondary mt-1">
           {{ data.competition.venue || '-' }} &middot;
           <span class="font-mono">{{ fmtDate(data.competition.date) }}</span>
         </p>
@@ -72,8 +72,8 @@ async function deleteAndBlacklist() {
             <tr>
               <th>Afstand</th>
               <th>Status</th>
-              <th>Tijd</th>
               <th>Baan</th>
+              <th class="num">Tijd</th>
             </tr>
           </thead>
           <tbody>
@@ -81,13 +81,13 @@ async function deleteAndBlacklist() {
               <td class="font-mono">
                 <NuxtLink :to="`/results/races/${r.id}`" class="stretched-link">{{ r.distanceM }}m</NuxtLink>
               </td>
-              <td style="color: var(--color-text-muted)">{{ raceStatusLabel(r.status) }}</td>
-              <td class="font-mono stat-value-sm">
-                {{ fmtMs(r.totalTimeMs) }}
-                <span v-if="r.isPr" class="text-xs font-sans font-semibold" style="color: var(--color-accent)">PR</span>
-                <span v-else-if="r.isSb" class="text-xs font-sans font-semibold" style="color: var(--color-success)">SB</span>
+              <td class="text-secondary">{{ raceStatusLabel(r.status) }}</td>
+              <td class="text-secondary">{{ r.trackType === 'outdoor' ? 'Buiten' : 'Binnen' }}</td>
+              <td class="num">
+                <span class="stat-value-sm">{{ fmtMs(r.totalTimeMs) }}</span>
+                <span v-if="r.isPr" class="badge badge-pr ml-1">PR</span>
+                <span v-else-if="r.isSb" class="badge badge-sb ml-1">SB</span>
               </td>
-              <td style="color: var(--color-text-muted)">{{ r.trackType === 'outdoor' ? 'Buiten' : 'Binnen' }}</td>
             </tr>
             <tr v-if="!data.races.length">
               <td colspan="4" class="empty-state" style="border: none">Nog geen ritten.</td>

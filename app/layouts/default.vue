@@ -38,8 +38,12 @@ const navLinks = [
     <a href="#main-content" class="skip-link">Ga naar inhoud</a>
     <header class="glass sticky top-0 z-20" style="border-radius: 0; border-width: 0 0 1px 0">
       <div class="page h-14 flex items-center justify-between gap-4">
-        <NuxtLink to="/" class="font-heading font-semibold gradient-text tracking-tight shrink-0">
-          SkateStats
+        <NuxtLink to="/" class="inline-flex items-center gap-1.5 font-heading font-semibold tracking-tight shrink-0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="shrink-0">
+            <rect x="2.5" y="7" width="19" height="10" rx="5" stroke="var(--color-accent)" stroke-width="1.6" />
+            <line x1="2.5" y1="12" x2="21.5" y2="12" stroke="var(--color-accent)" stroke-width="1.6" opacity="0.5" />
+          </svg>
+          <span class="gradient-text">SkateStats</span>
         </NuxtLink>
 
         <nav
@@ -147,6 +151,7 @@ const navLinks = [
 
 <style scoped>
 .nav-link {
+  position: relative;
   padding: 0.4rem 0.65rem;
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
@@ -160,7 +165,22 @@ const navLinks = [
 
 .nav-link-active {
   color: var(--color-accent) !important;
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 7%, transparent);
+}
+
+.nav-link-active::after {
+  content: '';
+  position: absolute;
+  left: 0.65rem;
+  right: 0.65rem;
+  bottom: 1px;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+}
+
+.nav-link-block.nav-link-active::after {
+  display: none;
 }
 
 .nav-link-block {
@@ -171,6 +191,11 @@ const navLinks = [
   text-transform: none;
   letter-spacing: normal;
   padding: 0.6rem 0.75rem;
+  border-left: 2px solid transparent;
+}
+
+.nav-link-block.nav-link-active {
+  border-left-color: var(--color-accent);
 }
 
 .menu-toggle {

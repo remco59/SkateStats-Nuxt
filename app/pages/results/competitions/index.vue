@@ -27,7 +27,7 @@ function applyFilters() {
 <template>
   <div class="space-y-6">
     <div class="flex flex-wrap items-center justify-between gap-3">
-      <h1 class="text-2xl font-heading font-semibold">Wedstrijden</h1>
+      <h1 class="page-title">Wedstrijden</h1>
       <NuxtLink to="/results/competitions/new" class="btn btn-primary btn-sm">
         Nieuwe wedstrijd
       </NuxtLink>
@@ -58,7 +58,7 @@ function applyFilters() {
           <tr>
             <th>Naam</th>
             <th>Locatie</th>
-            <th>Datum</th>
+            <th class="num">Datum</th>
           </tr>
         </thead>
         <tbody>
@@ -68,8 +68,8 @@ function applyFilters() {
                 {{ c.name }}
               </NuxtLink>
             </td>
-            <td style="color: var(--color-text-muted)">{{ c.venue || '-' }}</td>
-            <td class="font-mono" style="color: var(--color-text-muted)">{{ fmtDate(c.date) }}</td>
+            <td class="text-secondary">{{ c.venue || '-' }}</td>
+            <td class="num font-mono text-meta">{{ fmtDate(c.date) }}</td>
           </tr>
           <tr v-if="!data?.competitions?.length">
             <td colspan="3" class="empty-state" style="border: none">

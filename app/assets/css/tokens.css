@@ -135,6 +135,7 @@ h1, h2, h3, h4, h5, h6 {
 .font-mono,
 .mono {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 .font-heading {
@@ -184,7 +185,8 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: var(--shadow-card);
 }
 
-/* Standard "block" card -- an elevated surface floating above the void */
+/* Standard "block" card -- a calm, subtly-raised surface. Separation comes
+   mainly from the surface tone + spacing; the border is a faint hairline. */
 .card,
 .card-border {
   width: 100%;
@@ -194,6 +196,24 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--space-5);
+}
+
+/* A restrained nod to speed-skating geometry: a thin lane-line accent along
+   the top edge of a card, used sparingly to mark the primary summary card. */
+.card-lane-accent {
+  position: relative;
+}
+
+.card-lane-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--space-5);
+  right: var(--space-5);
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(to right, var(--color-accent), transparent 85%);
+  opacity: 0.7;
 }
 
 /* ==========================================================================
@@ -213,6 +233,19 @@ h1, h2, h3, h4, h5, h6 {
   gap: var(--space-6);
 }
 
+/* ==========================================================================
+   Typography roles
+   page-title > section-heading > card-title > stat-label
+   stat-value(-lg) > stat-value-sm > text-secondary > text-meta
+   ========================================================================== */
+.page-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
 .section-heading {
   font-family: var(--font-sans);
   font-size: 0.75rem;
@@ -220,6 +253,14 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--color-text-muted);
+}
+
+.card-title {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: -0.005em;
 }
 
 .stat-label {
@@ -232,16 +273,40 @@ h1, h2, h3, h4, h5, h6 {
 
 .stat-value {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 1.375rem;
   font-weight: 600;
   color: var(--color-text);
   line-height: 1.25;
 }
 
+/* Hero-level metric: the strongest numeric emphasis on a page (e.g. the
+   dashboard's primary counts). Use sparingly -- not every number is this. */
+.stat-value-lg {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.15;
+}
+
 .stat-value-sm {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 1rem;
   font-weight: 600;
+}
+
+/* Secondary metadata: present but visually quieter than a stat value. */
+.text-secondary {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.text-meta {
+  font-size: 0.75rem;
+  color: var(--color-text-faint);
 }
 
 /* ==========================================================================
@@ -294,7 +359,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .table th {
   text-align: left;
-  padding: 0 var(--space-3) var(--space-2) 0;
+  padding: 0 var(--space-3) var(--space-3) 0;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -303,10 +368,16 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid var(--color-border);
 }
 
+.table th.num,
+.table td.num {
+  text-align: right;
+}
+
 .table td {
   padding: var(--space-3) var(--space-3) var(--space-3) 0;
   border-bottom: 1px solid var(--highlight-soft);
   vertical-align: middle;
+  font-variant-numeric: tabular-nums;
 }
 
 .table tbody tr:last-child td {
@@ -315,10 +386,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .table-row-link {
   position: relative;
+  transition: background var(--transition-fast);
 }
 
 .table-row-link:hover {
   background: var(--highlight-soft);
+}
+
+.table-row-link:focus-within {
+  background: var(--highlight-soft);
+  outline: 1px solid var(--color-border-strong);
+  outline-offset: -1px;
 }
 
 /* Makes the whole row clickable while keeping a real, accessible link. */
@@ -358,6 +436,62 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-muted);
   font-size: 0.85rem;
   text-align: center;
+}
+
+.empty-state-title {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.empty-state-hint {
+  margin-top: 0.15rem;
+  color: var(--color-text-faint);
+  font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   Performance badges -- one consistent treatment for PR/SB everywhere
+   ========================================================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.badge-pr {
+  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+}
+
+.badge-sb {
+  color: var(--color-text-muted);
+  background: var(--highlight-soft);
+  border: 1px solid var(--color-border-strong);
+}
+
+/* Delta / trend indicators -- colour is never the only signal; the glyph
+   (+/-, arrow) carries the meaning too. */
+.delta-better {
+  color: var(--color-success);
+}
+
+.delta-worse {
+  color: var(--color-danger);
+}
+
+.delta-neutral {
+  color: var(--color-text-faint);
 }
 
 /* ==========================================================================
@@ -475,8 +609,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary:hover {
-  transform: scale(1.05);
-  box-shadow: var(--shadow-glow-strong);
+  filter: brightness(1.08);
+  box-shadow: var(--shadow-glow);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  filter: none;
+  transform: none;
 }
 
 .btn-ghost {
@@ -508,12 +649,25 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0.3rem 0.75rem;
   border-radius: var(--radius-pill);
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.03em;
   color: var(--color-text-muted);
   background: var(--color-surface-2);
   border: 1px solid var(--color-border);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.tag:hover {
+  color: var(--color-accent);
+  border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+}
+
+.tag-streak {
+  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface-2));
+  border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
 }
 
 /* Icon "node" container -- a glowing holographic badge */
