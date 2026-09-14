@@ -29,72 +29,53 @@ function applyFilters() {
 <template>
   <div class="space-y-6">
     <div class="flex items-center justify-between">
-      <h1 class="text-xl font-semibold">Ritten</h1>
-      <NuxtLink
-        to="/results/races/new"
-        class="rounded-md px-3 py-1.5 text-sm"
-        style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
-      >
+      <h1 class="page-title">Ritten</h1>
+      <NuxtLink to="/results/races/new" class="btn btn-primary btn-sm">
         Nieuwe rit
       </NuxtLink>
     </div>
 
-    <div class="flex flex-wrap gap-2">
+    <div class="filter-bar">
       <input
         v-model="q"
         placeholder="Zoek wedstrijd of locatie"
-        class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
+        class="field"
         @keyup.enter="applyFilters"
       >
-      <select
-        v-model="distanceM"
-        aria-label="Filter op afstand"
-        class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
-        @change="applyFilters"
-      >
+      <select v-model="distanceM" aria-label="Filter op afstand" class="field" @change="applyFilters">
         <option value="">Alle afstanden</option>
         <option v-for="d in data?.distanceOptions" :key="d" :value="d">{{ d }}m</option>
       </select>
-      <button
-        class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
-        @click="applyFilters"
-      >
-        Filter
-      </button>
+      <button type="button" class="btn btn-secondary" @click="applyFilters">Filter</button>
     </div>
 
     <p v-if="error" class="text-sm" style="color: var(--color-danger)">Kon ritten niet laden.</p>
     <div v-else class="overflow-x-auto">
-      <table class="w-full text-sm">
+      <table class="table">
         <thead>
-          <tr class="text-left" style="color: var(--color-text-muted)">
-            <th class="py-1 pr-4">Afstand</th>
-            <th class="py-1 pr-4">Wedstrijd</th>
-            <th class="py-1 pr-4">Datum</th>
-            <th class="py-1 pr-4">Status</th>
-            <th class="py-1 pr-4">Tijd</th>
+          <tr>
+            <th>Afstand</th>
+            <th>Wedstrijd</th>
+            <th>Status</th>
+            <th class="num">Datum</th>
+            <th class="num">Tijd</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="r in data?.races" :key="r.id" style="border-top: 1px solid var(--color-border)">
-            <td class="py-2 pr-4">
-              <NuxtLink :to="`/results/races/${r.id}`" class="font-mono hover:underline">
-                {{ r.distanceM }}m
-              </NuxtLink>
+          <tr v-for="r in data?.races" :key="r.id" class="table-row-link">
+            <td class="font-mono">
+              <NuxtLink :to="`/results/races/${r.id}`" class="stretched-link">{{ r.distanceM }}m</NuxtLink>
             </td>
-            <td class="py-2 pr-4">{{ r.competitionName }}</td>
-            <td class="py-2 pr-4 font-mono">{{ fmtDate(r.competitionDate) }}</td>
-            <td class="py-2 pr-4">{{ raceStatusLabel(r.status) }}</td>
-            <td class="py-2 pr-4 font-mono">
-              {{ fmtMs(r.totalTimeMs) }}
-              <span v-if="r.isPr" class="text-xs" style="color: var(--color-accent)">PR</span>
+            <td class="text-secondary">{{ r.competitionName }}</td>
+            <td class="text-secondary">{{ raceStatusLabel(r.status) }}</td>
+            <td class="num font-mono text-meta">{{ fmtDate(r.competitionDate) }}</td>
+            <td class="num">
+              <span class="stat-value-sm">{{ fmtMs(r.totalTimeMs) }}</span>
+              <span v-if="r.isPr" class="badge badge-pr ml-1">PR</span>
             </td>
           </tr>
           <tr v-if="!data?.races?.length">
-            <td colspan="5" class="py-4" style="color: var(--color-text-muted)">Nog geen ritten.</td>
+            <td colspan="5" class="empty-state" style="border: none">Nog geen ritten.</td>
           </tr>
         </tbody>
       </table>

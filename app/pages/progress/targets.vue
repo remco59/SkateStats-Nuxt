@@ -58,69 +58,60 @@ function forecastLabel(forecast: Record<string, unknown>): string {
 
 <template>
   <div class="space-y-8 max-w-2xl">
-    <h1 class="text-xl font-semibold">Targets</h1>
+    <h1 class="page-title">Targets</h1>
 
     <section class="space-y-2">
-      <h2 class="text-sm font-medium" style="color: var(--color-text-muted)">Target instellen</h2>
+      <h2 class="card-title">Target instellen</h2>
       <div class="flex gap-2">
-        <select
-          v-model.number="distanceM"
-          aria-label="Afstand"
-          class="rounded-md px-3 py-2 text-sm"
-          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
-        >
+        <select v-model.number="distanceM" aria-label="Afstand" class="field" style="width: auto">
           <option v-for="d in COMMON_DISTANCES" :key="d" :value="d">{{ d }}m</option>
         </select>
         <input
           v-model="targetTimeStr"
           placeholder="Tijd (m:ss.hh)"
           aria-label="Doeltijd"
-          class="flex-1 rounded-md px-3 py-2 text-sm"
-          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
+          class="field flex-1"
         >
-        <button
-          class="rounded-md px-3 py-1.5 text-sm"
-          style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
-          @click="saveTarget"
-        >
+        <button type="button" class="btn btn-primary" @click="saveTarget">
           Opslaan
         </button>
       </div>
       <p v-if="error" class="text-sm" style="color: var(--color-danger)">{{ error }}</p>
     </section>
 
-    <section v-if="!data?.cards?.length">
-      <p style="color: var(--color-text-muted)">Nog geen actieve targets.</p>
+    <section v-if="!data?.cards?.length" class="empty-state">
+      Nog geen actieve targets.
     </section>
 
-    <section v-for="card in data?.cards" :key="card.target.distanceM" class="rounded-lg p-4 space-y-3" style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)">
+    <section v-for="card in data?.cards" :key="card.target.distanceM" class="card space-y-3">
       <div class="flex items-center justify-between">
-        <h3 class="font-mono text-lg">{{ card.target.distanceM }}m</h3>
-        <button class="text-sm underline" style="color: var(--color-danger)" @click="deleteTarget(card.target.distanceM)">
+        <h3 class="font-mono text-lg font-semibold">{{ card.target.distanceM }}m</h3>
+        <button type="button" class="btn-link text-xs" style="color: var(--color-danger)" @click="deleteTarget(card.target.distanceM)">
           Verwijderen
         </button>
       </div>
-      <p class="text-sm">
-        Doeltijd: <span class="font-mono">{{ fmtMs(card.target.targetTimeMs) }}</span>
-      </p>
-      <p class="text-sm" style="color: var(--color-text-muted)">{{ forecastLabel(card.forecast) }}</p>
+      <div>
+        <div class="stat-label">Doeltijd</div>
+        <div class="stat-value-lg">{{ fmtMs(card.target.targetTimeMs) }}</div>
+      </div>
+      <p class="text-secondary">{{ forecastLabel(card.forecast) }}</p>
 
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3" style="border-top: 1px solid var(--highlight-soft)">
         <div>
-          <div style="color: var(--color-text-muted)">Opening</div>
-          <div class="font-mono">{{ fmtMs(card.generated.targetOpeningMs) }}</div>
+          <div class="stat-label">Opening</div>
+          <div class="text-secondary font-mono mt-0.5">{{ fmtMs(card.generated.targetOpeningMs) }}</div>
         </div>
         <div>
-          <div style="color: var(--color-text-muted)">Gem. 400m</div>
-          <div class="font-mono">{{ fmtMs(card.generated.targetAvg400Ms) }}</div>
+          <div class="stat-label">Gem. 400m</div>
+          <div class="text-secondary font-mono mt-0.5">{{ fmtMs(card.generated.targetAvg400Ms) }}</div>
         </div>
         <div>
-          <div style="color: var(--color-text-muted)">Laatste 400m</div>
-          <div class="font-mono">{{ fmtMs(card.generated.targetLast400Ms) }}</div>
+          <div class="stat-label">Laatste 400m</div>
+          <div class="text-secondary font-mono mt-0.5">{{ fmtMs(card.generated.targetLast400Ms) }}</div>
         </div>
         <div>
-          <div style="color: var(--color-text-muted)">Fade</div>
-          <div class="font-mono">{{ fmtMs(card.generated.targetFade400Ms) }}</div>
+          <div class="stat-label">Fade</div>
+          <div class="text-secondary font-mono mt-0.5">{{ fmtMs(card.generated.targetFade400Ms) }}</div>
         </div>
       </div>
     </section>

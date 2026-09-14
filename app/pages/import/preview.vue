@@ -61,7 +61,7 @@ async function ignoreCompetition(competitionSignature: string) {
 
 <template>
   <div class="space-y-8 max-w-3xl">
-    <h1 class="text-xl font-semibold">Import preview</h1>
+    <h1 class="page-title">Import preview</h1>
 
     <p v-if="loadError" style="color: var(--color-danger)">
       Deze import-batch is niet gevonden of verlopen. <NuxtLink to="/import" class="underline">Opnieuw proberen</NuxtLink>.
@@ -71,13 +71,12 @@ async function ignoreCompetition(competitionSignature: string) {
       <section
         v-for="item in preview.items"
         :key="item.competitionSignature"
-        class="rounded-lg p-4 space-y-3"
-        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
+        class="card space-y-3"
       >
         <div class="flex items-center justify-between">
           <div>
-            <div class="font-medium">{{ item.competition.name }}</div>
-            <div class="text-xs" style="color: var(--color-text-muted)">
+            <div class="card-title">{{ item.competition.name }}</div>
+            <div class="text-meta mt-0.5">
               {{ item.competition.venue || '-' }} &middot;
               <span class="font-mono">{{ fmtDate(item.competition.date) }}</span> &middot;
               {{ item.action === 'attach_to_existing' ? 'Bestaande wedstrijd' : 'Nieuwe wedstrijd' }}
@@ -85,7 +84,8 @@ async function ignoreCompetition(competitionSignature: string) {
           </div>
           <button
             v-if="item.action !== 'blacklisted'"
-            class="text-xs underline"
+            type="button"
+            class="btn-link text-xs"
             style="color: var(--color-danger)"
             @click="ignoreCompetition(item.competitionSignature)"
           >
@@ -94,27 +94,27 @@ async function ignoreCompetition(competitionSignature: string) {
         </div>
 
         <div class="overflow-x-auto">
-          <table class="w-full text-sm">
+          <table class="table">
             <thead>
-              <tr class="text-left" style="color: var(--color-text-muted)">
-                <th class="py-1 pr-4">Afstand</th>
-                <th class="py-1 pr-4">Tijd</th>
-                <th class="py-1 pr-4">Status</th>
-                <th class="py-1 pr-4">Actie</th>
+              <tr>
+                <th>Afstand</th>
+                <th class="num">Tijd</th>
+                <th>Status</th>
+                <th>Actie</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="raceItem in item.races" :key="raceItem.updateChoiceKey" style="border-top: 1px solid var(--color-border)">
-                <td class="py-1 pr-4 font-mono">{{ raceItem.race.distanceM }}m</td>
-                <td class="py-1 pr-4 font-mono">{{ fmtMs(raceItem.race.totalTimeMs) }}</td>
-                <td class="py-1 pr-4">{{ actionLabel[raceItem.action] }}</td>
-                <td class="py-1 pr-4">
+              <tr v-for="raceItem in item.races" :key="raceItem.updateChoiceKey">
+                <td class="font-mono">{{ raceItem.race.distanceM }}m</td>
+                <td class="num font-mono">{{ fmtMs(raceItem.race.totalTimeMs) }}</td>
+                <td class="text-secondary">{{ actionLabel[raceItem.action] }}</td>
+                <td>
                   <select
                     v-if="raceItem.action === 'update_candidate'"
                     v-model="updateChoices[raceItem.updateChoiceKey]"
                     aria-label="Actie voor deze rit"
-                    class="rounded-md px-2 py-1 text-xs"
-                    style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
+                    class="field"
+                    style="min-height: 2rem; padding: 0 0.5rem; font-size: 0.8rem"
                   >
                     <option value="skip">Overslaan (standaard)</option>
                     <option value="replace">Vervang bestaande tijd</option>
@@ -128,19 +128,10 @@ async function ignoreCompetition(competitionSignature: string) {
       </section>
 
       <div class="flex gap-3">
-        <button
-          class="rounded-md px-4 py-2 text-sm"
-          style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
-          :disabled="submitting"
-          @click="commit"
-        >
-          Importeren
+        <button type="button" class="btn btn-primary" :disabled="submitting" @click="commit">
+          {{ submitting ? 'Bezig...' : 'Importeren' }}
         </button>
-        <button
-          class="rounded-md px-4 py-2 text-sm"
-          style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
-          @click="discard"
-        >
+        <button type="button" class="btn btn-secondary" :disabled="submitting" @click="discard">
           Annuleren
         </button>
       </div>
