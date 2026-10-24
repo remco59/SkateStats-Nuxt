@@ -1,15 +1,22 @@
 import { seasonBoundsFromLabel, seasonLabelForDate } from './season'
 import { pythonRound } from '../../shared/utils/round'
 import { collectPrRaceIds, collectSbRaceIds, type RaceForPr } from './pr'
+import {
+  buildFunStats,
+  buildSplitStats,
+  buildStoryVariants,
+  type FunStats,
+  type SplitStats,
+  type StoryVariant,
+} from './stats-extras'
 
 /**
  * Stats engine ported (scoped) from app/main.py::build_stats_context (old
  * app, commit 4dc6959). Covers the four analytical sections + per-distance
  * PR history REBUILD_PLAN.md section 3 calls for (base, consistency,
- * track/venue, progression); the old app's extra narrative flourishes
- * (auto-generated "story" paragraphs, fastest-lap/opener callouts, month
- * counts) are presentational sugar on top of the same numbers and are not
- * ported -- the numbers themselves are.
+ * track/venue, progression). The lap-based per-distance stats, fun stats
+ * and "Coach Analyse" story live in ./stats-extras (pinned separately by
+ * golden_stats_extras.json).
  */
 
 export interface StatsRaceInput {
@@ -40,10 +47,11 @@ function pstdev(values: number[]): number {
 
 export function collectSeasonLabels(rows: StatsRaceInput[]): string[] {
   const labels = new Set(rows.map((r) => seasonLabelForDate(r.competitionDate)))
-  return [...labels].sort()
+  // Newest season first, like the old app's dropdown.
+  return [...labels].sort().reverse()
 }
 
-export interface DistanceStatsRow {
+export interface DistanceStatsRow extends SplitStats {
   distanceM: number
   pbMs: number
   pbRaceId: number
@@ -76,20 +84,42 @@ export interface StatsContext {
   distanceOptions: number[]
   selectedDistanceM: number | null
   basic: { competitionCount: number; raceCount: number; totalKm: number; pbCount: number; sbCount: number }
+  /** The season the SB column refers to: the selected one, else the current. */
+  sbReferenceSeason: string
   distanceRows: DistanceStatsRow[]
   trackRows: TrackStatsRow[]
   bestTrack: { name: string; deltaMs: number } | null
   worstTrack: { name: string; deltaMs: number } | null
+  funStats: FunStats
+  /** Every story variant that has content; the page shows one of them. */
+  storyCandidates: StoryVariant[]
 }
 
-export function buildStatsContext(
-  allRows: StatsRaceInput[],
-  opts: { season?: string; distanceM?: number | null } = {},
-): StatsContext {
+export interface StatsOptions {
+  season?: string
+  distanceM?: number | null
+  /**
+   * With no explicit season, open on the current season (when it has data)
+   * instead of "all seasons" -- how the old stats page opened. Callers
+   * decide what "no explicit season" means (the page sends `season=` for an
+   * explicit "all").
+   */
+  defaultToCurrent?: boolean
+  /** "YYYY-MM-DD"; injectable so tests don't depend on the clock. */
+  today?: string
+}
+
+export function buildStatsContext(allRows: StatsRaceInput[], opts: StatsOptions = {}): StatsContext {
   const seasonOptions = collectSeasonLabels(allRows)
-  const currentSeason = seasonLabelForDate(new Date().toISOString().slice(0, 10))
+  const currentSeason = seasonLabelForDate(opts.today ?? new Date().toISOString().slice(0, 10))
   let selectedSeason = (opts.season ?? '').trim()
-  if (selectedSeason && !seasonOptions.includes(selectedSeason)) selectedSeason = ''
+  if (opts.defaultToCurrent && !selectedSeason && seasonOptions.includes(currentSeason)) {
+    selectedSeason = currentSeason
+  }
+  // An unknown season (stale link) falls back to the current one, or "all".
+  if (selectedSeason && !seasonOptions.includes(selectedSeason)) {
+    selectedSeason = seasonOptions.includes(currentSeason) ? currentSeason : ''
+  }
 
   let filtered = allRows
   if (selectedSeason) {
@@ -151,6 +181,7 @@ export function buildStatsContext(
     }
 
     distanceRows.push({
+      ...buildSplitStats(rowsForDistance),
       distanceM: distance,
       pbMs: pbRow.totalTimeMs!,
       pbRaceId: pbRow.id,
@@ -197,6 +228,8 @@ export function buildStatsContext(
   }
   trackRows.sort((a, b) => a.avg500EqMs - b.avg500EqMs || a.venue.localeCompare(b.venue))
 
+  const funStats = buildFunStats(filtered, sortedTimed)
+
   let bestTrack: StatsContext['bestTrack'] = null
   let worstTrack: StatsContext['worstTrack'] = null
   if (all500Eq.length && trackRows.length) {
@@ -212,6 +245,7 @@ export function buildStatsContext(
     selectedSeason,
     distanceOptions,
     selectedDistanceM,
+    sbReferenceSeason,
     basic: {
       competitionCount: new Set(filtered.map((r) => r.competitionId)).size,
       raceCount: filtered.length,
@@ -223,5 +257,7 @@ export function buildStatsContext(
     trackRows,
     bestTrack,
     worstTrack,
+    funStats,
+    storyCandidates: buildStoryVariants(funStats, selectedSeason),
   }
 }

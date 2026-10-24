@@ -13,6 +13,14 @@ const { data, error, refresh } = await useFetch('/api/results/competitions', {
 
 // Dates apply as soon as a valid date is entered (or cleared).
 watch([dateFrom, dateTo], () => applyFilters())
+// The nav search box navigates here with ?q= even when this page is already
+// open; Nuxt reuses the component then, so pick the new query up explicitly.
+watch(
+  () => route.query.q,
+  (next) => {
+    q.value = String(next ?? '')
+  },
+)
 
 function applyFilters() {
   router.push({
@@ -29,6 +37,7 @@ function applyFilters() {
 
 <template>
   <div class="space-y-6">
+    <SubTabs section="results" class="!mb-0" />
     <div class="flex flex-wrap items-center justify-between gap-3">
       <h1 class="page-title">Wedstrijden</h1>
       <NuxtLink to="/results/competitions/new" class="btn btn-primary btn-sm">
