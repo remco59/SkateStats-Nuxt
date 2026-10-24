@@ -10,7 +10,7 @@ import {
   blacklist,
   ostaProfileLinks,
 } from '../db/schema'
-import { RACE_TAGS } from '../../shared/constants'
+import { RACE_TAGS, normalizeMotionPreference, normalizeThemePreference } from '../../shared/constants'
 import { parseLapsToMs } from './time'
 
 /**
@@ -284,12 +284,8 @@ export function importUserData(db: Db, userId: number, payload: BackupPayload): 
     tx.delete(competitions).where(eq(competitions.userId, userId)).run()
 
     if (payload.user) {
-      const theme = ['dark', 'light', 'system'].includes(payload.user.theme_preference ?? '')
-        ? payload.user.theme_preference!
-        : 'dark'
-      const motion = ['all', 'reduced'].includes(payload.user.motion_preference ?? '')
-        ? payload.user.motion_preference!
-        : 'all'
+      const theme = normalizeThemePreference(payload.user.theme_preference)
+      const motion = normalizeMotionPreference(payload.user.motion_preference)
       tx.update(users)
         .set({ themePreference: theme, motionPreference: motion, updatedAt: new Date().toISOString() })
         .where(eq(users.id, userId))
