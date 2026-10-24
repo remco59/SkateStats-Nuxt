@@ -1,4 +1,5 @@
 import { pythonRound } from '../../shared/utils/round'
+import { openingSplitM } from '../../shared/utils/opening-split'
 
 /**
  * Split/pace math ported 1:1 from app/main.py (old app, commit 4dc6959):
@@ -18,12 +19,10 @@ import { pythonRound } from '../../shared/utils/round'
  * deliberate follow-up, not bundled into this port.
  */
 
-export function openingSplitM(distanceM: number): number {
-  if (distanceM === 500) return 100;
-  if (distanceM === 1500) return 300;
-  if (distanceM === 100) return 100;
-  return 200;
-}
+// openingSplitM lives in shared/utils/opening-split.ts (the browser-side
+// target split plan needs it too). It is deliberately NOT re-exported here:
+// Nuxt auto-imports both shared/utils and server/utils, and exporting the same
+// name from both makes it a "Duplicated imports" warning at build time.
 
 export function segmentDistances(
   distanceM: number,

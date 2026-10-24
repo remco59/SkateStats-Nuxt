@@ -39,6 +39,15 @@ quirks called out in REBUILD_PLAN.md section 4.
 - `osta/search_results.html` — real `index.php?ZoekStr=Kjeld Nuis` response:
   one real skater with four separate OSTA profile records under the same
   name (exercises the multi-candidate/`OstaMultipleMatchesError` path).
+- `calculations/golden_targets.json` — target progress (the lap-derived
+  per-distance stats and `build_goal_progress`) and the live split plan
+  (`segmentDistancesForTarget` / `buildTargetSplitPlan` /
+  `rebalanceTargetSplits`). Unlike the Python-only fixtures above, the split
+  plan lives in the old app's `templates/goals.html` as JavaScript, so
+  `scripts/golden/targets.py` extracts those functions verbatim and runs
+  them under Node. Regenerate with
+  `python3 scripts/golden/targets.py /path/to/old/SkateStats`; it records the
+  old repo's commit in `generated_by`.
 - `osta/search_results_single.html` — real `index.php?ZoekStr=Remco Land`
   response: a single-candidate match, which OSTA redirects straight to the
   profile/season page instead of a `table.naam` list (exercises

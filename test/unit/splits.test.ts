@@ -1,11 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import {
-  buildSplitRows,
-  computeRaceMetrics,
-  openingSplitM,
-  per400Times,
-  segmentDistances,
-} from '../../server/utils/splits'
+import { buildSplitRows, computeRaceMetrics, per400Times, segmentDistances } from '../../server/utils/splits'
+import { openingSplitM } from '../../shared/utils/opening-split'
 import { fmtMs } from '../../shared/utils/format'
 import golden from '../../reference/fixtures/calculations/golden_calculations.json'
 
