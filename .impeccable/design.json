@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T23:58:00Z",
+  "title": "Design System: SkateStats",
+  "extensions": {
+    "colorMeta": {
+      "lane-blue": { "role": "primary", "displayName": "Lane Blue", "canonical": "#0b57c4", "tonalRamp": ["#021a3d", "#052d66", "#083f93", "#0b57c4", "#3b7fd8", "#6db0ff", "#9ccaff", "#d3e6ff"] },
+      "record-gold": { "role": "secondary", "displayName": "Record Gold", "canonical": "#7a4f00", "tonalRamp": ["#2e1d00", "#4f3300", "#7a4f00", "#a66b00", "#d19a1f", "#f0b429", "#f7d070", "#fbe9bb"] },
+      "ice-bg": { "role": "neutral", "displayName": "Ice", "canonical": "#edf2f6", "tonalRamp": ["#09111a", "#15232f", "#3a4f63", "#6c8296", "#a9bccd", "#d6e0e9", "#e4ebf1", "#edf2f6"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Page titles and the lead card's competition name." },
+      "data": { "displayName": "Data lead", "purpose": "Finish times and any figure that is compared with another; tabular lining numerals." },
+      "body": { "displayName": "Body", "purpose": "Sentences, 60ch max." }
+    },
+    "shadows": [
+      { "name": "float", "value": "0 10px 24px -8px rgba(12, 26, 41, 0.28)", "purpose": "Only for floating things: menus, tooltips, the quick-add button." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "All transitions; the lane lines of the lead card draw in 720ms with it, once per page." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one main action of a region.",
+      "html": "<button class=\"ds-btn-primary\">Alles importeren</button>",
+      "css": ".ds-btn-primary { background: #0b57c4; color: #ffffff; border: 1px solid transparent; border-radius: 8px; min-height: 40px; padding: 0 20px; font: 600 15px Inter, sans-serif; cursor: pointer; } .ds-btn-primary:hover { background: #083f93; } .ds-btn-primary:focus-visible { outline: 2px solid #0b57c4; outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Supporting action beside a primary.",
+      "html": "<button class=\"ds-btn-secondary\">Eerst bekijken</button>",
+      "css": ".ds-btn-secondary { background: #ffffff; color: #0c1a29; border: 1px solid rgba(12,26,41,0.3); border-radius: 8px; min-height: 40px; padding: 0 20px; font: 600 15px Inter, sans-serif; cursor: pointer; } .ds-btn-secondary:hover { background: #e4ebf1; border-color: #3a4f63; } .ds-btn-secondary:focus-visible { outline: 2px solid #0b57c4; outline-offset: 2px; }"
+    },
+    {
+      "name": "PR Badge",
+      "kind": "chip",
+      "refersTo": "badge-pr",
+      "description": "Marks a personal record; gold is used for nothing else.",
+      "html": "<abbr class=\"ds-badge-pr\" title=\"Persoonlijk record\">PR</abbr>",
+      "css": ".ds-badge-pr { display: inline-flex; padding: 1px 7px; border-radius: 4px; font: 700 13px 'Barlow Semi Condensed', sans-serif; letter-spacing: 0.04em; text-transform: uppercase; color: #7a4f00; background: rgba(122,79,0,0.14); border: 1px solid rgba(122,79,0,0.55); text-decoration: none; }"
+    },
+    {
+      "name": "Result Row",
+      "kind": "custom",
+      "description": "Distance, finish time with PR badge and opening split, gap to the previous PR with explicit sign.",
+      "html": "<div class=\"ds-row\"><span class=\"ds-dist\">500&nbsp;m</span><span><span class=\"ds-time\">38.10</span><br><small>opening 9.50</small></span><span class=\"ds-gap\">−0.20</span></div>",
+      "css": ".ds-row { display: grid; grid-template-columns: 72px 1fr auto; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(12,26,41,0.14); font-family: 'Barlow Semi Condensed', sans-serif; } .ds-dist { font-size: 20px; font-weight: 600; } .ds-time { font-size: 32px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums lining-nums; } .ds-row small { font: 13px Inter, sans-serif; color: #4f6478; } .ds-gap { font-size: 20px; font-weight: 600; color: #12703a; }"
+    },
+    {
+      "name": "Lead Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "The one card per page that carries two lane lines along its top edge.",
+      "html": "<div class=\"ds-card\"><h3>Seizoensopening Thialf</h3><p>Thialf, Heerenveen · 10-10-2026</p></div>",
+      "css": ".ds-card { position: relative; overflow: hidden; background: #ffffff; border: 1px solid rgba(12,26,41,0.14); border-radius: 12px; padding: 31px 24px 24px; color: #0c1a29; } .ds-card::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 7px; background: linear-gradient(to bottom, #0b57c4 0 2px, transparent 2px 5px, #0b57c4 5px 7px); } .ds-card h3 { margin: 0; font: 700 28px 'Barlow Semi Condensed', sans-serif; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Ice Sheet as a Plan",
+    "overview": "SkateStats is read like a result sheet off the ice: flat, ruled, and exact. The ground is cool ice-white by day and night-ice navy after dark, type is ink-navy, and the only accent is lane blue.",
+    "keyCharacteristics": [
+      "Flat and ruled: hairline borders, no shadows at rest, no gradients, no blur.",
+      "One accent (lane blue) for every action, link and focus; gold marks a record and nothing else.",
+      "Times and distances in the data face with tabular figures.",
+      "Phone first: bottom tab bar, 44px touch targets, the latest result before anything else.",
+      "Light, dark and system themes are each composed, not inverted."
+    ],
+    "rules": [
+      { "name": "The One Voice Rule", "body": "Lane blue is the only accent. If something is blue it can be pressed or it is where you are.", "section": "colors" },
+      { "name": "The Gold Means Record Rule", "body": "Gold appears only on a PR. A gold element that is not a record is a bug.", "section": "colors" },
+      { "name": "The Tabular Rule", "body": "Any figure that can be compared with another uses the data face with tabular, lining numerals.", "section": "typography" }
+    ],
+    "dos": [
+      "Do lead every result view with the latest result and its gap to the PR.",
+      "Do use tabular figures for every time, distance and count.",
+      "Do pair colour with a sign, arrow or word for every better/worse signal.",
+      "Do give risky actions an undo and long checks a visible status."
+    ],
+    "donts": [
+      "Don't add glow, blur, gradient text or an ambient background layer.",
+      "Don't use gold for anything but a record, or blue for anything that cannot be pressed or is not the current location.",
+      "Don't make activity counts the headline; they are context.",
+      "Don't use emoji as icons; draw them in the 1.7px stroke family used by the navigation icons.",
+      "Don't nest cards or wrap every list in a card; rules and spacing group first."
+    ]
+  }
+}

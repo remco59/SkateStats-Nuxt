@@ -46,8 +46,7 @@ async function submit() {
       style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
     />
     <button
-      class="rounded-md px-3 py-1.5 text-sm"
-      style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
+      class="btn btn-primary"
       @click="submit"
     >
       Aanmaken

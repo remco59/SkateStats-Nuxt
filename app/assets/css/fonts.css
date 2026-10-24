@@ -1,7 +1,7 @@
-/* Self-hosted Inter (body copy) + Google Fonts for the Bitcoin DeFi
-   display/mono faces (no local files available for these yet). */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
+/* Self-hosted faces only: Inter for running text, Barlow Semi Condensed
+   (SIL OFL, see /fonts/barlow-OFL.txt) for headings and every time/number.
+   No third-party font requests, so nothing blocks rendering on a weak
+   rink connection. */
 @font-face {
   font-family: 'Inter';
   font-style: normal;
@@ -32,4 +32,28 @@
   font-weight: 700;
   font-display: swap;
   src: url('/fonts/inter-700.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow Semi Condensed';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/barlow-semi-condensed-500.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow Semi Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/barlow-semi-condensed-600.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow Semi Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/barlow-semi-condensed-700.woff2') format('woff2');
 }

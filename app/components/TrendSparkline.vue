@@ -107,21 +107,29 @@ const label = computed(() => {
         <text :x="tick.x" :y="sparkline.baselineY + 16" class="sparkline-label">{{ tick.label }}</text>
       </g>
       <polyline :points="linePoints" class="sparkline-line" />
-      <circle
-        v-for="c in sparkline.circles"
-        :key="c.raceId"
-        :cx="c.x"
-        :cy="c.y"
-        r="4.5"
-        class="sparkline-dot"
-        :class="{ 'is-active': active?.raceId === c.raceId }"
-        tabindex="0"
-        :aria-label="`${fmtMs(c.totalTimeMs)} op ${fmtDate(c.date)}, ${c.name}`"
-        @mouseenter="onEnter(c)"
-        @click.stop="onClick(c)"
-        @focus="show(c)"
-        @keydown.enter.prevent="navigateTo(`/results/races/${c.raceId}`)"
-      />
+      <g v-for="c in sparkline.circles" :key="c.raceId">
+        <!-- Generous invisible hit area: the visible dot is only 9px wide. -->
+        <circle
+          :cx="c.x"
+          :cy="c.y"
+          r="22"
+          class="sparkline-hit"
+          role="link"
+          tabindex="0"
+          :aria-label="`${fmtMs(c.totalTimeMs)} op ${fmtDate(c.date)}, ${c.name}`"
+          @mouseenter="onEnter(c)"
+          @click.stop="onClick(c)"
+          @focus="show(c)"
+          @keydown.enter.prevent="navigateTo(`/results/races/${c.raceId}`)"
+        />
+        <circle
+          :cx="c.x"
+          :cy="c.y"
+          r="4.5"
+          class="sparkline-dot"
+          :class="{ 'is-active': active?.raceId === c.raceId }"
+        />
+      </g>
     </svg>
     <div v-if="active" ref="tooltipEl" class="sparkline-tooltip" :style="tooltipStyle" role="status">
       <div class="font-mono text-meta">{{ distanceM }}m</div>
@@ -156,7 +164,8 @@ const label = computed(() => {
 
 .sparkline-label {
   fill: var(--color-text-faint);
-  font-size: 10px;
+  font-family: var(--font-data);
+  font-size: 13px;
   text-anchor: middle;
 }
 
@@ -168,18 +177,27 @@ const label = computed(() => {
   stroke-linecap: round;
 }
 
-.sparkline-dot {
-  fill: var(--color-surface);
-  stroke: var(--color-accent);
-  stroke-width: 1.75;
+.sparkline-hit {
+  fill: transparent;
   cursor: pointer;
   outline: none;
 }
 
-.sparkline-dot:hover,
-.sparkline-dot:focus-visible,
+.sparkline-dot {
+  fill: var(--color-surface);
+  stroke: var(--color-accent);
+  stroke-width: 1.75;
+  pointer-events: none;
+}
+
+.sparkline-hit:hover + .sparkline-dot,
+.sparkline-hit:focus-visible + .sparkline-dot,
 .sparkline-dot.is-active {
   fill: var(--color-accent);
+}
+
+.sparkline-hit:focus-visible + .sparkline-dot {
+  stroke-width: 3.5;
 }
 
 .sparkline-tooltip {
@@ -189,15 +207,15 @@ const label = computed(() => {
   max-width: 14rem;
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface-2);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-  font-size: 0.75rem;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-float);
+  font-size: 0.8125rem;
 }
 
 .sparkline-tooltip-time {
-  font-family: var(--font-mono);
-  font-size: 1rem;
+  font-family: var(--font-data);
+  font-size: 1.25rem;
   font-weight: 600;
 }
 
@@ -217,6 +235,6 @@ const label = computed(() => {
 .sparkline-empty {
   padding: var(--space-3) 0;
   color: var(--color-text-muted);
-  font-size: 0.85rem;
+  font-size: 0.9375rem;
 }
 </style>

@@ -10,6 +10,7 @@ target_fingerprint: "sha256:d18659ab61c0099b930db4820ea2f0c02bfa1f65c9540fe9048d
 target_path: /home/user/SkateStats-Nuxt/app/pages/index.vue
 timestamp: 2026-10-24T22-33-16Z
 slug: app-pages-index-vue
+closed: true
 ---
 # Critique: dashboard (app/pages/index.vue + layout + tokens)
 
