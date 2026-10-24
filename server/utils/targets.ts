@@ -1,4 +1,5 @@
-import { openingSplitM, computeRaceMetrics } from './splits'
+import { computeRaceMetrics } from './splits'
+import { openingSplitM } from '../../shared/utils/opening-split'
 import { parseLapsToMs } from './time'
 import { pythonRound } from '../../shared/utils/round'
 

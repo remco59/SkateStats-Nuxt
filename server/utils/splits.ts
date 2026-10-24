@@ -19,9 +19,10 @@ import { openingSplitM } from '../../shared/utils/opening-split'
  * deliberate follow-up, not bundled into this port.
  */
 
-// Defined in shared/ (the browser-side target split plan needs it too);
-// re-exported so existing imports from this module keep working.
-export { openingSplitM };
+// openingSplitM lives in shared/utils/opening-split.ts (the browser-side
+// target split plan needs it too). It is deliberately NOT re-exported here:
+// Nuxt auto-imports both shared/utils and server/utils, and exporting the same
+// name from both makes it a "Duplicated imports" warning at build time.
 
 export function segmentDistances(
   distanceM: number,
