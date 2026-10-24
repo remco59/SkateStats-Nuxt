@@ -104,6 +104,7 @@ test.describe.serial('smoke suite', () => {
     await dialog.getByRole('textbox').fill('e2e-admin')
     await dialog.getByRole('button', { name: 'Account verwijderen' }).click()
     await expect(dialog.getByText(/laatste beheerder/)).toBeVisible()
+    await dialog.getByRole('button', { name: 'Annuleren' }).click()
   })
 
   test('logout', async () => {
