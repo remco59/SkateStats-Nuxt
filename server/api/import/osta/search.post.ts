@@ -1,14 +1,16 @@
 import { z } from 'zod'
-import { ostaSeasonSchema } from '../../../utils/osta-season'
 import { useDb } from '../../../db/client'
 import { requireValidSession } from '../../../utils/access'
-import { extractOstaResultsForPid, ostaLookupPid, OstaMultipleMatchesError, type OstaCandidate } from '../../../utils/import/osta'
-import { ostaResultsToImportPayload } from '../../../utils/import/osta-source'
-import { classifyImportPayload, savePreviewBatch } from '../../../utils/import/pipeline'
+import { defaultOstaSearchName, ostaLookupPid, OstaMultipleMatchesError, type OstaCandidate } from '../../../utils/import/osta'
+import { createOstaPreview } from '../../../utils/import/osta-import'
+import { ostaSeasonSchema } from '../../../utils/osta-season'
 
 const bodySchema = z.object({
-  searchName: z.string().min(1),
+  // Blank falls back to the account's skater name, like the old import form.
+  searchName: z.string().trim().optional(),
   season: ostaSeasonSchema,
+  // Known PID: skip the name search altogether.
+  pid: z.string().trim().optional(),
 })
 
 interface OstaSearchResult {
@@ -21,24 +23,25 @@ interface OstaSearchResult {
 
 export default defineEventHandler(async (event): Promise<OstaSearchResult> => {
   const session = await requireValidSession(event)
-  const { searchName, season } = await readValidatedBody(event, bodySchema.parse)
+  const body = await readValidatedBody(event, bodySchema.parse)
+  const { season } = body
+  const searchName = body.searchName || defaultOstaSearchName(session.user.skaterName)
+  if (!searchName && !body.pid) throw createError({ statusCode: 400, statusMessage: 'Vul een naam of PID in.' })
 
-  let pid: string
-  try {
-    const found = await ostaLookupPid(searchName)
-    pid = found.pid
-  } catch (err) {
-    if (err instanceof OstaMultipleMatchesError) {
-      return { status: 'multiple_matches', candidates: err.candidates, searchName, season }
+  let pid = body.pid ?? ''
+  if (!pid) {
+    try {
+      pid = (await ostaLookupPid(searchName)).pid
+    } catch (err) {
+      if (err instanceof OstaMultipleMatchesError) {
+        return { status: 'multiple_matches', candidates: err.candidates, searchName, season }
+      }
+      throw createError({ statusCode: 400, statusMessage: (err as Error).message })
     }
-    throw createError({ statusCode: 400, statusMessage: (err as Error).message })
   }
 
   try {
-    const parsed = await extractOstaResultsForPid(searchName, season, pid)
-    const db = useDb()
-    const preview = classifyImportPayload(db, session.user.id, ostaResultsToImportPayload(parsed))
-    const batchId = savePreviewBatch(db, session.user.id, preview)
+    const batchId = await createOstaPreview(useDb(), session.user.id, { searchName, season, pids: [pid] })
     return { status: 'ok', batchId }
   } catch (err) {
     throw createError({ statusCode: 400, statusMessage: (err as Error).message })

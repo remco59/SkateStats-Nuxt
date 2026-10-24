@@ -291,6 +291,22 @@ export interface CommitResult {
   skippedRaces: number
 }
 
+export interface CommitOptions {
+  /**
+   * `updateChoiceKey`s of the races the user ticked in the preview. Absent
+   * means "every new race" (what the dashboard's one-click import and the
+   * OSTA monitor do). Present, only ticked races are imported.
+   */
+  selectedRaceKeys?: ReadonlySet<string>
+  /**
+   * "Toevoegen als nieuwe wedstrijd": for an existing competition in which the
+   * user ticked a race that is already present, the ticked races are added to a
+   * NEW competition instead of being matched/skipped -- the user is saying this
+   * is a different competition that happens to look the same.
+   */
+  forceNewCompetition?: boolean
+}
+
 /**
  * Commits a preview batch in one transaction (rule 6). `updateChoices`
  * maps a race's updateChoiceKey (competitionSignature scoped identitySignature)
@@ -300,14 +316,19 @@ export interface CommitResult {
  * the SAME parsed payload after a successful commit is a no-op (rule 5):
  * every previously-new race now matches an existing one and classifies
  * as 'identical'.
+ *
+ * A competition is only created once one of its races is actually imported,
+ * so unticking every race of a new competition leaves nothing behind.
  */
 export function commitPreviewBatch(
   db: Db,
   userId: number,
   preview: ImportPreview,
   updateChoices: Record<string, UpdateCandidateChoice> = {},
+  options: CommitOptions = {},
 ): CommitResult {
   const result: CommitResult = { importedCompetitions: 0, importedRaces: 0, updatedRaces: 0, skippedRaces: 0 }
+  const { selectedRaceKeys, forceNewCompetition = false } = options
 
   db.transaction((tx) => {
     for (const item of preview.items) {
@@ -316,8 +337,13 @@ export function commitPreviewBatch(
         continue
       }
 
-      let competitionId = item.existingCompetitionId
-      if (!competitionId) {
+      const forceNew =
+        forceNewCompetition &&
+        item.existingCompetitionId !== undefined &&
+        item.races.some((r) => r.action === 'identical' && (selectedRaceKeys ? selectedRaceKeys.has(r.updateChoiceKey) : true))
+      let competitionId = forceNew ? undefined : item.existingCompetitionId
+      const ensureCompetition = (): number => {
+        if (competitionId) return competitionId
         const created = tx
           .insert(competitions)
           .values({
@@ -333,15 +359,27 @@ export function commitPreviewBatch(
           .get()
         competitionId = created.id
         result.importedCompetitions += 1
+        return created.id
       }
 
       for (const raceItem of item.races) {
-        if (raceItem.action === 'blacklisted' || raceItem.action === 'identical') {
+        if (raceItem.action === 'blacklisted') {
           result.skippedRaces += 1
           continue
         }
+        const ticked = selectedRaceKeys ? selectedRaceKeys.has(raceItem.updateChoiceKey) : true
 
-        if (raceItem.action === 'update_candidate') {
+        if (forceNew) {
+          // The user asked for these races to be added as new data: whatever
+          // they matched in the existing competition no longer matters.
+          if (!ticked) {
+            result.skippedRaces += 1
+            continue
+          }
+        } else if (raceItem.action === 'identical') {
+          result.skippedRaces += 1
+          continue
+        } else if (raceItem.action === 'update_candidate') {
           const choice = updateChoices[raceItem.updateChoiceKey] ?? 'skip'
           if (choice === 'skip') {
             result.skippedRaces += 1
@@ -373,13 +411,16 @@ export function commitPreviewBatch(
             continue
           }
           // 'keep_both' (or 'replace' with no existing id, defensively) falls through to insert-as-new below.
+        } else if (!ticked) {
+          result.skippedRaces += 1
+          continue
         }
 
         const now = new Date().toISOString()
         const inserted = tx
           .insert(races)
           .values({
-            competitionId,
+            competitionId: ensureCompetition(),
             userId,
             distanceM: raceItem.race.distanceM,
             status: raceItem.race.status,
@@ -419,4 +460,50 @@ export function addCompetitionToBlacklist(db: Db, userId: number, item: Competit
     })
     .onConflictDoNothing()
     .run()
+}
+
+/**
+ * Ticking an ignored (blacklisted) competition or race in the preview means
+ * "import it after all": its blacklist entry is removed, like the old app did,
+ * and the preview is classified again so those races become ordinary new /
+ * already-present / correction rows. Returns the same preview when nothing was
+ * released.
+ */
+export function releaseBlacklistedSelection(
+  db: Db,
+  userId: number,
+  preview: ImportPreview,
+  selectedRaceKeys: ReadonlySet<string>,
+): ImportPreview {
+  let released = false
+  for (const item of preview.items) {
+    const ticked = item.races.filter((r) => selectedRaceKeys.has(r.updateChoiceKey))
+    if (!ticked.length) continue
+
+    if (item.action === 'blacklisted') {
+      db.delete(blacklist)
+        .where(and(eq(blacklist.userId, userId), eq(blacklist.signature, item.competitionSignature)))
+        .run()
+      released = true
+    }
+    for (const raceItem of ticked) {
+      if (raceItem.action !== 'blacklisted') continue
+      db.delete(raceBlacklist)
+        .where(
+          and(
+            eq(raceBlacklist.userId, userId),
+            eq(raceBlacklist.competitionSignature, item.competitionSignature),
+            eq(raceBlacklist.raceIdentitySignature, raceItem.identitySignature),
+          ),
+        )
+        .run()
+      released = true
+    }
+  }
+  if (!released) return preview
+
+  return classifyImportPayload(db, userId, {
+    source: preview.source,
+    competitions: preview.items.map((item) => item.competition),
+  })
 }

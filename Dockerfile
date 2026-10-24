@@ -35,6 +35,8 @@ RUN addgroup -S skatestats && adduser -S skatestats -G skatestats
 COPY --from=build /app/.output ./.output
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/server/db ./server/db
+# The command-line scripts (users.ts, consolidate-competitions.ts) share code with the server.
+COPY --from=build /app/server/utils ./server/utils
 COPY --from=build /app/shared ./shared
 COPY --from=build /app/scripts ./scripts
 COPY --from=build /app/package.json ./package.json

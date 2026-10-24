@@ -70,7 +70,8 @@ test.describe.serial('smoke suite', () => {
     await expect(page).toHaveURL(/\/import\/preview\?batchId=/, { timeout: 15_000 })
     await expect(page.getByText('KNSB Gewestelijke Wedstrijd Alkmaar')).toBeVisible()
     await page.getByRole('button', { name: 'Importeren' }).click()
-    await expect(page.getByText(/wedstrijden.*nieuwe ritten/)).toBeVisible()
+    await expect(page).toHaveURL(/\/import\?notice=imported/)
+    await expect(page.getByText(/wedstrijden aangemaakt.*ritten geïmporteerd/)).toBeVisible()
   })
 
   test('compare: compare the two manually-added 500m races', async () => {
