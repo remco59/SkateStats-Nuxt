@@ -1,6 +1,15 @@
 <script setup lang="ts">
+import {
+  MOTION_LABELS,
+  MOTION_PREFERENCES,
+  THEME_LABELS,
+  THEME_PREFERENCES,
+  normalizeMotionPreference,
+  normalizeThemePreference,
+} from '#shared/constants'
+
 const { data: account, refresh } = await useFetch('/api/account')
-const { fetch: refreshSession, clear } = useUserSession()
+const { fetch: refreshSession, clear, user } = useUserSession()
 const router = useRouter()
 
 const skaterName = ref('')
@@ -22,6 +31,37 @@ async function saveProfile() {
     profileSaving.value = false
   }
 }
+
+// Appearance: the selects are bound straight to the app-wide state, so a
+// choice previews live. Saving persists it; leaving the page without saving
+// reverts to what the session (= what is saved) says.
+const { theme, motion } = useAppearance()
+const appearanceSaving = ref(false)
+const appearanceMessage = ref('')
+const appearanceError = ref('')
+
+async function saveAppearance() {
+  appearanceSaving.value = true
+  appearanceMessage.value = ''
+  appearanceError.value = ''
+  try {
+    await $fetch('/api/account/profile', {
+      method: 'PATCH',
+      body: { themePreference: theme.value, motionPreference: motion.value },
+    })
+    await refreshSession()
+    appearanceMessage.value = 'Opgeslagen.'
+  } catch {
+    appearanceError.value = 'Opslaan mislukt.'
+  } finally {
+    appearanceSaving.value = false
+  }
+}
+
+onBeforeUnmount(() => {
+  theme.value = normalizeThemePreference(user.value?.themePreference)
+  motion.value = normalizeMotionPreference(user.value?.motionPreference)
+})
 
 const currentPassword = ref('')
 const newPassword = ref('')
@@ -139,6 +179,27 @@ async function deleteAccount() {
       <p v-if="profileMessage" class="text-sm" style="color: var(--color-success)">
         {{ profileMessage }}
       </p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-sm font-medium" style="color: var(--color-text-muted)">Weergave</h2>
+      <label class="block text-sm space-y-1">
+        <span style="color: var(--color-text-muted)">Thema</span>
+        <select v-model="theme" class="field">
+          <option v-for="t in THEME_PREFERENCES" :key="t" :value="t">{{ THEME_LABELS[t] }}</option>
+        </select>
+      </label>
+      <label class="block text-sm space-y-1">
+        <span style="color: var(--color-text-muted)">Animaties</span>
+        <select v-model="motion" class="field">
+          <option v-for="m in MOTION_PREFERENCES" :key="m" :value="m">{{ MOTION_LABELS[m] }}</option>
+        </select>
+      </label>
+      <button type="button" class="btn btn-primary btn-sm" :disabled="appearanceSaving" @click="saveAppearance">
+        Opslaan
+      </button>
+      <p v-if="appearanceMessage" class="text-sm" style="color: var(--color-success)">{{ appearanceMessage }}</p>
+      <p v-if="appearanceError" class="text-sm" style="color: var(--color-danger)">{{ appearanceError }}</p>
     </section>
 
     <section class="space-y-3">

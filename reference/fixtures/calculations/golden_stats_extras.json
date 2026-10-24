@@ -1,0 +1,4564 @@
+{
+  "generated_by": "scripts/golden/stats-extras.py against old SkateStats at 01a634c8265df0612bef38f0f41eab932007953f: build_stats_context (main.py), clock pinned to 2025-03-01, random.choice intercepted to capture every story variant",
+  "cases": [
+    {
+      "name": "explicit season",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 1,
+          "competition_id": 90,
+          "distance_m": 1500,
+          "total_time_ms": 150000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "44.0,32.5,33.0,34.0"
+        },
+        {
+          "id": 2,
+          "competition_id": 90,
+          "distance_m": 500,
+          "total_time_ms": 43000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "10.9,32.1"
+        },
+        {
+          "id": 3,
+          "competition_id": 91,
+          "distance_m": 1500,
+          "total_time_ms": 148000,
+          "dnf": 0,
+          "competition_date": "2024-01-20",
+          "venue": "Deventer",
+          "laps_csv": "43.5,32.0,32.5,33.0"
+        },
+        {
+          "id": 10,
+          "competition_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 140000,
+          "dnf": 0,
+          "competition_date": "2024-09-14",
+          "venue": "Heerenveen",
+          "laps_csv": "42.0,31.0,31.5,32.0"
+        },
+        {
+          "id": 11,
+          "competition_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 41200,
+          "dnf": 0,
+          "competition_date": "2024-09-14",
+          "venue": "Heerenveen",
+          "laps_csv": "10.4,30.8"
+        },
+        {
+          "id": 12,
+          "competition_id": 2,
+          "distance_m": 1500,
+          "total_time_ms": 137000,
+          "dnf": 0,
+          "competition_date": "2024-10-05",
+          "venue": "Heerenveen",
+          "laps_csv": "41.0,30.5,31.2,31.5"
+        },
+        {
+          "id": 13,
+          "competition_id": 2,
+          "distance_m": 1000,
+          "total_time_ms": 83500,
+          "dnf": 0,
+          "competition_date": "2024-10-05",
+          "venue": "Heerenveen",
+          "laps_csv": "24.5,29.5,29.5"
+        },
+        {
+          "id": 14,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": 133900,
+          "dnf": 0,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "41.5,30.2,30.8,31.4"
+        },
+        {
+          "id": 15,
+          "competition_id": 3,
+          "distance_m": 500,
+          "total_time_ms": 40800,
+          "dnf": 0,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "10.2,30.6"
+        },
+        {
+          "id": 16,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": null,
+          "dnf": 1,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "42.0,31.0"
+        },
+        {
+          "id": 17,
+          "competition_id": 4,
+          "distance_m": 1500,
+          "total_time_ms": 138000,
+          "dnf": 0,
+          "competition_date": "2024-12-14",
+          "venue": "Deventer",
+          "laps_csv": null
+        },
+        {
+          "id": 18,
+          "competition_id": 4,
+          "distance_m": 3000,
+          "total_time_ms": 275000,
+          "dnf": 0,
+          "competition_date": "2024-12-14",
+          "venue": "Deventer",
+          "laps_csv": "21.0,32.0,32.2,32.5,32.8,33.0,33.2,34.0"
+        },
+        {
+          "id": 5,
+          "competition_id": 5,
+          "distance_m": 1500,
+          "total_time_ms": 132500,
+          "dnf": 0,
+          "competition_date": "2025-01-11",
+          "venue": "Heerenveen",
+          "laps_csv": "41.5,30.0,30.5,30.5"
+        },
+        {
+          "id": 19,
+          "competition_id": 5,
+          "distance_m": 500,
+          "total_time_ms": 40550,
+          "dnf": 0,
+          "competition_date": "2025-01-11",
+          "venue": "Heerenveen",
+          "laps_csv": "10.2,30.35"
+        },
+        {
+          "id": 20,
+          "competition_id": 6,
+          "distance_m": 1000,
+          "total_time_ms": 82000,
+          "dnf": 0,
+          "competition_date": "2025-02-08",
+          "venue": "Thialf",
+          "laps_csv": "24.2,28.9,28.9"
+        }
+      ],
+      "params": {
+        "season": "2024-2025",
+        "distance_m": "",
+        "default_to_current": false
+      },
+      "expected": {
+        "season_options": [
+          "2024-2025",
+          "2023-2024"
+        ],
+        "selected_season": "2024-2025",
+        "selected_distance": "",
+        "distance_options": [
+          500,
+          1000,
+          1500,
+          3000
+        ],
+        "basic_stats": {
+          "competition_count": 6,
+          "race_count": 12,
+          "total_km": 15.5,
+          "pb_count": 10,
+          "sb_count": 10
+        },
+        "distance_overview_rows": [
+          {
+            "distance_m": 500,
+            "pb_ms": 40550,
+            "pb_race_id": 19,
+            "season_best_ms": 40550,
+            "season_best_race_id": 19,
+            "average_ms": 40850,
+            "median_ms": 40800,
+            "avg_opening_s": 10.266666666666666,
+            "best_opening_s": 10.2,
+            "best_opening_race_id": 15,
+            "avg_lap_s": 30.583333333333336,
+            "best_lap_s": 30.35,
+            "best_lap_race_id": 19,
+            "avg_fade_s": 0.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 30.583333333333336
+              }
+            ]
+          },
+          {
+            "distance_m": 1000,
+            "pb_ms": 82000,
+            "pb_race_id": 20,
+            "season_best_ms": 82000,
+            "season_best_race_id": 20,
+            "average_ms": 82750,
+            "median_ms": 82750,
+            "avg_opening_s": 24.35,
+            "best_opening_s": 24.2,
+            "best_opening_race_id": 20,
+            "avg_lap_s": 29.2,
+            "best_lap_s": 28.9,
+            "best_lap_race_id": 20,
+            "avg_fade_s": 0.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 29.2
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 29.2
+              }
+            ]
+          },
+          {
+            "distance_m": 1500,
+            "pb_ms": 132500,
+            "pb_race_id": 5,
+            "season_best_ms": 132500,
+            "season_best_race_id": 5,
+            "average_ms": 136280,
+            "median_ms": 137000,
+            "avg_opening_s": 41.5,
+            "best_opening_s": 41.0,
+            "best_opening_race_id": 12,
+            "avg_lap_s": 30.925,
+            "best_lap_s": 30.0,
+            "best_lap_race_id": 5,
+            "avg_fade_s": 0.9249999999999998,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 30.425
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 31.0
+              },
+              {
+                "lap_no": 3,
+                "avg_s": 31.35
+              }
+            ]
+          },
+          {
+            "distance_m": 3000,
+            "pb_ms": 275000,
+            "pb_race_id": 18,
+            "season_best_ms": 275000,
+            "season_best_race_id": 18,
+            "average_ms": 275000,
+            "median_ms": 275000,
+            "avg_opening_s": 21.0,
+            "best_opening_s": 21.0,
+            "best_opening_race_id": 18,
+            "avg_lap_s": 32.81428571428572,
+            "best_lap_s": 32.0,
+            "best_lap_race_id": 18,
+            "avg_fade_s": 2.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 32.0
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 32.2
+              },
+              {
+                "lap_no": 3,
+                "avg_s": 32.5
+              },
+              {
+                "lap_no": 4,
+                "avg_s": 32.8
+              },
+              {
+                "lap_no": 5,
+                "avg_s": 33.0
+              },
+              {
+                "lap_no": 6,
+                "avg_s": 33.2
+              },
+              {
+                "lap_no": 7,
+                "avg_s": 34.0
+              }
+            ]
+          }
+        ],
+        "consistency_rows": [
+          {
+            "distance_m": 500,
+            "std_dev_ms": 268,
+            "range_ms": 650
+          },
+          {
+            "distance_m": 1000,
+            "std_dev_ms": 750,
+            "range_ms": 1500
+          },
+          {
+            "distance_m": 1500,
+            "std_dev_ms": 2730,
+            "range_ms": 7500
+          },
+          {
+            "distance_m": 3000,
+            "std_dev_ms": 0,
+            "range_ms": 0
+          }
+        ],
+        "progress_rows": [
+          {
+            "distance_m": 500,
+            "first_ms": 41200,
+            "first_race_id": 11,
+            "latest_ms": 40550,
+            "latest_race_id": 19,
+            "improvement_ms": -650,
+            "last5_avg_ms": 40850,
+            "season_avg_ms": 40850,
+            "trend": "stabiel"
+          },
+          {
+            "distance_m": 1000,
+            "first_ms": 83500,
+            "first_race_id": 13,
+            "latest_ms": 82000,
+            "latest_race_id": 20,
+            "improvement_ms": -1500,
+            "last5_avg_ms": 82750,
+            "season_avg_ms": 82750,
+            "trend": "stabiel"
+          },
+          {
+            "distance_m": 1500,
+            "first_ms": 140000,
+            "first_race_id": 10,
+            "latest_ms": 132500,
+            "latest_race_id": 5,
+            "improvement_ms": -7500,
+            "last5_avg_ms": 136280,
+            "season_avg_ms": 136280,
+            "trend": "stabiel"
+          },
+          {
+            "distance_m": 3000,
+            "first_ms": 275000,
+            "first_race_id": 18,
+            "latest_ms": 275000,
+            "latest_race_id": 18,
+            "improvement_ms": 0,
+            "last5_avg_ms": 275000,
+            "season_avg_ms": 275000,
+            "trend": "stabiel"
+          }
+        ],
+        "track_rows": [
+          {
+            "track": "Thialf",
+            "race_count": 1,
+            "avg_500eq_ms": 41000,
+            "best_500eq_ms": 41000
+          },
+          {
+            "track": "Alkmaar",
+            "race_count": 2,
+            "avg_500eq_ms": 42716,
+            "best_500eq_ms": 40800
+          },
+          {
+            "track": "Heerenveen",
+            "race_count": 6,
+            "avg_500eq_ms": 43334,
+            "best_500eq_ms": 40550
+          },
+          {
+            "track": "Deventer",
+            "race_count": 2,
+            "avg_500eq_ms": 45916,
+            "best_500eq_ms": 45833
+          }
+        ],
+        "best_track_summary": {
+          "name": "Thialf",
+          "delta_ms": -2479
+        },
+        "worst_track_summary": {
+          "name": "Deventer",
+          "delta_ms": 2437
+        },
+        "fun_stats": {
+          "closest_pb_miss": {
+            "delta_ms": 4100,
+            "distance_m": 1500,
+            "venue": "Deventer",
+            "race_id": 17
+          },
+          "fastest_lap": {
+            "time_ms": 28900,
+            "distance_m": 1000,
+            "venue": "Thialf",
+            "race_id": 20
+          },
+          "fastest_opener": {
+            "time_ms": 10200,
+            "distance_m": 500,
+            "venue": "Alkmaar",
+            "race_id": 15
+          },
+          "busiest_month": {
+            "month": "2024-11",
+            "count": 3
+          },
+          "most_skated_distance": {
+            "distance_m": 1500,
+            "count": 6
+          }
+        },
+        "sb_reference_season": "2024-2025"
+      },
+      "expected_story_candidates": [
+        {
+          "title": "Coach Analyse",
+          "variant": "commentary",
+          "paragraphs": [
+            [
+              {
+                "text": "In het seizoen 2024-2025 reed je je snelste ronde",
+                "tone": "neutral"
+              },
+              {
+                "text": "28.90",
+                "tone": "positive",
+                "href": "/races/20"
+              },
+              {
+                "text": " op de 1000m in Thialf.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening klokte je op",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.20",
+                "tone": "positive",
+                "href": "/races/15"
+              },
+              {
+                "text": " in Alkmaar.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "In Deventer kwam je het dichtst bij een nieuw PR: je miste het daar met",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": ".",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "november 2024 was je drukste maand met",
+                "tone": "neutral"
+              },
+              {
+                "text": "3",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De afstand die je het vaakst reed was de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": ", in totaal 6 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "analysis",
+          "paragraphs": [
+            [
+              {
+                "text": "Dit seizoen liet je sterke snelheid zien.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je snelste ronde was",
+                "tone": "neutral"
+              },
+              {
+                "text": "28.90",
+                "tone": "positive",
+                "href": "/races/20"
+              },
+              {
+                "text": " in Thialf.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je beste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.20",
+                "tone": "positive",
+                "href": "/races/15"
+              },
+              {
+                "text": " in Alkmaar.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "In Deventer zat je ook het dichtst bij een persoonlijk record:",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": " verwijderd van je PR.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "november 2024 was duidelijk je actiefste maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "3",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest gereden afstand met 6 starts.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "recap",
+          "paragraphs": [
+            [
+              {
+                "text": "In het seizoen 2024-2025 kende een aantal opvallende momenten.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "Je snelste ronde reed je in",
+                "tone": "neutral"
+              },
+              {
+                "text": "Thialf",
+                "tone": "positive"
+              },
+              {
+                "text": ", waar je",
+                "tone": "neutral"
+              },
+              {
+                "text": "28.90",
+                "tone": "positive",
+                "href": "/races/20"
+              },
+              {
+                "text": " noteerde op de 1000m.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.20",
+                "tone": "positive",
+                "href": "/races/15"
+              },
+              {
+                "text": " in Alkmaar.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Daar kwam je ook dicht bij een PR, met een marge van",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": ".",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "november 2024",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest actieve maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "3",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Over de hele periode bleek de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " je favoriete afstand: die reed je 6 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "all seasons, no default",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 1,
+          "competition_id": 90,
+          "distance_m": 1500,
+          "total_time_ms": 150000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "44.0,32.5,33.0,34.0"
+        },
+        {
+          "id": 2,
+          "competition_id": 90,
+          "distance_m": 500,
+          "total_time_ms": 43000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "10.9,32.1"
+        },
+        {
+          "id": 3,
+          "competition_id": 91,
+          "distance_m": 1500,
+          "total_time_ms": 148000,
+          "dnf": 0,
+          "competition_date": "2024-01-20",
+          "venue": "Deventer",
+          "laps_csv": "43.5,32.0,32.5,33.0"
+        },
+        {
+          "id": 10,
+          "competition_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 140000,
+          "dnf": 0,
+          "competition_date": "2024-09-14",
+          "venue": "Heerenveen",
+          "laps_csv": "42.0,31.0,31.5,32.0"
+        },
+        {
+          "id": 11,
+          "competition_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 41200,
+          "dnf": 0,
+          "competition_date": "2024-09-14",
+          "venue": "Heerenveen",
+          "laps_csv": "10.4,30.8"
+        },
+        {
+          "id": 12,
+          "competition_id": 2,
+          "distance_m": 1500,
+          "total_time_ms": 137000,
+          "dnf": 0,
+          "competition_date": "2024-10-05",
+          "venue": "Heerenveen",
+          "laps_csv": "41.0,30.5,31.2,31.5"
+        },
+        {
+          "id": 13,
+          "competition_id": 2,
+          "distance_m": 1000,
+          "total_time_ms": 83500,
+          "dnf": 0,
+          "competition_date": "2024-10-05",
+          "venue": "Heerenveen",
+          "laps_csv": "24.5,29.5,29.5"
+        },
+        {
+          "id": 14,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": 133900,
+          "dnf": 0,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "41.5,30.2,30.8,31.4"
+        },
+        {
+          "id": 15,
+          "competition_id": 3,
+          "distance_m": 500,
+          "total_time_ms": 40800,
+          "dnf": 0,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "10.2,30.6"
+        },
+        {
+          "id": 16,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": null,
+          "dnf": 1,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "42.0,31.0"
+        },
+        {
+          "id": 17,
+          "competition_id": 4,
+          "distance_m": 1500,
+          "total_time_ms": 138000,
+          "dnf": 0,
+          "competition_date": "2024-12-14",
+          "venue": "Deventer",
+          "laps_csv": null
+        },
+        {
+          "id": 18,
+          "competition_id": 4,
+          "distance_m": 3000,
+          "total_time_ms": 275000,
+          "dnf": 0,
+          "competition_date": "2024-12-14",
+          "venue": "Deventer",
+          "laps_csv": "21.0,32.0,32.2,32.5,32.8,33.0,33.2,34.0"
+        },
+        {
+          "id": 5,
+          "competition_id": 5,
+          "distance_m": 1500,
+          "total_time_ms": 132500,
+          "dnf": 0,
+          "competition_date": "2025-01-11",
+          "venue": "Heerenveen",
+          "laps_csv": "41.5,30.0,30.5,30.5"
+        },
+        {
+          "id": 19,
+          "competition_id": 5,
+          "distance_m": 500,
+          "total_time_ms": 40550,
+          "dnf": 0,
+          "competition_date": "2025-01-11",
+          "venue": "Heerenveen",
+          "laps_csv": "10.2,30.35"
+        },
+        {
+          "id": 20,
+          "competition_id": 6,
+          "distance_m": 1000,
+          "total_time_ms": 82000,
+          "dnf": 0,
+          "competition_date": "2025-02-08",
+          "venue": "Thialf",
+          "laps_csv": "24.2,28.9,28.9"
+        }
+      ],
+      "params": {
+        "season": "",
+        "distance_m": "",
+        "default_to_current": false
+      },
+      "expected": {
+        "season_options": [
+          "2024-2025",
+          "2023-2024"
+        ],
+        "selected_season": "",
+        "selected_distance": "",
+        "distance_options": [
+          500,
+          1000,
+          1500,
+          3000
+        ],
+        "basic_stats": {
+          "competition_count": 8,
+          "race_count": 15,
+          "total_km": 19.0,
+          "pb_count": 13,
+          "sb_count": 13
+        },
+        "distance_overview_rows": [
+          {
+            "distance_m": 500,
+            "pb_ms": 40550,
+            "pb_race_id": 19,
+            "season_best_ms": 40550,
+            "season_best_race_id": 19,
+            "average_ms": 41388,
+            "median_ms": 41000,
+            "avg_opening_s": 10.425,
+            "best_opening_s": 10.2,
+            "best_opening_race_id": 15,
+            "avg_lap_s": 30.962500000000002,
+            "best_lap_s": 30.35,
+            "best_lap_race_id": 19,
+            "avg_fade_s": 0.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 30.962500000000002
+              }
+            ]
+          },
+          {
+            "distance_m": 1000,
+            "pb_ms": 82000,
+            "pb_race_id": 20,
+            "season_best_ms": 82000,
+            "season_best_race_id": 20,
+            "average_ms": 82750,
+            "median_ms": 82750,
+            "avg_opening_s": 24.35,
+            "best_opening_s": 24.2,
+            "best_opening_race_id": 20,
+            "avg_lap_s": 29.2,
+            "best_lap_s": 28.9,
+            "best_lap_race_id": 20,
+            "avg_fade_s": 0.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 29.2
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 29.2
+              }
+            ]
+          },
+          {
+            "distance_m": 1500,
+            "pb_ms": 132500,
+            "pb_race_id": 5,
+            "season_best_ms": 132500,
+            "season_best_race_id": 5,
+            "average_ms": 139914,
+            "median_ms": 138000,
+            "avg_opening_s": 42.25,
+            "best_opening_s": 41.0,
+            "best_opening_race_id": 12,
+            "avg_lap_s": 31.56111111111111,
+            "best_lap_s": 30.0,
+            "best_lap_race_id": 5,
+            "avg_fade_s": 1.0333333333333332,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 31.03333333333333
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 31.583333333333332
+              },
+              {
+                "lap_no": 3,
+                "avg_s": 32.06666666666666
+              }
+            ]
+          },
+          {
+            "distance_m": 3000,
+            "pb_ms": 275000,
+            "pb_race_id": 18,
+            "season_best_ms": 275000,
+            "season_best_race_id": 18,
+            "average_ms": 275000,
+            "median_ms": 275000,
+            "avg_opening_s": 21.0,
+            "best_opening_s": 21.0,
+            "best_opening_race_id": 18,
+            "avg_lap_s": 32.81428571428572,
+            "best_lap_s": 32.0,
+            "best_lap_race_id": 18,
+            "avg_fade_s": 2.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 32.0
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 32.2
+              },
+              {
+                "lap_no": 3,
+                "avg_s": 32.5
+              },
+              {
+                "lap_no": 4,
+                "avg_s": 32.8
+              },
+              {
+                "lap_no": 5,
+                "avg_s": 33.0
+              },
+              {
+                "lap_no": 6,
+                "avg_s": 33.2
+              },
+              {
+                "lap_no": 7,
+                "avg_s": 34.0
+              }
+            ]
+          }
+        ],
+        "consistency_rows": [
+          {
+            "distance_m": 500,
+            "std_dev_ms": 959,
+            "range_ms": 2450
+          },
+          {
+            "distance_m": 1000,
+            "std_dev_ms": 750,
+            "range_ms": 1500
+          },
+          {
+            "distance_m": 1500,
+            "std_dev_ms": 6215,
+            "range_ms": 17500
+          },
+          {
+            "distance_m": 3000,
+            "std_dev_ms": 0,
+            "range_ms": 0
+          }
+        ],
+        "progress_rows": [
+          {
+            "distance_m": 500,
+            "first_ms": 43000,
+            "first_race_id": 2,
+            "latest_ms": 40550,
+            "latest_race_id": 19,
+            "improvement_ms": -2450,
+            "last5_avg_ms": 41388,
+            "season_avg_ms": 40850,
+            "trend": "verslechterend"
+          },
+          {
+            "distance_m": 1000,
+            "first_ms": 83500,
+            "first_race_id": 13,
+            "latest_ms": 82000,
+            "latest_race_id": 20,
+            "improvement_ms": -1500,
+            "last5_avg_ms": 82750,
+            "season_avg_ms": 82750,
+            "trend": "stabiel"
+          },
+          {
+            "distance_m": 1500,
+            "first_ms": 150000,
+            "first_race_id": 1,
+            "latest_ms": 132500,
+            "latest_race_id": 5,
+            "improvement_ms": -17500,
+            "last5_avg_ms": 136280,
+            "season_avg_ms": 136280,
+            "trend": "stabiel"
+          },
+          {
+            "distance_m": 3000,
+            "first_ms": 275000,
+            "first_race_id": 18,
+            "latest_ms": 275000,
+            "latest_race_id": 18,
+            "improvement_ms": 0,
+            "last5_avg_ms": 275000,
+            "season_avg_ms": 275000,
+            "trend": "stabiel"
+          }
+        ],
+        "track_rows": [
+          {
+            "track": "Thialf",
+            "race_count": 1,
+            "avg_500eq_ms": 41000,
+            "best_500eq_ms": 41000
+          },
+          {
+            "track": "Alkmaar",
+            "race_count": 2,
+            "avg_500eq_ms": 42716,
+            "best_500eq_ms": 40800
+          },
+          {
+            "track": "Heerenveen",
+            "race_count": 8,
+            "avg_500eq_ms": 44125,
+            "best_500eq_ms": 40550
+          },
+          {
+            "track": "Deventer",
+            "race_count": 3,
+            "avg_500eq_ms": 47055,
+            "best_500eq_ms": 45833
+          }
+        ],
+        "best_track_summary": {
+          "name": "Thialf",
+          "delta_ms": -3329
+        },
+        "worst_track_summary": {
+          "name": "Deventer",
+          "delta_ms": 2726
+        },
+        "fun_stats": {
+          "closest_pb_miss": {
+            "delta_ms": 4100,
+            "distance_m": 1500,
+            "venue": "Deventer",
+            "race_id": 17
+          },
+          "fastest_lap": {
+            "time_ms": 28900,
+            "distance_m": 1000,
+            "venue": "Thialf",
+            "race_id": 20
+          },
+          "fastest_opener": {
+            "time_ms": 10200,
+            "distance_m": 500,
+            "venue": "Alkmaar",
+            "race_id": 15
+          },
+          "busiest_month": {
+            "month": "2024-11",
+            "count": 3
+          },
+          "most_skated_distance": {
+            "distance_m": 1500,
+            "count": 8
+          }
+        },
+        "sb_reference_season": "2024-2025"
+      },
+      "expected_story_candidates": [
+        {
+          "title": "Coach Analyse",
+          "variant": "commentary",
+          "paragraphs": [
+            [
+              {
+                "text": "In deze periode reed je je snelste ronde",
+                "tone": "neutral"
+              },
+              {
+                "text": "28.90",
+                "tone": "positive",
+                "href": "/races/20"
+              },
+              {
+                "text": " op de 1000m in Thialf.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening klokte je op",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.20",
+                "tone": "positive",
+                "href": "/races/15"
+              },
+              {
+                "text": " in Alkmaar.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "In Deventer kwam je het dichtst bij een nieuw PR: je miste het daar met",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": ".",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "november 2024 was je drukste maand met",
+                "tone": "neutral"
+              },
+              {
+                "text": "3",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De afstand die je het vaakst reed was de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": ", in totaal 8 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "analysis",
+          "paragraphs": [
+            [
+              {
+                "text": "In deze periode liet je sterke snelheid zien.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je snelste ronde was",
+                "tone": "neutral"
+              },
+              {
+                "text": "28.90",
+                "tone": "positive",
+                "href": "/races/20"
+              },
+              {
+                "text": " in Thialf.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je beste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.20",
+                "tone": "positive",
+                "href": "/races/15"
+              },
+              {
+                "text": " in Alkmaar.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "In Deventer zat je ook het dichtst bij een persoonlijk record:",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": " verwijderd van je PR.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "november 2024 was duidelijk je actiefste maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "3",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest gereden afstand met 8 starts.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "recap",
+          "paragraphs": [
+            [
+              {
+                "text": "In deze periode kende een aantal opvallende momenten.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "Je snelste ronde reed je in",
+                "tone": "neutral"
+              },
+              {
+                "text": "Thialf",
+                "tone": "positive"
+              },
+              {
+                "text": ", waar je",
+                "tone": "neutral"
+              },
+              {
+                "text": "28.90",
+                "tone": "positive",
+                "href": "/races/20"
+              },
+              {
+                "text": " noteerde op de 1000m.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.20",
+                "tone": "positive",
+                "href": "/races/15"
+              },
+              {
+                "text": " in Alkmaar.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Daar kwam je ook dicht bij een PR, met een marge van",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": ".",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "november 2024",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest actieve maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "3",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Over de hele periode bleek de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " je favoriete afstand: die reed je 8 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "default to current season (2024-2025 at 2025-03-01)",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 1,
+          "competition_id": 90,
+          "distance_m": 1500,
+          "total_time_ms": 150000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "44.0,32.5,33.0,34.0"
+        },
+        {
+          "id": 2,
+          "competition_id": 90,
+          "distance_m": 500,
+          "total_time_ms": 43000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "10.9,32.1"
+        },
+        {
+          "id": 3,
+          "competition_id": 91,
+          "distance_m": 1500,
+          "total_time_ms": 148000,
+          "dnf": 0,
+          "competition_date": "2024-01-20",
+          "venue": "Deventer",
+          "laps_csv": "43.5,32.0,32.5,33.0"
+        },
+        {
+          "id": 10,
+          "competition_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 140000,
+          "dnf": 0,
+          "competition_date": "2024-09-14",
+          "venue": "Heerenveen",
+          "laps_csv": "42.0,31.0,31.5,32.0"
+        },
+        {
+          "id": 11,
+          "competition_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 41200,
+          "dnf": 0,
+          "competition_date": "2024-09-14",
+          "venue": "Heerenveen",
+          "laps_csv": "10.4,30.8"
+        },
+        {
+          "id": 12,
+          "competition_id": 2,
+          "distance_m": 1500,
+          "total_time_ms": 137000,
+          "dnf": 0,
+          "competition_date": "2024-10-05",
+          "venue": "Heerenveen",
+          "laps_csv": "41.0,30.5,31.2,31.5"
+        },
+        {
+          "id": 13,
+          "competition_id": 2,
+          "distance_m": 1000,
+          "total_time_ms": 83500,
+          "dnf": 0,
+          "competition_date": "2024-10-05",
+          "venue": "Heerenveen",
+          "laps_csv": "24.5,29.5,29.5"
+        },
+        {
+          "id": 14,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": 133900,
+          "dnf": 0,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "41.5,30.2,30.8,31.4"
+        },
+        {
+          "id": 15,
+          "competition_id": 3,
+          "distance_m": 500,
+          "total_time_ms": 40800,
+          "dnf": 0,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "10.2,30.6"
+        },
+        {
+          "id": 16,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": null,
+          "dnf": 1,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "42.0,31.0"
+        },
+        {
+          "id": 17,
+          "competition_id": 4,
+          "distance_m": 1500,
+          "total_time_ms": 138000,
+          "dnf": 0,
+          "competition_date": "2024-12-14",
+          "venue": "Deventer",
+          "laps_csv": null
+        },
+        {
+          "id": 18,
+          "competition_id": 4,
+          "distance_m": 3000,
+          "total_time_ms": 275000,
+          "dnf": 0,
+          "competition_date": "2024-12-14",
+          "venue": "Deventer",
+          "laps_csv": "21.0,32.0,32.2,32.5,32.8,33.0,33.2,34.0"
+        },
+        {
+          "id": 5,
+          "competition_id": 5,
+          "distance_m": 1500,
+          "total_time_ms": 132500,
+          "dnf": 0,
+          "competition_date": "2025-01-11",
+          "venue": "Heerenveen",
+          "laps_csv": "41.5,30.0,30.5,30.5"
+        },
+        {
+          "id": 19,
+          "competition_id": 5,
+          "distance_m": 500,
+          "total_time_ms": 40550,
+          "dnf": 0,
+          "competition_date": "2025-01-11",
+          "venue": "Heerenveen",
+          "laps_csv": "10.2,30.35"
+        },
+        {
+          "id": 20,
+          "competition_id": 6,
+          "distance_m": 1000,
+          "total_time_ms": 82000,
+          "dnf": 0,
+          "competition_date": "2025-02-08",
+          "venue": "Thialf",
+          "laps_csv": "24.2,28.9,28.9"
+        }
+      ],
+      "params": {
+        "season": "",
+        "distance_m": "",
+        "default_to_current": true
+      },
+      "expected": {
+        "season_options": [
+          "2024-2025",
+          "2023-2024"
+        ],
+        "selected_season": "2024-2025",
+        "selected_distance": "",
+        "distance_options": [
+          500,
+          1000,
+          1500,
+          3000
+        ],
+        "basic_stats": {
+          "competition_count": 6,
+          "race_count": 12,
+          "total_km": 15.5,
+          "pb_count": 10,
+          "sb_count": 10
+        },
+        "distance_overview_rows": [
+          {
+            "distance_m": 500,
+            "pb_ms": 40550,
+            "pb_race_id": 19,
+            "season_best_ms": 40550,
+            "season_best_race_id": 19,
+            "average_ms": 40850,
+            "median_ms": 40800,
+            "avg_opening_s": 10.266666666666666,
+            "best_opening_s": 10.2,
+            "best_opening_race_id": 15,
+            "avg_lap_s": 30.583333333333336,
+            "best_lap_s": 30.35,
+            "best_lap_race_id": 19,
+            "avg_fade_s": 0.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 30.583333333333336
+              }
+            ]
+          },
+          {
+            "distance_m": 1000,
+            "pb_ms": 82000,
+            "pb_race_id": 20,
+            "season_best_ms": 82000,
+            "season_best_race_id": 20,
+            "average_ms": 82750,
+            "median_ms": 82750,
+            "avg_opening_s": 24.35,
+            "best_opening_s": 24.2,
+            "best_opening_race_id": 20,
+            "avg_lap_s": 29.2,
+            "best_lap_s": 28.9,
+            "best_lap_race_id": 20,
+            "avg_fade_s": 0.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 29.2
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 29.2
+              }
+            ]
+          },
+          {
+            "distance_m": 1500,
+            "pb_ms": 132500,
+            "pb_race_id": 5,
+            "season_best_ms": 132500,
+            "season_best_race_id": 5,
+            "average_ms": 136280,
+            "median_ms": 137000,
+            "avg_opening_s": 41.5,
+            "best_opening_s": 41.0,
+            "best_opening_race_id": 12,
+            "avg_lap_s": 30.925,
+            "best_lap_s": 30.0,
+            "best_lap_race_id": 5,
+            "avg_fade_s": 0.9249999999999998,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 30.425
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 31.0
+              },
+              {
+                "lap_no": 3,
+                "avg_s": 31.35
+              }
+            ]
+          },
+          {
+            "distance_m": 3000,
+            "pb_ms": 275000,
+            "pb_race_id": 18,
+            "season_best_ms": 275000,
+            "season_best_race_id": 18,
+            "average_ms": 275000,
+            "median_ms": 275000,
+            "avg_opening_s": 21.0,
+            "best_opening_s": 21.0,
+            "best_opening_race_id": 18,
+            "avg_lap_s": 32.81428571428572,
+            "best_lap_s": 32.0,
+            "best_lap_race_id": 18,
+            "avg_fade_s": 2.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 32.0
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 32.2
+              },
+              {
+                "lap_no": 3,
+                "avg_s": 32.5
+              },
+              {
+                "lap_no": 4,
+                "avg_s": 32.8
+              },
+              {
+                "lap_no": 5,
+                "avg_s": 33.0
+              },
+              {
+                "lap_no": 6,
+                "avg_s": 33.2
+              },
+              {
+                "lap_no": 7,
+                "avg_s": 34.0
+              }
+            ]
+          }
+        ],
+        "consistency_rows": [
+          {
+            "distance_m": 500,
+            "std_dev_ms": 268,
+            "range_ms": 650
+          },
+          {
+            "distance_m": 1000,
+            "std_dev_ms": 750,
+            "range_ms": 1500
+          },
+          {
+            "distance_m": 1500,
+            "std_dev_ms": 2730,
+            "range_ms": 7500
+          },
+          {
+            "distance_m": 3000,
+            "std_dev_ms": 0,
+            "range_ms": 0
+          }
+        ],
+        "progress_rows": [
+          {
+            "distance_m": 500,
+            "first_ms": 41200,
+            "first_race_id": 11,
+            "latest_ms": 40550,
+            "latest_race_id": 19,
+            "improvement_ms": -650,
+            "last5_avg_ms": 40850,
+            "season_avg_ms": 40850,
+            "trend": "stabiel"
+          },
+          {
+            "distance_m": 1000,
+            "first_ms": 83500,
+            "first_race_id": 13,
+            "latest_ms": 82000,
+            "latest_race_id": 20,
+            "improvement_ms": -1500,
+            "last5_avg_ms": 82750,
+            "season_avg_ms": 82750,
+            "trend": "stabiel"
+          },
+          {
+            "distance_m": 1500,
+            "first_ms": 140000,
+            "first_race_id": 10,
+            "latest_ms": 132500,
+            "latest_race_id": 5,
+            "improvement_ms": -7500,
+            "last5_avg_ms": 136280,
+            "season_avg_ms": 136280,
+            "trend": "stabiel"
+          },
+          {
+            "distance_m": 3000,
+            "first_ms": 275000,
+            "first_race_id": 18,
+            "latest_ms": 275000,
+            "latest_race_id": 18,
+            "improvement_ms": 0,
+            "last5_avg_ms": 275000,
+            "season_avg_ms": 275000,
+            "trend": "stabiel"
+          }
+        ],
+        "track_rows": [
+          {
+            "track": "Thialf",
+            "race_count": 1,
+            "avg_500eq_ms": 41000,
+            "best_500eq_ms": 41000
+          },
+          {
+            "track": "Alkmaar",
+            "race_count": 2,
+            "avg_500eq_ms": 42716,
+            "best_500eq_ms": 40800
+          },
+          {
+            "track": "Heerenveen",
+            "race_count": 6,
+            "avg_500eq_ms": 43334,
+            "best_500eq_ms": 40550
+          },
+          {
+            "track": "Deventer",
+            "race_count": 2,
+            "avg_500eq_ms": 45916,
+            "best_500eq_ms": 45833
+          }
+        ],
+        "best_track_summary": {
+          "name": "Thialf",
+          "delta_ms": -2479
+        },
+        "worst_track_summary": {
+          "name": "Deventer",
+          "delta_ms": 2437
+        },
+        "fun_stats": {
+          "closest_pb_miss": {
+            "delta_ms": 4100,
+            "distance_m": 1500,
+            "venue": "Deventer",
+            "race_id": 17
+          },
+          "fastest_lap": {
+            "time_ms": 28900,
+            "distance_m": 1000,
+            "venue": "Thialf",
+            "race_id": 20
+          },
+          "fastest_opener": {
+            "time_ms": 10200,
+            "distance_m": 500,
+            "venue": "Alkmaar",
+            "race_id": 15
+          },
+          "busiest_month": {
+            "month": "2024-11",
+            "count": 3
+          },
+          "most_skated_distance": {
+            "distance_m": 1500,
+            "count": 6
+          }
+        },
+        "sb_reference_season": "2024-2025"
+      },
+      "expected_story_candidates": [
+        {
+          "title": "Coach Analyse",
+          "variant": "commentary",
+          "paragraphs": [
+            [
+              {
+                "text": "In het seizoen 2024-2025 reed je je snelste ronde",
+                "tone": "neutral"
+              },
+              {
+                "text": "28.90",
+                "tone": "positive",
+                "href": "/races/20"
+              },
+              {
+                "text": " op de 1000m in Thialf.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening klokte je op",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.20",
+                "tone": "positive",
+                "href": "/races/15"
+              },
+              {
+                "text": " in Alkmaar.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "In Deventer kwam je het dichtst bij een nieuw PR: je miste het daar met",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": ".",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "november 2024 was je drukste maand met",
+                "tone": "neutral"
+              },
+              {
+                "text": "3",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De afstand die je het vaakst reed was de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": ", in totaal 6 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "analysis",
+          "paragraphs": [
+            [
+              {
+                "text": "Dit seizoen liet je sterke snelheid zien.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je snelste ronde was",
+                "tone": "neutral"
+              },
+              {
+                "text": "28.90",
+                "tone": "positive",
+                "href": "/races/20"
+              },
+              {
+                "text": " in Thialf.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je beste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.20",
+                "tone": "positive",
+                "href": "/races/15"
+              },
+              {
+                "text": " in Alkmaar.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "In Deventer zat je ook het dichtst bij een persoonlijk record:",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": " verwijderd van je PR.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "november 2024 was duidelijk je actiefste maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "3",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest gereden afstand met 6 starts.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "recap",
+          "paragraphs": [
+            [
+              {
+                "text": "In het seizoen 2024-2025 kende een aantal opvallende momenten.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "Je snelste ronde reed je in",
+                "tone": "neutral"
+              },
+              {
+                "text": "Thialf",
+                "tone": "positive"
+              },
+              {
+                "text": ", waar je",
+                "tone": "neutral"
+              },
+              {
+                "text": "28.90",
+                "tone": "positive",
+                "href": "/races/20"
+              },
+              {
+                "text": " noteerde op de 1000m.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.20",
+                "tone": "positive",
+                "href": "/races/15"
+              },
+              {
+                "text": " in Alkmaar.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Daar kwam je ook dicht bij een PR, met een marge van",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": ".",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "november 2024",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest actieve maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "3",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Over de hele periode bleek de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " je favoriete afstand: die reed je 6 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "default to current but current has no data",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 1,
+          "competition_id": 90,
+          "distance_m": 1500,
+          "total_time_ms": 150000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "44.0,32.5,33.0,34.0"
+        },
+        {
+          "id": 2,
+          "competition_id": 90,
+          "distance_m": 500,
+          "total_time_ms": 43000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "10.9,32.1"
+        },
+        {
+          "id": 3,
+          "competition_id": 91,
+          "distance_m": 1500,
+          "total_time_ms": 148000,
+          "dnf": 0,
+          "competition_date": "2024-01-20",
+          "venue": "Deventer",
+          "laps_csv": "43.5,32.0,32.5,33.0"
+        }
+      ],
+      "params": {
+        "season": "",
+        "distance_m": "",
+        "default_to_current": true
+      },
+      "expected": {
+        "season_options": [
+          "2023-2024"
+        ],
+        "selected_season": "",
+        "selected_distance": "",
+        "distance_options": [
+          500,
+          1500
+        ],
+        "basic_stats": {
+          "competition_count": 2,
+          "race_count": 3,
+          "total_km": 3.5,
+          "pb_count": 3,
+          "sb_count": 3
+        },
+        "distance_overview_rows": [
+          {
+            "distance_m": 500,
+            "pb_ms": 43000,
+            "pb_race_id": 2,
+            "season_best_ms": null,
+            "season_best_race_id": null,
+            "average_ms": 43000,
+            "median_ms": 43000,
+            "avg_opening_s": 10.9,
+            "best_opening_s": 10.9,
+            "best_opening_race_id": 2,
+            "avg_lap_s": 32.1,
+            "best_lap_s": 32.1,
+            "best_lap_race_id": 2,
+            "avg_fade_s": 0.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 32.1
+              }
+            ]
+          },
+          {
+            "distance_m": 1500,
+            "pb_ms": 148000,
+            "pb_race_id": 3,
+            "season_best_ms": null,
+            "season_best_race_id": null,
+            "average_ms": 149000,
+            "median_ms": 149000,
+            "avg_opening_s": 43.75,
+            "best_opening_s": 43.5,
+            "best_opening_race_id": 3,
+            "avg_lap_s": 32.833333333333336,
+            "best_lap_s": 32.0,
+            "best_lap_race_id": 3,
+            "avg_fade_s": 1.25,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 32.25
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 32.75
+              },
+              {
+                "lap_no": 3,
+                "avg_s": 33.5
+              }
+            ]
+          }
+        ],
+        "consistency_rows": [
+          {
+            "distance_m": 500,
+            "std_dev_ms": 0,
+            "range_ms": 0
+          },
+          {
+            "distance_m": 1500,
+            "std_dev_ms": 1000,
+            "range_ms": 2000
+          }
+        ],
+        "progress_rows": [
+          {
+            "distance_m": 500,
+            "first_ms": 43000,
+            "first_race_id": 2,
+            "latest_ms": 43000,
+            "latest_race_id": 2,
+            "improvement_ms": 0,
+            "last5_avg_ms": 43000,
+            "season_avg_ms": null,
+            "trend": "n.v.t."
+          },
+          {
+            "distance_m": 1500,
+            "first_ms": 150000,
+            "first_race_id": 1,
+            "latest_ms": 148000,
+            "latest_race_id": 3,
+            "improvement_ms": -2000,
+            "last5_avg_ms": 149000,
+            "season_avg_ms": null,
+            "trend": "n.v.t."
+          }
+        ],
+        "track_rows": [
+          {
+            "track": "Heerenveen",
+            "race_count": 2,
+            "avg_500eq_ms": 46500,
+            "best_500eq_ms": 43000
+          },
+          {
+            "track": "Deventer",
+            "race_count": 1,
+            "avg_500eq_ms": 49333,
+            "best_500eq_ms": 49333
+          }
+        ],
+        "best_track_summary": {
+          "name": "Heerenveen",
+          "delta_ms": -944
+        },
+        "worst_track_summary": {
+          "name": "Deventer",
+          "delta_ms": 1889
+        },
+        "fun_stats": {
+          "closest_pb_miss": null,
+          "fastest_lap": {
+            "time_ms": 32000,
+            "distance_m": 1500,
+            "venue": "Deventer",
+            "race_id": 3
+          },
+          "fastest_opener": {
+            "time_ms": 10900,
+            "distance_m": 500,
+            "venue": "Heerenveen",
+            "race_id": 2
+          },
+          "busiest_month": {
+            "month": "2023-10",
+            "count": 2
+          },
+          "most_skated_distance": {
+            "distance_m": 1500,
+            "count": 2
+          }
+        },
+        "sb_reference_season": "2024-2025"
+      },
+      "expected_story_candidates": [
+        {
+          "title": "Coach Analyse",
+          "variant": "commentary",
+          "paragraphs": [
+            [
+              {
+                "text": "In deze periode reed je je snelste ronde",
+                "tone": "neutral"
+              },
+              {
+                "text": "32.00",
+                "tone": "positive",
+                "href": "/races/3"
+              },
+              {
+                "text": " op de 1500m in Deventer.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening klokte je op",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.90",
+                "tone": "positive",
+                "href": "/races/2"
+              },
+              {
+                "text": " in Heerenveen.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "oktober 2023 was je drukste maand met",
+                "tone": "neutral"
+              },
+              {
+                "text": "2",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De afstand die je het vaakst reed was de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": ", in totaal 2 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "analysis",
+          "paragraphs": [
+            [
+              {
+                "text": "In deze periode liet je sterke snelheid zien.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je snelste ronde was",
+                "tone": "neutral"
+              },
+              {
+                "text": "32.00",
+                "tone": "positive",
+                "href": "/races/3"
+              },
+              {
+                "text": " in Deventer.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je beste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.90",
+                "tone": "positive",
+                "href": "/races/2"
+              },
+              {
+                "text": " in Heerenveen.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "oktober 2023 was duidelijk je actiefste maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "2",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest gereden afstand met 2 starts.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "recap",
+          "paragraphs": [
+            [
+              {
+                "text": "In deze periode kende een aantal opvallende momenten.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "Je snelste ronde reed je in",
+                "tone": "neutral"
+              },
+              {
+                "text": "Deventer",
+                "tone": "positive"
+              },
+              {
+                "text": ", waar je",
+                "tone": "neutral"
+              },
+              {
+                "text": "32.00",
+                "tone": "positive",
+                "href": "/races/3"
+              },
+              {
+                "text": " noteerde op de 1500m.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.90",
+                "tone": "positive",
+                "href": "/races/2"
+              },
+              {
+                "text": " in Heerenveen.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "oktober 2023",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest actieve maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "2",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Over de hele periode bleek de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " je favoriete afstand: die reed je 2 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "unknown season falls back to current",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 1,
+          "competition_id": 90,
+          "distance_m": 1500,
+          "total_time_ms": 150000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "44.0,32.5,33.0,34.0"
+        },
+        {
+          "id": 2,
+          "competition_id": 90,
+          "distance_m": 500,
+          "total_time_ms": 43000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "10.9,32.1"
+        },
+        {
+          "id": 3,
+          "competition_id": 91,
+          "distance_m": 1500,
+          "total_time_ms": 148000,
+          "dnf": 0,
+          "competition_date": "2024-01-20",
+          "venue": "Deventer",
+          "laps_csv": "43.5,32.0,32.5,33.0"
+        },
+        {
+          "id": 10,
+          "competition_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 140000,
+          "dnf": 0,
+          "competition_date": "2024-09-14",
+          "venue": "Heerenveen",
+          "laps_csv": "42.0,31.0,31.5,32.0"
+        },
+        {
+          "id": 11,
+          "competition_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 41200,
+          "dnf": 0,
+          "competition_date": "2024-09-14",
+          "venue": "Heerenveen",
+          "laps_csv": "10.4,30.8"
+        },
+        {
+          "id": 12,
+          "competition_id": 2,
+          "distance_m": 1500,
+          "total_time_ms": 137000,
+          "dnf": 0,
+          "competition_date": "2024-10-05",
+          "venue": "Heerenveen",
+          "laps_csv": "41.0,30.5,31.2,31.5"
+        },
+        {
+          "id": 13,
+          "competition_id": 2,
+          "distance_m": 1000,
+          "total_time_ms": 83500,
+          "dnf": 0,
+          "competition_date": "2024-10-05",
+          "venue": "Heerenveen",
+          "laps_csv": "24.5,29.5,29.5"
+        },
+        {
+          "id": 14,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": 133900,
+          "dnf": 0,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "41.5,30.2,30.8,31.4"
+        },
+        {
+          "id": 15,
+          "competition_id": 3,
+          "distance_m": 500,
+          "total_time_ms": 40800,
+          "dnf": 0,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "10.2,30.6"
+        },
+        {
+          "id": 16,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": null,
+          "dnf": 1,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "42.0,31.0"
+        },
+        {
+          "id": 17,
+          "competition_id": 4,
+          "distance_m": 1500,
+          "total_time_ms": 138000,
+          "dnf": 0,
+          "competition_date": "2024-12-14",
+          "venue": "Deventer",
+          "laps_csv": null
+        },
+        {
+          "id": 18,
+          "competition_id": 4,
+          "distance_m": 3000,
+          "total_time_ms": 275000,
+          "dnf": 0,
+          "competition_date": "2024-12-14",
+          "venue": "Deventer",
+          "laps_csv": "21.0,32.0,32.2,32.5,32.8,33.0,33.2,34.0"
+        },
+        {
+          "id": 5,
+          "competition_id": 5,
+          "distance_m": 1500,
+          "total_time_ms": 132500,
+          "dnf": 0,
+          "competition_date": "2025-01-11",
+          "venue": "Heerenveen",
+          "laps_csv": "41.5,30.0,30.5,30.5"
+        },
+        {
+          "id": 19,
+          "competition_id": 5,
+          "distance_m": 500,
+          "total_time_ms": 40550,
+          "dnf": 0,
+          "competition_date": "2025-01-11",
+          "venue": "Heerenveen",
+          "laps_csv": "10.2,30.35"
+        },
+        {
+          "id": 20,
+          "competition_id": 6,
+          "distance_m": 1000,
+          "total_time_ms": 82000,
+          "dnf": 0,
+          "competition_date": "2025-02-08",
+          "venue": "Thialf",
+          "laps_csv": "24.2,28.9,28.9"
+        }
+      ],
+      "params": {
+        "season": "2019-2020",
+        "distance_m": "",
+        "default_to_current": false
+      },
+      "expected": {
+        "season_options": [
+          "2024-2025",
+          "2023-2024"
+        ],
+        "selected_season": "2024-2025",
+        "selected_distance": "",
+        "distance_options": [
+          500,
+          1000,
+          1500,
+          3000
+        ],
+        "basic_stats": {
+          "competition_count": 6,
+          "race_count": 12,
+          "total_km": 15.5,
+          "pb_count": 10,
+          "sb_count": 10
+        },
+        "distance_overview_rows": [
+          {
+            "distance_m": 500,
+            "pb_ms": 40550,
+            "pb_race_id": 19,
+            "season_best_ms": 40550,
+            "season_best_race_id": 19,
+            "average_ms": 40850,
+            "median_ms": 40800,
+            "avg_opening_s": 10.266666666666666,
+            "best_opening_s": 10.2,
+            "best_opening_race_id": 15,
+            "avg_lap_s": 30.583333333333336,
+            "best_lap_s": 30.35,
+            "best_lap_race_id": 19,
+            "avg_fade_s": 0.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 30.583333333333336
+              }
+            ]
+          },
+          {
+            "distance_m": 1000,
+            "pb_ms": 82000,
+            "pb_race_id": 20,
+            "season_best_ms": 82000,
+            "season_best_race_id": 20,
+            "average_ms": 82750,
+            "median_ms": 82750,
+            "avg_opening_s": 24.35,
+            "best_opening_s": 24.2,
+            "best_opening_race_id": 20,
+            "avg_lap_s": 29.2,
+            "best_lap_s": 28.9,
+            "best_lap_race_id": 20,
+            "avg_fade_s": 0.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 29.2
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 29.2
+              }
+            ]
+          },
+          {
+            "distance_m": 1500,
+            "pb_ms": 132500,
+            "pb_race_id": 5,
+            "season_best_ms": 132500,
+            "season_best_race_id": 5,
+            "average_ms": 136280,
+            "median_ms": 137000,
+            "avg_opening_s": 41.5,
+            "best_opening_s": 41.0,
+            "best_opening_race_id": 12,
+            "avg_lap_s": 30.925,
+            "best_lap_s": 30.0,
+            "best_lap_race_id": 5,
+            "avg_fade_s": 0.9249999999999998,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 30.425
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 31.0
+              },
+              {
+                "lap_no": 3,
+                "avg_s": 31.35
+              }
+            ]
+          },
+          {
+            "distance_m": 3000,
+            "pb_ms": 275000,
+            "pb_race_id": 18,
+            "season_best_ms": 275000,
+            "season_best_race_id": 18,
+            "average_ms": 275000,
+            "median_ms": 275000,
+            "avg_opening_s": 21.0,
+            "best_opening_s": 21.0,
+            "best_opening_race_id": 18,
+            "avg_lap_s": 32.81428571428572,
+            "best_lap_s": 32.0,
+            "best_lap_race_id": 18,
+            "avg_fade_s": 2.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 32.0
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 32.2
+              },
+              {
+                "lap_no": 3,
+                "avg_s": 32.5
+              },
+              {
+                "lap_no": 4,
+                "avg_s": 32.8
+              },
+              {
+                "lap_no": 5,
+                "avg_s": 33.0
+              },
+              {
+                "lap_no": 6,
+                "avg_s": 33.2
+              },
+              {
+                "lap_no": 7,
+                "avg_s": 34.0
+              }
+            ]
+          }
+        ],
+        "consistency_rows": [
+          {
+            "distance_m": 500,
+            "std_dev_ms": 268,
+            "range_ms": 650
+          },
+          {
+            "distance_m": 1000,
+            "std_dev_ms": 750,
+            "range_ms": 1500
+          },
+          {
+            "distance_m": 1500,
+            "std_dev_ms": 2730,
+            "range_ms": 7500
+          },
+          {
+            "distance_m": 3000,
+            "std_dev_ms": 0,
+            "range_ms": 0
+          }
+        ],
+        "progress_rows": [
+          {
+            "distance_m": 500,
+            "first_ms": 41200,
+            "first_race_id": 11,
+            "latest_ms": 40550,
+            "latest_race_id": 19,
+            "improvement_ms": -650,
+            "last5_avg_ms": 40850,
+            "season_avg_ms": 40850,
+            "trend": "stabiel"
+          },
+          {
+            "distance_m": 1000,
+            "first_ms": 83500,
+            "first_race_id": 13,
+            "latest_ms": 82000,
+            "latest_race_id": 20,
+            "improvement_ms": -1500,
+            "last5_avg_ms": 82750,
+            "season_avg_ms": 82750,
+            "trend": "stabiel"
+          },
+          {
+            "distance_m": 1500,
+            "first_ms": 140000,
+            "first_race_id": 10,
+            "latest_ms": 132500,
+            "latest_race_id": 5,
+            "improvement_ms": -7500,
+            "last5_avg_ms": 136280,
+            "season_avg_ms": 136280,
+            "trend": "stabiel"
+          },
+          {
+            "distance_m": 3000,
+            "first_ms": 275000,
+            "first_race_id": 18,
+            "latest_ms": 275000,
+            "latest_race_id": 18,
+            "improvement_ms": 0,
+            "last5_avg_ms": 275000,
+            "season_avg_ms": 275000,
+            "trend": "stabiel"
+          }
+        ],
+        "track_rows": [
+          {
+            "track": "Thialf",
+            "race_count": 1,
+            "avg_500eq_ms": 41000,
+            "best_500eq_ms": 41000
+          },
+          {
+            "track": "Alkmaar",
+            "race_count": 2,
+            "avg_500eq_ms": 42716,
+            "best_500eq_ms": 40800
+          },
+          {
+            "track": "Heerenveen",
+            "race_count": 6,
+            "avg_500eq_ms": 43334,
+            "best_500eq_ms": 40550
+          },
+          {
+            "track": "Deventer",
+            "race_count": 2,
+            "avg_500eq_ms": 45916,
+            "best_500eq_ms": 45833
+          }
+        ],
+        "best_track_summary": {
+          "name": "Thialf",
+          "delta_ms": -2479
+        },
+        "worst_track_summary": {
+          "name": "Deventer",
+          "delta_ms": 2437
+        },
+        "fun_stats": {
+          "closest_pb_miss": {
+            "delta_ms": 4100,
+            "distance_m": 1500,
+            "venue": "Deventer",
+            "race_id": 17
+          },
+          "fastest_lap": {
+            "time_ms": 28900,
+            "distance_m": 1000,
+            "venue": "Thialf",
+            "race_id": 20
+          },
+          "fastest_opener": {
+            "time_ms": 10200,
+            "distance_m": 500,
+            "venue": "Alkmaar",
+            "race_id": 15
+          },
+          "busiest_month": {
+            "month": "2024-11",
+            "count": 3
+          },
+          "most_skated_distance": {
+            "distance_m": 1500,
+            "count": 6
+          }
+        },
+        "sb_reference_season": "2024-2025"
+      },
+      "expected_story_candidates": [
+        {
+          "title": "Coach Analyse",
+          "variant": "commentary",
+          "paragraphs": [
+            [
+              {
+                "text": "In het seizoen 2024-2025 reed je je snelste ronde",
+                "tone": "neutral"
+              },
+              {
+                "text": "28.90",
+                "tone": "positive",
+                "href": "/races/20"
+              },
+              {
+                "text": " op de 1000m in Thialf.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening klokte je op",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.20",
+                "tone": "positive",
+                "href": "/races/15"
+              },
+              {
+                "text": " in Alkmaar.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "In Deventer kwam je het dichtst bij een nieuw PR: je miste het daar met",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": ".",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "november 2024 was je drukste maand met",
+                "tone": "neutral"
+              },
+              {
+                "text": "3",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De afstand die je het vaakst reed was de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": ", in totaal 6 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "analysis",
+          "paragraphs": [
+            [
+              {
+                "text": "Dit seizoen liet je sterke snelheid zien.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je snelste ronde was",
+                "tone": "neutral"
+              },
+              {
+                "text": "28.90",
+                "tone": "positive",
+                "href": "/races/20"
+              },
+              {
+                "text": " in Thialf.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je beste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.20",
+                "tone": "positive",
+                "href": "/races/15"
+              },
+              {
+                "text": " in Alkmaar.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "In Deventer zat je ook het dichtst bij een persoonlijk record:",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": " verwijderd van je PR.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "november 2024 was duidelijk je actiefste maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "3",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest gereden afstand met 6 starts.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "recap",
+          "paragraphs": [
+            [
+              {
+                "text": "In het seizoen 2024-2025 kende een aantal opvallende momenten.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "Je snelste ronde reed je in",
+                "tone": "neutral"
+              },
+              {
+                "text": "Thialf",
+                "tone": "positive"
+              },
+              {
+                "text": ", waar je",
+                "tone": "neutral"
+              },
+              {
+                "text": "28.90",
+                "tone": "positive",
+                "href": "/races/20"
+              },
+              {
+                "text": " noteerde op de 1000m.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.20",
+                "tone": "positive",
+                "href": "/races/15"
+              },
+              {
+                "text": " in Alkmaar.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Daar kwam je ook dicht bij een PR, met een marge van",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": ".",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "november 2024",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest actieve maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "3",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Over de hele periode bleek de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " je favoriete afstand: die reed je 6 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "unknown season, current has no data",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 1,
+          "competition_id": 90,
+          "distance_m": 1500,
+          "total_time_ms": 150000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "44.0,32.5,33.0,34.0"
+        },
+        {
+          "id": 2,
+          "competition_id": 90,
+          "distance_m": 500,
+          "total_time_ms": 43000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "10.9,32.1"
+        },
+        {
+          "id": 3,
+          "competition_id": 91,
+          "distance_m": 1500,
+          "total_time_ms": 148000,
+          "dnf": 0,
+          "competition_date": "2024-01-20",
+          "venue": "Deventer",
+          "laps_csv": "43.5,32.0,32.5,33.0"
+        }
+      ],
+      "params": {
+        "season": "2019-2020",
+        "distance_m": "",
+        "default_to_current": false
+      },
+      "expected": {
+        "season_options": [
+          "2023-2024"
+        ],
+        "selected_season": "",
+        "selected_distance": "",
+        "distance_options": [
+          500,
+          1500
+        ],
+        "basic_stats": {
+          "competition_count": 2,
+          "race_count": 3,
+          "total_km": 3.5,
+          "pb_count": 3,
+          "sb_count": 3
+        },
+        "distance_overview_rows": [
+          {
+            "distance_m": 500,
+            "pb_ms": 43000,
+            "pb_race_id": 2,
+            "season_best_ms": null,
+            "season_best_race_id": null,
+            "average_ms": 43000,
+            "median_ms": 43000,
+            "avg_opening_s": 10.9,
+            "best_opening_s": 10.9,
+            "best_opening_race_id": 2,
+            "avg_lap_s": 32.1,
+            "best_lap_s": 32.1,
+            "best_lap_race_id": 2,
+            "avg_fade_s": 0.0,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 32.1
+              }
+            ]
+          },
+          {
+            "distance_m": 1500,
+            "pb_ms": 148000,
+            "pb_race_id": 3,
+            "season_best_ms": null,
+            "season_best_race_id": null,
+            "average_ms": 149000,
+            "median_ms": 149000,
+            "avg_opening_s": 43.75,
+            "best_opening_s": 43.5,
+            "best_opening_race_id": 3,
+            "avg_lap_s": 32.833333333333336,
+            "best_lap_s": 32.0,
+            "best_lap_race_id": 3,
+            "avg_fade_s": 1.25,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 32.25
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 32.75
+              },
+              {
+                "lap_no": 3,
+                "avg_s": 33.5
+              }
+            ]
+          }
+        ],
+        "consistency_rows": [
+          {
+            "distance_m": 500,
+            "std_dev_ms": 0,
+            "range_ms": 0
+          },
+          {
+            "distance_m": 1500,
+            "std_dev_ms": 1000,
+            "range_ms": 2000
+          }
+        ],
+        "progress_rows": [
+          {
+            "distance_m": 500,
+            "first_ms": 43000,
+            "first_race_id": 2,
+            "latest_ms": 43000,
+            "latest_race_id": 2,
+            "improvement_ms": 0,
+            "last5_avg_ms": 43000,
+            "season_avg_ms": null,
+            "trend": "n.v.t."
+          },
+          {
+            "distance_m": 1500,
+            "first_ms": 150000,
+            "first_race_id": 1,
+            "latest_ms": 148000,
+            "latest_race_id": 3,
+            "improvement_ms": -2000,
+            "last5_avg_ms": 149000,
+            "season_avg_ms": null,
+            "trend": "n.v.t."
+          }
+        ],
+        "track_rows": [
+          {
+            "track": "Heerenveen",
+            "race_count": 2,
+            "avg_500eq_ms": 46500,
+            "best_500eq_ms": 43000
+          },
+          {
+            "track": "Deventer",
+            "race_count": 1,
+            "avg_500eq_ms": 49333,
+            "best_500eq_ms": 49333
+          }
+        ],
+        "best_track_summary": {
+          "name": "Heerenveen",
+          "delta_ms": -944
+        },
+        "worst_track_summary": {
+          "name": "Deventer",
+          "delta_ms": 1889
+        },
+        "fun_stats": {
+          "closest_pb_miss": null,
+          "fastest_lap": {
+            "time_ms": 32000,
+            "distance_m": 1500,
+            "venue": "Deventer",
+            "race_id": 3
+          },
+          "fastest_opener": {
+            "time_ms": 10900,
+            "distance_m": 500,
+            "venue": "Heerenveen",
+            "race_id": 2
+          },
+          "busiest_month": {
+            "month": "2023-10",
+            "count": 2
+          },
+          "most_skated_distance": {
+            "distance_m": 1500,
+            "count": 2
+          }
+        },
+        "sb_reference_season": "2024-2025"
+      },
+      "expected_story_candidates": [
+        {
+          "title": "Coach Analyse",
+          "variant": "commentary",
+          "paragraphs": [
+            [
+              {
+                "text": "In deze periode reed je je snelste ronde",
+                "tone": "neutral"
+              },
+              {
+                "text": "32.00",
+                "tone": "positive",
+                "href": "/races/3"
+              },
+              {
+                "text": " op de 1500m in Deventer.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening klokte je op",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.90",
+                "tone": "positive",
+                "href": "/races/2"
+              },
+              {
+                "text": " in Heerenveen.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "oktober 2023 was je drukste maand met",
+                "tone": "neutral"
+              },
+              {
+                "text": "2",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De afstand die je het vaakst reed was de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": ", in totaal 2 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "analysis",
+          "paragraphs": [
+            [
+              {
+                "text": "In deze periode liet je sterke snelheid zien.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je snelste ronde was",
+                "tone": "neutral"
+              },
+              {
+                "text": "32.00",
+                "tone": "positive",
+                "href": "/races/3"
+              },
+              {
+                "text": " in Deventer.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je beste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.90",
+                "tone": "positive",
+                "href": "/races/2"
+              },
+              {
+                "text": " in Heerenveen.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "oktober 2023 was duidelijk je actiefste maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "2",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest gereden afstand met 2 starts.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "recap",
+          "paragraphs": [
+            [
+              {
+                "text": "In deze periode kende een aantal opvallende momenten.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "Je snelste ronde reed je in",
+                "tone": "neutral"
+              },
+              {
+                "text": "Deventer",
+                "tone": "positive"
+              },
+              {
+                "text": ", waar je",
+                "tone": "neutral"
+              },
+              {
+                "text": "32.00",
+                "tone": "positive",
+                "href": "/races/3"
+              },
+              {
+                "text": " noteerde op de 1500m.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "10.90",
+                "tone": "positive",
+                "href": "/races/2"
+              },
+              {
+                "text": " in Heerenveen.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "oktober 2023",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest actieve maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "2",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Over de hele periode bleek de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " je favoriete afstand: die reed je 2 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "distance filter",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 1,
+          "competition_id": 90,
+          "distance_m": 1500,
+          "total_time_ms": 150000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "44.0,32.5,33.0,34.0"
+        },
+        {
+          "id": 2,
+          "competition_id": 90,
+          "distance_m": 500,
+          "total_time_ms": 43000,
+          "dnf": 0,
+          "competition_date": "2023-10-07",
+          "venue": "Heerenveen",
+          "laps_csv": "10.9,32.1"
+        },
+        {
+          "id": 3,
+          "competition_id": 91,
+          "distance_m": 1500,
+          "total_time_ms": 148000,
+          "dnf": 0,
+          "competition_date": "2024-01-20",
+          "venue": "Deventer",
+          "laps_csv": "43.5,32.0,32.5,33.0"
+        },
+        {
+          "id": 10,
+          "competition_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 140000,
+          "dnf": 0,
+          "competition_date": "2024-09-14",
+          "venue": "Heerenveen",
+          "laps_csv": "42.0,31.0,31.5,32.0"
+        },
+        {
+          "id": 11,
+          "competition_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 41200,
+          "dnf": 0,
+          "competition_date": "2024-09-14",
+          "venue": "Heerenveen",
+          "laps_csv": "10.4,30.8"
+        },
+        {
+          "id": 12,
+          "competition_id": 2,
+          "distance_m": 1500,
+          "total_time_ms": 137000,
+          "dnf": 0,
+          "competition_date": "2024-10-05",
+          "venue": "Heerenveen",
+          "laps_csv": "41.0,30.5,31.2,31.5"
+        },
+        {
+          "id": 13,
+          "competition_id": 2,
+          "distance_m": 1000,
+          "total_time_ms": 83500,
+          "dnf": 0,
+          "competition_date": "2024-10-05",
+          "venue": "Heerenveen",
+          "laps_csv": "24.5,29.5,29.5"
+        },
+        {
+          "id": 14,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": 133900,
+          "dnf": 0,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "41.5,30.2,30.8,31.4"
+        },
+        {
+          "id": 15,
+          "competition_id": 3,
+          "distance_m": 500,
+          "total_time_ms": 40800,
+          "dnf": 0,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "10.2,30.6"
+        },
+        {
+          "id": 16,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": null,
+          "dnf": 1,
+          "competition_date": "2024-11-16",
+          "venue": "Alkmaar",
+          "laps_csv": "42.0,31.0"
+        },
+        {
+          "id": 17,
+          "competition_id": 4,
+          "distance_m": 1500,
+          "total_time_ms": 138000,
+          "dnf": 0,
+          "competition_date": "2024-12-14",
+          "venue": "Deventer",
+          "laps_csv": null
+        },
+        {
+          "id": 18,
+          "competition_id": 4,
+          "distance_m": 3000,
+          "total_time_ms": 275000,
+          "dnf": 0,
+          "competition_date": "2024-12-14",
+          "venue": "Deventer",
+          "laps_csv": "21.0,32.0,32.2,32.5,32.8,33.0,33.2,34.0"
+        },
+        {
+          "id": 5,
+          "competition_id": 5,
+          "distance_m": 1500,
+          "total_time_ms": 132500,
+          "dnf": 0,
+          "competition_date": "2025-01-11",
+          "venue": "Heerenveen",
+          "laps_csv": "41.5,30.0,30.5,30.5"
+        },
+        {
+          "id": 19,
+          "competition_id": 5,
+          "distance_m": 500,
+          "total_time_ms": 40550,
+          "dnf": 0,
+          "competition_date": "2025-01-11",
+          "venue": "Heerenveen",
+          "laps_csv": "10.2,30.35"
+        },
+        {
+          "id": 20,
+          "competition_id": 6,
+          "distance_m": 1000,
+          "total_time_ms": 82000,
+          "dnf": 0,
+          "competition_date": "2025-02-08",
+          "venue": "Thialf",
+          "laps_csv": "24.2,28.9,28.9"
+        }
+      ],
+      "params": {
+        "season": "2024-2025",
+        "distance_m": "1500",
+        "default_to_current": false
+      },
+      "expected": {
+        "season_options": [
+          "2024-2025",
+          "2023-2024"
+        ],
+        "selected_season": "2024-2025",
+        "selected_distance": "1500",
+        "distance_options": [
+          500,
+          1000,
+          1500,
+          3000
+        ],
+        "basic_stats": {
+          "competition_count": 5,
+          "race_count": 6,
+          "total_km": 9.0,
+          "pb_count": 4,
+          "sb_count": 4
+        },
+        "distance_overview_rows": [
+          {
+            "distance_m": 1500,
+            "pb_ms": 132500,
+            "pb_race_id": 5,
+            "season_best_ms": 132500,
+            "season_best_race_id": 5,
+            "average_ms": 136280,
+            "median_ms": 137000,
+            "avg_opening_s": 41.5,
+            "best_opening_s": 41.0,
+            "best_opening_race_id": 12,
+            "avg_lap_s": 30.925,
+            "best_lap_s": 30.0,
+            "best_lap_race_id": 5,
+            "avg_fade_s": 0.9249999999999998,
+            "lap_averages": [
+              {
+                "lap_no": 1,
+                "avg_s": 30.425
+              },
+              {
+                "lap_no": 2,
+                "avg_s": 31.0
+              },
+              {
+                "lap_no": 3,
+                "avg_s": 31.35
+              }
+            ]
+          }
+        ],
+        "consistency_rows": [
+          {
+            "distance_m": 1500,
+            "std_dev_ms": 2730,
+            "range_ms": 7500
+          }
+        ],
+        "progress_rows": [
+          {
+            "distance_m": 1500,
+            "first_ms": 140000,
+            "first_race_id": 10,
+            "latest_ms": 132500,
+            "latest_race_id": 5,
+            "improvement_ms": -7500,
+            "last5_avg_ms": 136280,
+            "season_avg_ms": 136280,
+            "trend": "stabiel"
+          }
+        ],
+        "track_rows": [
+          {
+            "track": "Alkmaar",
+            "race_count": 1,
+            "avg_500eq_ms": 44633,
+            "best_500eq_ms": 44633
+          },
+          {
+            "track": "Heerenveen",
+            "race_count": 3,
+            "avg_500eq_ms": 45500,
+            "best_500eq_ms": 44167
+          },
+          {
+            "track": "Deventer",
+            "race_count": 1,
+            "avg_500eq_ms": 46000,
+            "best_500eq_ms": 46000
+          }
+        ],
+        "best_track_summary": {
+          "name": "Alkmaar",
+          "delta_ms": -794
+        },
+        "worst_track_summary": {
+          "name": "Deventer",
+          "delta_ms": 573
+        },
+        "fun_stats": {
+          "closest_pb_miss": {
+            "delta_ms": 4100,
+            "distance_m": 1500,
+            "venue": "Deventer",
+            "race_id": 17
+          },
+          "fastest_lap": {
+            "time_ms": 30000,
+            "distance_m": 1500,
+            "venue": "Heerenveen",
+            "race_id": 5
+          },
+          "fastest_opener": {
+            "time_ms": 41000,
+            "distance_m": 1500,
+            "venue": "Heerenveen",
+            "race_id": 12
+          },
+          "busiest_month": {
+            "month": "2024-11",
+            "count": 2
+          },
+          "most_skated_distance": {
+            "distance_m": 1500,
+            "count": 6
+          }
+        },
+        "sb_reference_season": "2024-2025"
+      },
+      "expected_story_candidates": [
+        {
+          "title": "Coach Analyse",
+          "variant": "commentary",
+          "paragraphs": [
+            [
+              {
+                "text": "In het seizoen 2024-2025 reed je je snelste ronde",
+                "tone": "neutral"
+              },
+              {
+                "text": "30.00",
+                "tone": "positive",
+                "href": "/races/5"
+              },
+              {
+                "text": " op de 1500m in Heerenveen.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening klokte je op",
+                "tone": "neutral"
+              },
+              {
+                "text": "41.00",
+                "tone": "positive",
+                "href": "/races/12"
+              },
+              {
+                "text": " in Heerenveen.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "In Deventer kwam je het dichtst bij een nieuw PR: je miste het daar met",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": ".",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "november 2024 was je drukste maand met",
+                "tone": "neutral"
+              },
+              {
+                "text": "2",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De afstand die je het vaakst reed was de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": ", in totaal 6 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "analysis",
+          "paragraphs": [
+            [
+              {
+                "text": "Dit seizoen liet je sterke snelheid zien.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je snelste ronde was",
+                "tone": "neutral"
+              },
+              {
+                "text": "30.00",
+                "tone": "positive",
+                "href": "/races/5"
+              },
+              {
+                "text": " in Heerenveen.",
+                "tone": "neutral"
+              },
+              {
+                "text": " Je beste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "41.00",
+                "tone": "positive",
+                "href": "/races/12"
+              },
+              {
+                "text": " in Heerenveen.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "In Deventer zat je ook het dichtst bij een persoonlijk record:",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": " verwijderd van je PR.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "november 2024 was duidelijk je actiefste maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "2",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest gereden afstand met 6 starts.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "recap",
+          "paragraphs": [
+            [
+              {
+                "text": "In het seizoen 2024-2025 kende een aantal opvallende momenten.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "Je snelste ronde reed je in",
+                "tone": "neutral"
+              },
+              {
+                "text": "Heerenveen",
+                "tone": "positive"
+              },
+              {
+                "text": ", waar je",
+                "tone": "neutral"
+              },
+              {
+                "text": "30.00",
+                "tone": "positive",
+                "href": "/races/5"
+              },
+              {
+                "text": " noteerde op de 1500m.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Je snelste opening was",
+                "tone": "neutral"
+              },
+              {
+                "text": "41.00",
+                "tone": "positive",
+                "href": "/races/12"
+              },
+              {
+                "text": " in Heerenveen.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Daar kwam je ook dicht bij een PR, met een marge van",
+                "tone": "neutral"
+              },
+              {
+                "text": "4.10",
+                "tone": "negative",
+                "href": "/races/17"
+              },
+              {
+                "text": ".",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "november 2024",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest actieve maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "2",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Over de hele periode bleek de",
+                "tone": "neutral"
+              },
+              {
+                "text": "1500m",
+                "tone": "positive"
+              },
+              {
+                "text": " je favoriete afstand: die reed je 6 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "races without laps: only calendar fun stats",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 30,
+          "competition_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 41500,
+          "dnf": 0,
+          "competition_date": "2024-11-02",
+          "venue": "Thialf",
+          "laps_csv": null
+        },
+        {
+          "id": 31,
+          "competition_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 41100,
+          "dnf": 0,
+          "competition_date": "2024-11-30",
+          "venue": "Thialf",
+          "laps_csv": null
+        },
+        {
+          "id": 32,
+          "competition_id": 2,
+          "distance_m": 1000,
+          "total_time_ms": 84000,
+          "dnf": 1,
+          "competition_date": "2024-12-14",
+          "venue": "Thialf",
+          "laps_csv": null
+        }
+      ],
+      "params": {
+        "season": "",
+        "distance_m": "",
+        "default_to_current": false
+      },
+      "expected": {
+        "season_options": [
+          "2024-2025"
+        ],
+        "selected_season": "",
+        "selected_distance": "",
+        "distance_options": [
+          500,
+          1000
+        ],
+        "basic_stats": {
+          "competition_count": 2,
+          "race_count": 3,
+          "total_km": 2.0,
+          "pb_count": 2,
+          "sb_count": 2
+        },
+        "distance_overview_rows": [
+          {
+            "distance_m": 500,
+            "pb_ms": 41100,
+            "pb_race_id": 31,
+            "season_best_ms": 41100,
+            "season_best_race_id": 31,
+            "average_ms": 41300,
+            "median_ms": 41300,
+            "avg_opening_s": null,
+            "best_opening_s": null,
+            "best_opening_race_id": null,
+            "avg_lap_s": null,
+            "best_lap_s": null,
+            "best_lap_race_id": null,
+            "avg_fade_s": null,
+            "lap_averages": []
+          }
+        ],
+        "consistency_rows": [
+          {
+            "distance_m": 500,
+            "std_dev_ms": 200,
+            "range_ms": 400
+          }
+        ],
+        "progress_rows": [
+          {
+            "distance_m": 500,
+            "first_ms": 41500,
+            "first_race_id": 30,
+            "latest_ms": 41100,
+            "latest_race_id": 31,
+            "improvement_ms": -400,
+            "last5_avg_ms": 41300,
+            "season_avg_ms": 41300,
+            "trend": "stabiel"
+          }
+        ],
+        "track_rows": [
+          {
+            "track": "Thialf",
+            "race_count": 2,
+            "avg_500eq_ms": 41300,
+            "best_500eq_ms": 41100
+          }
+        ],
+        "best_track_summary": {
+          "name": "Thialf",
+          "delta_ms": 0
+        },
+        "worst_track_summary": {
+          "name": "Thialf",
+          "delta_ms": 0
+        },
+        "fun_stats": {
+          "closest_pb_miss": null,
+          "fastest_lap": null,
+          "fastest_opener": null,
+          "busiest_month": {
+            "month": "2024-11",
+            "count": 2
+          },
+          "most_skated_distance": {
+            "distance_m": 500,
+            "count": 2
+          }
+        },
+        "sb_reference_season": "2024-2025"
+      },
+      "expected_story_candidates": [
+        {
+          "title": "Coach Analyse",
+          "variant": "commentary",
+          "paragraphs": [
+            [
+              {
+                "text": "november 2024 was je drukste maand met",
+                "tone": "neutral"
+              },
+              {
+                "text": "2",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De afstand die je het vaakst reed was de",
+                "tone": "neutral"
+              },
+              {
+                "text": "500m",
+                "tone": "positive"
+              },
+              {
+                "text": ", in totaal 2 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "analysis",
+          "paragraphs": [
+            [
+              {
+                "text": "november 2024 was duidelijk je actiefste maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "2",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "De",
+                "tone": "neutral"
+              },
+              {
+                "text": "500m",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest gereden afstand met 2 starts.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Coach Analyse",
+          "variant": "recap",
+          "paragraphs": [
+            [
+              {
+                "text": "In deze periode kende een aantal opvallende momenten.",
+                "tone": "neutral"
+              }
+            ],
+            [
+              {
+                "text": "november 2024",
+                "tone": "positive"
+              },
+              {
+                "text": " was je meest actieve maand, met",
+                "tone": "neutral"
+              },
+              {
+                "text": "2",
+                "tone": "positive"
+              },
+              {
+                "text": " ritten.",
+                "tone": "neutral"
+              },
+              {
+                "text": " ",
+                "tone": "neutral"
+              },
+              {
+                "text": "Over de hele periode bleek de",
+                "tone": "neutral"
+              },
+              {
+                "text": "500m",
+                "tone": "positive"
+              },
+              {
+                "text": " je favoriete afstand: die reed je 2 keer.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "no races at all",
+      "today": "2025-03-01",
+      "rows": [],
+      "params": {
+        "season": "",
+        "distance_m": "",
+        "default_to_current": false
+      },
+      "expected": {
+        "season_options": [],
+        "selected_season": "",
+        "selected_distance": "",
+        "distance_options": [],
+        "basic_stats": {
+          "competition_count": 0,
+          "race_count": 0,
+          "total_km": 0.0,
+          "pb_count": 0,
+          "sb_count": 0
+        },
+        "distance_overview_rows": [],
+        "consistency_rows": [],
+        "progress_rows": [],
+        "track_rows": [],
+        "best_track_summary": null,
+        "worst_track_summary": null,
+        "fun_stats": {
+          "closest_pb_miss": null,
+          "fastest_lap": null,
+          "fastest_opener": null,
+          "busiest_month": null,
+          "most_skated_distance": null
+        },
+        "sb_reference_season": "2024-2025"
+      },
+      "expected_story_candidates": [
+        {
+          "title": "Coach Analyse",
+          "variant": "commentary",
+          "paragraphs": [
+            [
+              {
+                "text": "Hier zie je per afstand hoe je tijden, openingen, rondes en verval zich ontwikkelen.",
+                "tone": "neutral"
+              }
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}
