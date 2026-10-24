@@ -22,6 +22,7 @@ const trendLabel: Record<string, string> = {
 
 <template>
   <div class="space-y-8">
+    <SubTabs section="progress" class="!mb-0" />
     <h1 class="page-title">Statistieken</h1>
 
     <div class="filter-bar">

@@ -94,6 +94,9 @@ function trendContext(points: { totalTimeMs: number }[]) {
           <div class="stat-label">Favoriete afstand</div>
           <div class="text-secondary font-mono mt-0.5">{{ data.favoriteDistance ? `${data.favoriteDistance}m` : '-' }}</div>
         </div>
+        <NuxtLink to="/progress/stats" class="btn-link self-end ml-auto text-sm">
+          Meer statistieken &rarr;
+        </NuxtLink>
       </div>
     </section>
 
