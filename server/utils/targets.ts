@@ -266,3 +266,46 @@ export function buildTargetForecast(
     etaDate,
   };
 }
+
+/**
+ * Hand-set split targets for one distance. Persisted in the `targets` table's
+ * `generator_profile_json` column (the column predates this use and the name
+ * is a misnomer -- it is where the backup importer and the v1 -> v2
+ * migration already put the old app's target_opening_ms / target_avg_400_ms /
+ * target_last_400_ms / target_fade_400_ms, so existing data is read as is).
+ */
+// A type alias (not an interface) on purpose: Drizzle's JSON column wants a
+// Record<string, unknown>, which interfaces are not assignable to.
+export type StoredSplitTargets = {
+  openingMs: number | null;
+  avg400Ms: number | null;
+  last400Ms: number | null;
+  fade400Ms: number | null;
+};
+
+export const NO_SPLIT_TARGETS: StoredSplitTargets = {
+  openingMs: null,
+  avg400Ms: null,
+  last400Ms: null,
+  fade400Ms: null,
+};
+
+function asMs(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) ? Math.round(value) : null;
+}
+
+export function readStoredSplitTargets(json: unknown): StoredSplitTargets {
+  if (!json || typeof json !== 'object') return { ...NO_SPLIT_TARGETS };
+  const o = json as Record<string, unknown>;
+  return {
+    openingMs: asMs(o.openingMs),
+    avg400Ms: asMs(o.avg400Ms),
+    last400Ms: asMs(o.last400Ms),
+    fade400Ms: asMs(o.fade400Ms),
+  };
+}
+
+/** What to write to the column: null (not an empty object) when nothing is set. */
+export function toStoredSplitJson(splits: StoredSplitTargets): StoredSplitTargets | null {
+  return Object.values(splits).some((v) => v !== null) ? splits : null;
+}
