@@ -1,3 +1,5 @@
+import { pythonRound } from './round'
+
 /** Formats ms as "m:ss.hh" (or "ss.hh" under a minute); "-" for null/undefined. */
 export function fmtMs(ms: number | null | undefined): string {
   if (ms === null || ms === undefined) return '-'
@@ -16,4 +18,10 @@ export function fmtDate(dateStr: string | null | undefined): string {
   if (!dateStr) return '-'
   const [y, m, d] = dateStr.split('-')
   return `${d}-${m}-${y}`
+}
+
+/** Seconds (a float) formatted like fmtMs; "-" for null/undefined. */
+export function fmtSec(seconds: number | null | undefined): string {
+  if (seconds === null || seconds === undefined) return '-'
+  return fmtMs(pythonRound(seconds * 1000))
 }

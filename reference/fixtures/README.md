@@ -39,6 +39,15 @@ quirks called out in REBUILD_PLAN.md section 4.
 - `osta/search_results.html` — real `index.php?ZoekStr=Kjeld Nuis` response:
   one real skater with four separate OSTA profile records under the same
   name (exercises the multi-candidate/`OstaMultipleMatchesError` path).
+- `calculations/golden_stats_extras.json` — the stats page's lap-based
+  per-distance numbers, fun stats and the "Coach Analyse" story, from the old
+  `build_stats_context` run end to end on nine scenarios (season defaulting,
+  unknown seasons, distance filter, races without laps, empty data).
+  `scripts/golden/stats-extras.py` pulls that function and its helpers out of
+  the old `main.py` by AST, pins the clock to 2025-03-01 and intercepts
+  `random.choice` so every story variant is captured, not just one random
+  pick. Regenerate with `python3 scripts/golden/stats-extras.py
+  /path/to/old/SkateStats`.
 - `osta/search_results_single.html` — real `index.php?ZoekStr=Remco Land`
   response: a single-candidate match, which OSTA redirects straight to the
   profile/season page instead of a `table.naam` list (exercises
