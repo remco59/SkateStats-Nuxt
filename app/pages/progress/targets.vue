@@ -58,6 +58,7 @@ function forecastLabel(forecast: Record<string, unknown>): string {
 
 <template>
   <div class="space-y-8 max-w-2xl">
+    <SubTabs section="progress" class="!mb-0" />
     <h1 class="page-title">Targets</h1>
 
     <section class="space-y-2">
