@@ -175,7 +175,7 @@ async function deleteAccount() {
     <section class="space-y-3">
       <h2 class="text-sm font-medium" style="color: var(--color-text-muted)">OSTA monitor</h2>
       <p class="text-xs" style="color: var(--color-text-muted)">
-        Gekoppelde profielen worden op het dashboard gecontroleerd op nieuwe wedstrijden.
+        Gekoppelde profielen worden op het dashboard gecontroleerd op nieuwe wedstrijden. Bij "Automatisch importeren" komen nieuwe wedstrijden direct in je resultaten; bij "Melden" kies je zelf.
       </p>
       <ul v-if="ostaProfiles?.length" class="space-y-2">
         <li
@@ -193,6 +193,7 @@ async function deleteAccount() {
               @change="updateOstaMonitorMode(p.id, ($event.target as HTMLSelectElement).value)"
             >
               <option value="notify">Melden</option>
+              <option value="auto_import">Automatisch importeren</option>
               <option value="off">Uit</option>
             </select>
             <button class="underline text-xs" @click="removeOstaProfile(p.id)">Verwijderen</button>
@@ -214,7 +215,8 @@ async function deleteAccount() {
         >
         <input
           v-model="newOstaSeason"
-          placeholder="Seizoen"
+          placeholder="Seizoen (2025 of ALL)"
+          aria-label="Seizoen"
           class="rounded-md px-3 py-2 text-sm"
           style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >

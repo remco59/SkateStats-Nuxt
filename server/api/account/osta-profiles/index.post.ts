@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { ostaSeasonSchema } from '../../../utils/osta-season'
 import { useDb } from '../../../db/client'
 import { ostaProfileLinks } from '../../../db/schema'
 import { requireValidSession } from '../../../utils/access'
@@ -6,7 +7,7 @@ import { requireValidSession } from '../../../utils/access'
 const bodySchema = z.object({
   pid: z.string().min(1),
   searchName: z.string().min(1),
-  season: z.string().regex(/^\d{4}$/),
+  season: ostaSeasonSchema,
   monitorMode: z.enum(['notify', 'auto_import', 'off']).default('notify'),
   isPrimary: z.boolean().optional().default(false),
 })
