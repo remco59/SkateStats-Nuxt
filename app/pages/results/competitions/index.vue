@@ -11,6 +11,8 @@ const { data, error, refresh } = await useFetch('/api/results/competitions', {
   query: { q, venue, dateFrom, dateTo },
 })
 
+// Dates apply as soon as a valid date is entered (or cleared).
+watch([dateFrom, dateTo], () => applyFilters())
 // The nav search box navigates here with ?q= even when this page is already
 // open; Nuxt reuses the component then, so pick the new query up explicitly.
 watch(
@@ -54,8 +56,8 @@ function applyFilters() {
         <option value="">Alle locaties</option>
         <option v-for="v in data?.venueOptions" :key="v" :value="v">{{ v }}</option>
       </select>
-      <input v-model="dateFrom" type="date" class="field" style="flex: 0 1 auto" @change="applyFilters">
-      <input v-model="dateTo" type="date" class="field" style="flex: 0 1 auto" @change="applyFilters">
+      <DateInput v-model="dateFrom" aria-label="Datum vanaf" class="date-filter" />
+      <DateInput v-model="dateTo" aria-label="Datum t/m" class="date-filter" />
       <button type="button" class="btn btn-secondary" @click="applyFilters">Filter</button>
     </div>
 
@@ -91,3 +93,12 @@ function applyFilters() {
     </div>
   </div>
 </template>
+
+<style scoped>
+/* A date field in the filter bar: wide enough for dd/mm/jjjj, not full width. */
+.date-filter {
+  flex: 0 1 11rem;
+  width: auto;
+  min-width: 9rem;
+}
+</style>

@@ -40,6 +40,7 @@ async function deleteAndBlacklist() {
           {{ data.competition.venue || '-' }} &middot;
           <span class="font-mono">{{ fmtDate(data.competition.date) }}</span>
         </p>
+        <FormattedNotes :notes="data.competition.notes" class="text-secondary mt-2" />
       </div>
       <div class="flex flex-wrap items-center gap-2">
         <NuxtLink :to="`/results/races/new?competitionId=${id}`" class="btn btn-primary btn-sm">
@@ -71,26 +72,31 @@ async function deleteAndBlacklist() {
           <thead>
             <tr>
               <th>Afstand</th>
-              <th>Status</th>
-              <th>Baan</th>
               <th class="num">Tijd</th>
+              <th>Baan</th>
+              <th class="num">Gem.</th>
+              <th class="num">Verval</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="r in data.races" :key="r.id" class="table-row-link">
-              <td class="font-mono">
+              <td class="font-mono whitespace-nowrap">
                 <NuxtLink :to="`/results/races/${r.id}`" class="stretched-link">{{ r.distanceM }}m</NuxtLink>
+                <span v-if="r.trackType === 'outdoor'" class="text-meta ml-1">buiten</span>
               </td>
-              <td class="text-secondary">{{ raceStatusLabel(r.status) }}</td>
-              <td class="text-secondary">{{ r.trackType === 'outdoor' ? 'Buiten' : 'Binnen' }}</td>
-              <td class="num">
-                <span class="stat-value-sm">{{ fmtMs(r.totalTimeMs) }}</span>
+              <td class="num whitespace-nowrap">
+                <span v-if="r.totalTimeMs !== null" class="stat-value-sm">{{ fmtMs(r.totalTimeMs) }}</span>
+                <span v-else class="text-secondary">{{ raceStatusLabel(r.status) }}</span>
                 <span v-if="r.isPr" class="badge badge-pr ml-1">PR</span>
                 <span v-else-if="r.isSb" class="badge badge-sb ml-1">SB</span>
+                <RaceTagChip :tag="r.tag" class="ml-1" />
               </td>
+              <td><LaneDot :lane="r.lane" /></td>
+              <td class="num font-mono text-secondary">{{ r.avg400 === null ? '-' : r.avg400.toFixed(2) }}</td>
+              <td class="num font-mono text-secondary">{{ r.fade400Eq === null ? '-' : r.fade400Eq.toFixed(2) }}</td>
             </tr>
             <tr v-if="!data.races.length">
-              <td colspan="4" class="empty-state" style="border: none">Nog geen ritten.</td>
+              <td colspan="5" class="empty-state" style="border: none">Nog geen ritten.</td>
             </tr>
           </tbody>
         </table>

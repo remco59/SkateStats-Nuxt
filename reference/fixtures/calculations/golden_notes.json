@@ -1,0 +1,113 @@
+{
+  "generated_by": "scripts/golden/notes.py against old SkateStats at 01a634c8265df0612bef38f0f41eab932007953f: format_notes_html / normalize_note_line (main.py); markupsafe.escape and Markup are stood in for by an equivalent escape()",
+  "cases": [
+    {
+      "notes": "Kei hard ijs, goed gevoel",
+      "expected_html": "Kei hard ijs, goed gevoel"
+    },
+    {
+      "notes": "",
+      "expected_html": ""
+    },
+    {
+      "notes": "   ",
+      "expected_html": ""
+    },
+    {
+      "notes": "Geïmporteerd van OSTA: https://www.osta.nl/index.php?pid=abc-123",
+      "expected_html": "Geïmporteerd van <a href=\"https://www.osta.nl/index.php?pid=abc-123\" target=\"_blank\" rel=\"noreferrer\">OSTA</a>"
+    },
+    {
+      "notes": "Geimporteerd van SpeedSkatingResults: https://speedskatingresults.com/index.php?p=3&e=1",
+      "expected_html": "Geimporteerd van <a href=\"https://speedskatingresults.com/index.php?p=3&amp;e=1\" target=\"_blank\" rel=\"noreferrer\">SpeedSkatingResults</a>"
+    },
+    {
+      "notes": "Rondetijden van OSTA: https://www.osta.nl/race?id=7",
+      "expected_html": "Rondetijden van <a href=\"https://www.osta.nl/race?id=7\" target=\"_blank\" rel=\"noreferrer\">OSTA</a>"
+    },
+    {
+      "notes": "Geïmporteerd van OSTA",
+      "expected_html": "Geïmporteerd van OSTA"
+    },
+    {
+      "notes": "Imported from OSTA: https://www.osta.nl/index.php?pid=86651033-b5c2",
+      "expected_html": "Geïmporteerd van <a href=\"https://www.osta.nl/index.php?pid=86651033-b5c2\" target=\"_blank\" rel=\"noreferrer\">OSTA</a>"
+    },
+    {
+      "notes": "Imported from OSTA pid 86651033-b5c2-4819-2162-08ddeb0685e4",
+      "expected_html": "Geïmporteerd van <a href=\"https://www.osta.nl/index.php?pid=86651033-b5c2-4819-2162-08ddeb0685e4\" target=\"_blank\" rel=\"noreferrer\">OSTA</a>"
+    },
+    {
+      "notes": "Imported from OSTA pid weird pid/with chars!*'()",
+      "expected_html": "Geïmporteerd van <a href=\"https://www.osta.nl/index.php?pid=weird%20pid/with%20chars%21%2A%27%28%29\" target=\"_blank\" rel=\"noreferrer\">OSTA</a>"
+    },
+    {
+      "notes": "OSTA sync via pid 86651033-b5c2",
+      "expected_html": "Rondetijden van OSTA"
+    },
+    {
+      "notes": "Imported from SpeedSkatingResults: {\"link\": \"https://speedskatingresults.com/x?a=1&b=2\"}",
+      "expected_html": "Geïmporteerd van <a href=\"https://speedskatingresults.com/x?a=1&amp;b=2\" target=\"_blank\" rel=\"noreferrer\">SpeedSkatingResults</a>"
+    },
+    {
+      "notes": "Imported from SpeedSkatingResults: {\"nolink\": true}",
+      "expected_html": "Geïmporteerd van SpeedSkatingResults"
+    },
+    {
+      "notes": "Imported from SpeedSkatingResults: {kapot json",
+      "expected_html": "Geïmporteerd van SpeedSkatingResults"
+    },
+    {
+      "notes": "Imported from SpeedSkatingResults: see https://speedskatingresults.com/r/9 for details",
+      "expected_html": "Geïmporteerd van <a href=\"https://speedskatingresults.com/r/9\" target=\"_blank\" rel=\"noreferrer\">SpeedSkatingResults</a>"
+    },
+    {
+      "notes": "Imported from SpeedSkatingResults: geen link",
+      "expected_html": "Geïmporteerd van SpeedSkatingResults"
+    },
+    {
+      "notes": "Imported from SpeedSkatingResults season 2025 https://speedskatingresults.com/s/2025",
+      "expected_html": "Geïmporteerd van <a href=\"https://speedskatingresults.com/s/2025\" target=\"_blank\" rel=\"noreferrer\">SpeedSkatingResults</a>"
+    },
+    {
+      "notes": "Imported from SpeedSkatingResults season 2025",
+      "expected_html": "Geïmporteerd van SpeedSkatingResults"
+    },
+    {
+      "notes": "Zie https://example.com/pagina",
+      "expected_html": "Zie <a href=\"https://example.com/pagina\" target=\"_blank\" rel=\"noreferrer\">https://example.com/pagina</a>"
+    },
+    {
+      "notes": "Zie https://example.com/pagina en meer tekst erna",
+      "expected_html": "Zie https://example.com/pagina en meer tekst erna"
+    },
+    {
+      "notes": "Prefix zonder spatie:https://example.com/a?b=1&c=2",
+      "expected_html": "Prefix zonder spatie:<a href=\"https://example.com/a?b=1&amp;c=2\" target=\"_blank\" rel=\"noreferrer\">https://example.com/a?b=1&amp;c=2</a>"
+    },
+    {
+      "notes": "<script>alert('x')</script> & \"quotes\"",
+      "expected_html": "&lt;script&gt;alert(&#39;x&#39;)&lt;/script&gt; &amp; &#34;quotes&#34;"
+    },
+    {
+      "notes": "Geïmporteerd van OSTA: https://www.osta.nl/?q=<b>",
+      "expected_html": "Geïmporteerd van <a href=\"https://www.osta.nl/?q=&lt;b&gt;\" target=\"_blank\" rel=\"noreferrer\">OSTA</a>"
+    },
+    {
+      "notes": "Regel één\nRegel twee\n\nRegel vier",
+      "expected_html": "Regel één<br>Regel twee<br>Regel vier"
+    },
+    {
+      "notes": "Geïmporteerd van OSTA: https://www.osta.nl/index.php?pid=1\nGoed gevoel vandaag\nTrainer: https://club.example/coach",
+      "expected_html": "Geïmporteerd van <a href=\"https://www.osta.nl/index.php?pid=1\" target=\"_blank\" rel=\"noreferrer\">OSTA</a><br>Goed gevoel vandaag<br>Trainer: <a href=\"https://club.example/coach\" target=\"_blank\" rel=\"noreferrer\">https://club.example/coach</a>"
+    },
+    {
+      "notes": "  Geïmporteerd van OSTA: https://www.osta.nl/index.php?pid=1  ",
+      "expected_html": "Geïmporteerd van <a href=\"https://www.osta.nl/index.php?pid=1\" target=\"_blank\" rel=\"noreferrer\">OSTA</a>"
+    },
+    {
+      "notes": "Imported from OSTA: https://www.osta.nl/index.php?pid=1\nOSTA sync via pid 1",
+      "expected_html": "Geïmporteerd van <a href=\"https://www.osta.nl/index.php?pid=1\" target=\"_blank\" rel=\"noreferrer\">OSTA</a><br>Rondetijden van OSTA"
+    }
+  ]
+}
