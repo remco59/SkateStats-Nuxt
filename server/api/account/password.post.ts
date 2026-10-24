@@ -2,20 +2,27 @@ import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { useDb } from '../../db/client'
 import { users } from '../../db/schema'
+import { accountErrorToHttp, checkNewPassword } from '../../utils/accounts'
 
 const bodySchema = z.object({
   currentPassword: z.string().min(1),
-  newPassword: z.string().min(8),
+  newPassword: z.string(),
+  confirmPassword: z.string(),
 })
 
 export default defineEventHandler(async (event) => {
   const session = await requireValidSession(event)
-  const { currentPassword, newPassword } = await readValidatedBody(event, bodySchema.parse)
+  const { currentPassword, newPassword, confirmPassword } = await readValidatedBody(event, bodySchema.parse)
 
   const db = useDb()
   const user = db.select().from(users).where(eq(users.id, session.user.id)).get()
   if (!user || !(await verifyPassword(user.passwordHash, currentPassword))) {
-    throw createError({ statusCode: 400, statusMessage: 'Huidig wachtwoord klopt niet' })
+    throw createError({ statusCode: 400, statusMessage: 'Het huidige wachtwoord klopt niet.' })
+  }
+  try {
+    checkNewPassword(newPassword, confirmPassword)
+  } catch (err) {
+    accountErrorToHttp(err)
   }
 
   const newHash = await hashPassword(newPassword)
