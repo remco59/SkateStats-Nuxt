@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { ostaSeasonSchema } from '../../../utils/osta-season'
 import { useDb } from '../../../db/client'
 import { requireValidSession } from '../../../utils/access'
 import { extractOstaResultsForPid } from '../../../utils/import/osta'
@@ -7,7 +8,7 @@ import { classifyImportPayload, savePreviewBatch } from '../../../utils/import/p
 
 const bodySchema = z.object({
   searchName: z.string().min(1),
-  season: z.string().regex(/^\d{4}$/),
+  season: ostaSeasonSchema,
   pid: z.string().min(1),
 })
 

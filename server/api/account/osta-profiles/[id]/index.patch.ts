@@ -1,15 +1,13 @@
 import { and, eq } from 'drizzle-orm'
 import { z } from 'zod'
+import { ostaSeasonSchema } from '../../../../utils/osta-season'
 import { useDb } from '../../../../db/client'
 import { ostaProfileLinks } from '../../../../db/schema'
 import { requireValidSession } from '../../../../utils/access'
 
 const bodySchema = z.object({
   monitorMode: z.enum(['notify', 'auto_import', 'off']).optional(),
-  season: z
-    .string()
-    .regex(/^\d{4}$/)
-    .optional(),
+  season: ostaSeasonSchema.optional(),
   isPrimary: z.boolean().optional(),
 })
 

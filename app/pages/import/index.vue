@@ -123,7 +123,7 @@ async function removeRaceBlacklist(id: number) {
           <p class="text-xs" style="color: var(--color-text-muted)">Zoek en importeer wedstrijden van osta.nl.</p>
         </div>
         <input v-model="searchName" placeholder="Naam op OSTA (bv. Achternaam, Voornaam)" aria-label="Naam op OSTA" class="field">
-        <input v-model="season" placeholder="Seizoen (startjaar, bv. 2024)" aria-label="Seizoen" class="field">
+        <input v-model="season" placeholder="Seizoen (startjaar, bv. 2024, of ALL)" aria-label="Seizoen" class="field">
         <button type="button" class="btn btn-primary w-full" :disabled="submitting" @click="submitOstaSearch">
           {{ submitting ? 'Bezig...' : 'Zoeken' }}
         </button>
