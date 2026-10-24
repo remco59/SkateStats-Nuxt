@@ -49,3 +49,38 @@ export function raceTagLabel(tag: string | null | undefined): string {
   if (!tag) return '-'
   return RACE_TAG_LABELS[tag as RaceTag] ?? tag
 }
+
+// Appearance preferences (per account). `system` follows the OS colour
+// scheme. Motion has four levels like the old app; `reduced` was this
+// app's own earlier two-value setting and is treated as `none`.
+export const THEME_PREFERENCES = ['dark', 'light', 'system'] as const
+export type ThemePreference = (typeof THEME_PREFERENCES)[number]
+
+export const THEME_LABELS: Record<ThemePreference, string> = {
+  system: 'Systeem volgen',
+  dark: 'Donker',
+  light: 'Licht',
+}
+
+export const MOTION_PREFERENCES = ['all', 'background', 'cards', 'none'] as const
+export type MotionPreference = (typeof MOTION_PREFERENCES)[number]
+
+export const MOTION_LABELS: Record<MotionPreference, string> = {
+  all: 'Alle animaties',
+  background: 'Alleen achtergrond',
+  cards: 'Alleen kaarten',
+  none: 'Geen animaties',
+}
+
+export function normalizeThemePreference(value: unknown): ThemePreference {
+  return (THEME_PREFERENCES as readonly string[]).includes(value as string)
+    ? (value as ThemePreference)
+    : 'dark'
+}
+
+export function normalizeMotionPreference(value: unknown): MotionPreference {
+  if (value === 'reduced') return 'none'
+  return (MOTION_PREFERENCES as readonly string[]).includes(value as string)
+    ? (value as MotionPreference)
+    : 'all'
+}

@@ -37,13 +37,7 @@ async function submit() {
       class="w-full rounded-md px-3 py-2 text-sm"
       style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
     >
-    <input
-      v-model="date"
-      type="date"
-      aria-label="Datum"
-      class="w-full rounded-md px-3 py-2 text-sm"
-      style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
-    >
+    <DateInput v-model="date" aria-label="Datum" />
     <textarea
       v-model="notes"
       placeholder="Notities"

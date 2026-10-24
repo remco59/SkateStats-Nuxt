@@ -5,7 +5,13 @@ import { buildStatsContext } from '../../utils/stats'
 export default defineEventHandler(async (event) => {
   const session = await requireValidSession(event)
   const query = getQuery(event)
+
+  // No `season` parameter at all means "just opened the page": show the
+  // current season (when it has data), like the old app. An explicit empty
+  // `season=` is the user choosing "all seasons".
+  const defaultToCurrent = query.season === undefined
   const season = query.season ? String(query.season) : undefined
+
   let distanceM: number | null = null
   if (query.distanceM !== undefined && query.distanceM !== '') {
     distanceM = Number(query.distanceM)
@@ -26,5 +32,10 @@ export default defineEventHandler(async (event) => {
     lapsMs: r.lapsMs,
   }))
 
-  return buildStatsContext(statsInputs, { season, distanceM })
+  const { storyCandidates, ...context } = buildStatsContext(statsInputs, { season, distanceM, defaultToCurrent })
+
+  // One of the story variants, different on each visit (as in the old app).
+  const story = storyCandidates[Math.floor(Math.random() * storyCandidates.length)] ?? null
+
+  return { ...context, story }
 })
