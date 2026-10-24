@@ -16,6 +16,52 @@ at the end, not here.
 
 ---
 
+## Status
+
+Each area has its own pull request, branched from `main`. They merge in this order (1 → 9);
+the later ones expect small conflicts, listed under "Merge notes".
+
+| Area | Sections | PR |
+|---|---|---|
+| Navigation, quick-add button, global search, footer | 0.1, 0.4, 9.1, 9.5 | #22 |
+| Light / system theme, animation setting, card reveals | 0.2, 7.1, 7.2, 9.3, 9.4 | #23 |
+| Targets (manual splits, edit, generate, progress, simulation) | 0.3, 3 | #24 |
+| Stats (story, fun stats, lap stats, defaults) | 2 | #25 |
+| Race comparison | 4 | #26 |
+| Races and competitions (lists, filters, detail, editing) | 5 | #27 |
+| Dashboard and OSTA monitor | 1, 7.5 | #28 |
+| Import | 6 | #29 |
+| Account, admin, CLI | 7.3, 7.4, 7.6, 7.7, 8, 10.1 | #30 |
+
+**Corrections to this list, found while building:**
+
+- **6.7**: the old app had no competition name / venue / date overrides for the PDF import.
+  Only the defaulting of the skater name from the account existed, and that is done.
+- **6.2 / 6.5**: the old "overwrite" and "add as new" modes are covered by the rebuilt
+  dedup rules plus an explicit "Toevoegen als nieuwe wedstrijd" for the case where an
+  existing competition only looks the same. The "update same-date competitions with OSTA
+  laps" switch stays a per-race correction choice.
+- **6.8**: the blacklist overview shows readable races and has bulk removal, but not the
+  old PID / race-count columns: signatures no longer contain a PID and a count would need a
+  schema change.
+- **10.2** (admin created automatically on startup) was left as it is, by design: the plan
+  chose the CLI, and `bootstrap-admin.ts` sets the password in one step.
+- **8.5**: both guards now apply: you cannot remove your own admin rights *and* the last
+  admin cannot be demoted or deleted.
+
+**Merge notes.** Merged in order, these conflict by hand in a handful of places, all small:
+`progress/targets.vue` (tab line from #22 vs. width from #24), `CompareChart.vue` (changed in
+#23, deleted in #26: delete it), `results/competitions/index.vue` (both sides are wanted),
+`reference/fixtures/README.md` (each PR adds a paragraph: keep all), `TrendSparkline.vue`
+and `index.vue` (#28 replaces the chart; take #28's), `import/index.vue` and the two OSTA
+import routes (#29 supersedes #28's one-line changes), and `account/index.vue` (#30 moves
+three sections into components; keep #23's "Weergave" and #28's monitor options). I merged all
+nine in that order in a scratch checkout, resolved these, and ran lint, typecheck, the unit
+tests (431) and the end-to-end smoke suite on the result; only the PDF-upload step could not
+run in my sandbox, as on `main`.
+
+---
+
 ## 0. Biggest findings
 
 1. **Targets page and standalone Races list are unreachable from the UI.** The nav has
