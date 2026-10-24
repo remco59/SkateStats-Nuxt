@@ -99,7 +99,11 @@ test.describe.serial('smoke suite', () => {
     await page.goto('/admin/users')
     const row = page.getByRole('row', { name: /e2e-admin/ })
     await row.getByRole('button', { name: 'Verwijderen' }).click()
-    await expect(row.getByText(/laatste beheerder/)).toBeVisible()
+    const dialog = page.getByRole('dialog')
+    // Deleting needs the username typed first.
+    await dialog.getByRole('textbox').fill('e2e-admin')
+    await dialog.getByRole('button', { name: 'Account verwijderen' }).click()
+    await expect(dialog.getByText(/laatste beheerder/)).toBeVisible()
   })
 
   test('logout', async () => {

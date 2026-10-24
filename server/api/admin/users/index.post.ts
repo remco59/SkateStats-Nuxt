@@ -1,12 +1,13 @@
 import { z } from 'zod'
 import { useDb } from '../../../db/client'
-import { users } from '../../../db/schema'
 import { requireAdmin } from '../../../utils/access'
+import { accountErrorToHttp, checkNewPassword, createUserAccount } from '../../../utils/accounts'
 
 const bodySchema = z.object({
-  username: z.string().min(1).max(100),
-  skaterName: z.string().min(1).max(200),
-  password: z.string().min(8),
+  username: z.string().max(100),
+  skaterName: z.string().max(200),
+  password: z.string(),
+  confirmPassword: z.string(),
   isAdmin: z.boolean().optional().default(false),
 })
 
@@ -15,22 +16,17 @@ export default defineEventHandler(async (event) => {
   const body = await readValidatedBody(event, bodySchema.parse)
 
   const db = useDb()
-  const passwordHash = await hashPassword(body.password)
-  const now = new Date().toISOString()
-
-  const created = db
-    .insert(users)
-    .values({
+  try {
+    checkNewPassword(body.password, body.confirmPassword)
+    const created = createUserAccount(db, {
       username: body.username,
       skaterName: body.skaterName,
-      passwordHash,
+      passwordHash: await hashPassword(body.password),
       isAdmin: body.isAdmin,
-      createdAt: now,
-      updatedAt: now,
     })
-    .returning()
-    .get()
-
-  const { passwordHash: _passwordHash, ...safe } = created
-  return safe
+    const { passwordHash: _passwordHash, ...safe } = created
+    return safe
+  } catch (err) {
+    accountErrorToHttp(err)
+  }
 })

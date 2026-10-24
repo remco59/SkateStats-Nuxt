@@ -15,6 +15,12 @@ export default defineEventHandler(async (event) => {
   const target = db.select().from(users).where(eq(users.id, userId)).get()
   if (!target) throw createError({ statusCode: 404 })
 
+  // Nobody can take away their own admin rights (the old app's rule), which
+  // also covers the last admin demoting themselves.
+  if (userId === session.user.id && !isAdmin) {
+    throw createError({ statusCode: 409, statusMessage: 'Je kunt je eigen adminrechten niet uitschakelen.' })
+  }
+
   // The last remaining admin cannot be demoted -- by themselves OR by
   // another admin (plan section 8: the old app only guarded self-demote).
   if (target.isAdmin && !isAdmin && countAdmins() <= 1) {
