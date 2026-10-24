@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { raceStatusLabel, raceTagLabel } from '#shared/constants'
+import { raceStatusLabel } from '#shared/constants'
+import { isAutoImportNote, parseNotes } from '#shared/utils/notes'
 
 const route = useRoute()
 const router = useRouter()
@@ -37,15 +38,19 @@ const sourceLabels: Record<string, string> = {
   manual: 'Handmatig',
 }
 
-const autoImportNoteRegex = /^Geimporteerd van (OSTA|SpeedSkatingResults)(: https?:\/\/\S+)?$/
-
 const sourceLabel = computed(() => (race.value ? sourceLabels[race.value.source] ?? race.value.source : ''))
 const sourceIsLink = computed(() => !!race.value?.sourceRef && /^https?:\/\//.test(race.value.sourceRef))
-const displayNotes = computed(() => {
-  const notes = race.value?.notes
-  if (!notes || autoImportNoteRegex.test(notes)) return null
-  return notes
-})
+// The automatic "imported from ..." line is shown as the "Bron" link below;
+// anything a person wrote (or a URL in it) stays, with links clickable.
+const hasNotes = computed(() => parseNotes(race.value?.notes).some((line) => !isAutoImportNote(line)))
+
+const isFirstTime = computed(
+  () => !!race.value && race.value.status === 'finished' && race.value.deltaVsPreviousPrMs === null,
+)
+
+// Lap chart + the "Gem. verval per ronde" tile need laps; the sprint
+// distances have a single lap, where "per ronde" says nothing.
+const lapSeconds = computed(() => race.value?.lapsMs.map((ms) => ms / 1000) ?? [])
 </script>
 
 <template>
@@ -57,6 +62,7 @@ const displayNotes = computed(() => {
           {{ race.venue || '-' }} &middot;
           <span class="font-mono">{{ fmtDate(race.competitionDate) }}</span> &middot;
           {{ race.trackType === 'outdoor' ? 'Buitenbaan' : 'Binnenbaan' }}
+          <RaceTagChip :tag="race.tag" class="ml-1" />
         </p>
       </div>
       <div class="flex flex-wrap items-center gap-2">
@@ -65,6 +71,9 @@ const displayNotes = computed(() => {
         </NuxtLink>
         <NuxtLink :to="`/results/races/${id}/compare`" class="btn btn-secondary btn-sm">
           Vergelijken
+        </NuxtLink>
+        <NuxtLink :to="`/results/races/new?competitionId=${race.competitionId}`" class="btn btn-secondary btn-sm">
+          Nieuwe rit
         </NuxtLink>
         <details class="menu">
           <summary class="btn btn-secondary btn-sm" aria-label="Meer acties">&hellip;</summary>
@@ -96,7 +105,12 @@ const displayNotes = computed(() => {
         <div class="text-right">
           <div class="stat-label">T.o.v. vorige PR</div>
           <div class="stat-value-sm mt-0.5">
-            <span v-if="race.deltaVsPreviousPrMs === null" class="delta-neutral">-</span>
+            <span v-if="race.deltaVsPreviousPrMs === null" class="delta-neutral">
+              <span v-if="isFirstTime" class="text-secondary" style="font-family: var(--font-sans); font-weight: 400">
+                Eerste tijd op deze afstand
+              </span>
+              <template v-else>-</template>
+            </span>
             <span v-else :class="race.deltaVsPreviousPrMs <= 0 ? 'delta-better' : 'delta-worse'">
               {{ race.deltaVsPreviousPrMs > 0 ? '+' : '' }}{{ fmtMs(race.deltaVsPreviousPrMs) }}
             </span>
@@ -108,9 +122,19 @@ const displayNotes = computed(() => {
           <div class="stat-label">Status</div>
           <div class="text-secondary mt-0.5">{{ raceStatusLabel(race.status) }}</div>
         </div>
-        <div>
-          <div class="stat-label">Tag</div>
-          <div class="text-secondary mt-0.5">{{ raceTagLabel(race.tag) }}</div>
+        <div v-if="race.lapsMs.length">
+          <div class="stat-label">Gem. ronde</div>
+          <div class="text-secondary font-mono mt-0.5">{{ race.metrics.avg400?.toFixed(2) ?? '-' }}</div>
+        </div>
+        <div v-if="race.lapsMs.length && race.distanceM !== 500">
+          <div class="stat-label">Gem. verval per ronde</div>
+          <div class="text-secondary font-mono mt-0.5">
+            {{ race.metrics.avgFadePerSegment400Eq?.toFixed(2) ?? '-' }}
+          </div>
+        </div>
+        <div v-if="race.lapsMs.length">
+          <div class="stat-label">Verval (laatste - eerste ronde)</div>
+          <div class="text-secondary font-mono mt-0.5">{{ race.metrics.fade400Eq?.toFixed(2) ?? '-' }}</div>
         </div>
       </div>
     </section>
@@ -144,15 +168,22 @@ const displayNotes = computed(() => {
           </tbody>
         </table>
       </div>
-      <p class="text-meta mt-2">
-        Gemiddelde per 400m: {{ race.metrics.avg400?.toFixed(2) ?? '-' }} &middot;
-        Fade: {{ race.metrics.fade400Eq?.toFixed(2) ?? '-' }}
-      </p>
     </section>
 
-    <section v-if="displayNotes">
+    <section v-if="lapSeconds.length > 1">
+      <h2 class="section-heading mb-2">Rondetijden</h2>
+      <SplitChart
+        kind="seconds"
+        :labels="lapSeconds.map((_, i) => String(i + 1))"
+        :series="[{ name: 'Rondetijd', values: lapSeconds, tone: 'accent' }]"
+        label="Grafiek van de rondetijden in seconden"
+      />
+    </section>
+    <p v-else-if="!lapSeconds.length" class="text-secondary">Geen rondetijden ingevuld.</p>
+
+    <section v-if="hasNotes">
       <h2 class="section-heading mb-2">Notities</h2>
-      <p class="text-sm whitespace-pre-line text-secondary">{{ displayNotes }}</p>
+      <FormattedNotes :notes="race.notes" hide-auto-import class="text-sm text-secondary" />
     </section>
 
     <!-- Low-value technical metadata: kept out of the way, below the result. -->
@@ -162,8 +193,8 @@ const displayNotes = computed(() => {
       </summary>
       <div class="mt-3 flex flex-wrap gap-x-6 gap-y-3 text-sm">
         <div v-if="race.lane">
-          <div class="stat-label">Baan</div>
-          <div class="text-secondary mt-0.5">{{ race.lane }}</div>
+          <div class="stat-label">Startbaan</div>
+          <div class="text-secondary mt-0.5"><LaneDot :lane="race.lane" show-text /></div>
         </div>
         <div v-if="race.opponent">
           <div class="stat-label">Tegenstander</div>
