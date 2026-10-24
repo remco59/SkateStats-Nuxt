@@ -1,0 +1,2023 @@
+{
+  "generated_by": "scripts/golden/compare.py against old SkateStats at 01a634c8265df0612bef38f0f41eab932007953f: build_comparison_context (main.py)",
+  "cases": [
+    {
+      "name": "faster over nearly the whole race",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": 133000,
+        "laps_csv": "41.0,30.5,30.8,30.7"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": 131500,
+        "laps_csv": "40.2,29.9,30.4,31.0"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 133000,
+            "compare_ms": 131500,
+            "delta_ms": -1500
+          },
+          {
+            "label": "Opening",
+            "base_ms": 41000,
+            "compare_ms": 40200,
+            "delta_ms": -800
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 30700,
+            "compare_ms": 31000,
+            "delta_ms": 300
+          },
+          {
+            "label": "Verval",
+            "base_ms": -23967,
+            "compare_ms": -22600,
+            "delta_ms": 1367
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 41.0,
+            "compare_split": 40.2,
+            "split_delta_ms": -800,
+            "cumulative_delta_ms": -800,
+            "base_400": 54.666666666666664,
+            "compare_400": 53.60000000000001,
+            "eq_delta_ms": -1067
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": 29.9,
+            "split_delta_ms": -600,
+            "cumulative_delta_ms": -1400,
+            "base_400": 30.5,
+            "compare_400": 29.9,
+            "eq_delta_ms": -600
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 30.8,
+            "compare_split": 30.4,
+            "split_delta_ms": -400,
+            "cumulative_delta_ms": -1800,
+            "base_400": 30.8,
+            "compare_400": 30.4,
+            "eq_delta_ms": -400
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 30.7,
+            "compare_split": 31.0,
+            "split_delta_ms": 300,
+            "cumulative_delta_ms": -1500,
+            "base_400": 30.7,
+            "compare_400": 31.0,
+            "eq_delta_ms": 300
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": -1500,
+          "opening_delta_ms": -800,
+          "slot_delta_ms": 300,
+          "verval_delta_ms": 1367
+        },
+        "samenvatting_tekst": "Sneller over vrijwel de hele rit.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 41000,
+          "vergelijking_opening_ms": 40200,
+          "basis_slot_ms": 30700,
+          "vergelijking_slot_ms": 31000,
+          "basis_verval_ms": -23967,
+          "vergelijking_verval_ms": -22600
+        },
+        "onderdelen": {
+          "sterkste": 1,
+          "zwakste": 4
+        },
+        "delta_chart_points": 4,
+        "lap_overlay_points": [
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "name": "faster opening but big fade",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": 131000,
+        "laps_csv": "41.0,30.0,30.0,30.0"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": 131500,
+        "laps_csv": "40.5,29.8,30.5,30.7"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 131000,
+            "compare_ms": 131500,
+            "delta_ms": 500
+          },
+          {
+            "label": "Opening",
+            "base_ms": 41000,
+            "compare_ms": 40500,
+            "delta_ms": -500
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 30000,
+            "compare_ms": 30700,
+            "delta_ms": 700
+          },
+          {
+            "label": "Verval",
+            "base_ms": -24667,
+            "compare_ms": -23300,
+            "delta_ms": 1367
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 41.0,
+            "compare_split": 40.5,
+            "split_delta_ms": -500,
+            "cumulative_delta_ms": -500,
+            "base_400": 54.666666666666664,
+            "compare_400": 54.0,
+            "eq_delta_ms": -667
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.0,
+            "compare_split": 29.8,
+            "split_delta_ms": -200,
+            "cumulative_delta_ms": -700,
+            "base_400": 30.0,
+            "compare_400": 29.8,
+            "eq_delta_ms": -200
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 30.0,
+            "compare_split": 30.5,
+            "split_delta_ms": 500,
+            "cumulative_delta_ms": -200,
+            "base_400": 30.0,
+            "compare_400": 30.5,
+            "eq_delta_ms": 500
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 30.0,
+            "compare_split": 30.7,
+            "split_delta_ms": 700,
+            "cumulative_delta_ms": 500,
+            "base_400": 30.0,
+            "compare_400": 30.7,
+            "eq_delta_ms": 700
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": 500,
+          "opening_delta_ms": -500,
+          "slot_delta_ms": 700,
+          "verval_delta_ms": 1367
+        },
+        "samenvatting_tekst": "Snellere opening, maar veel verval in de slotfase.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 41000,
+          "vergelijking_opening_ms": 40500,
+          "basis_slot_ms": 30000,
+          "vergelijking_slot_ms": 30700,
+          "basis_verval_ms": -24667,
+          "vergelijking_verval_ms": -23300
+        },
+        "onderdelen": {
+          "sterkste": 1,
+          "zwakste": 4
+        },
+        "delta_chart_points": 4,
+        "lap_overlay_points": [
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "name": "calmer start, stronger finish",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": 132000,
+        "laps_csv": "40.0,30.5,31.0,30.5"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": 131500,
+        "laps_csv": "40.4,30.3,30.4,30.4"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 132000,
+            "compare_ms": 131500,
+            "delta_ms": -500
+          },
+          {
+            "label": "Opening",
+            "base_ms": 40000,
+            "compare_ms": 40400,
+            "delta_ms": 400
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 30500,
+            "compare_ms": 30400,
+            "delta_ms": -100
+          },
+          {
+            "label": "Verval",
+            "base_ms": -22833,
+            "compare_ms": -23467,
+            "delta_ms": -634
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 40.0,
+            "compare_split": 40.4,
+            "split_delta_ms": 400,
+            "cumulative_delta_ms": 400,
+            "base_400": 53.333333333333336,
+            "compare_400": 53.86666666666667,
+            "eq_delta_ms": 533
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": 30.3,
+            "split_delta_ms": -200,
+            "cumulative_delta_ms": 200,
+            "base_400": 30.5,
+            "compare_400": 30.3,
+            "eq_delta_ms": -200
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 31.0,
+            "compare_split": 30.4,
+            "split_delta_ms": -600,
+            "cumulative_delta_ms": -400,
+            "base_400": 31.0,
+            "compare_400": 30.4,
+            "eq_delta_ms": -600
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": 30.4,
+            "split_delta_ms": -100,
+            "cumulative_delta_ms": -500,
+            "base_400": 30.5,
+            "compare_400": 30.4,
+            "eq_delta_ms": -100
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": -500,
+          "opening_delta_ms": 400,
+          "slot_delta_ms": -100,
+          "verval_delta_ms": -633
+        },
+        "samenvatting_tekst": "Sneller over vrijwel de hele rit.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 40000,
+          "vergelijking_opening_ms": 40400,
+          "basis_slot_ms": 30500,
+          "vergelijking_slot_ms": 30400,
+          "basis_verval_ms": -22833,
+          "vergelijking_verval_ms": -23467
+        },
+        "onderdelen": {
+          "sterkste": 3,
+          "zwakste": 1
+        },
+        "delta_chart_points": 4,
+        "lap_overlay_points": [
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "name": "overall faster by 250 ms, mixed splits",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": 132000,
+        "laps_csv": "40.0,30.0,30.5,31.0"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": 131750,
+        "laps_csv": "40.1,29.9,30.7,30.9"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 132000,
+            "compare_ms": 131750,
+            "delta_ms": -250
+          },
+          {
+            "label": "Opening",
+            "base_ms": 40000,
+            "compare_ms": 40100,
+            "delta_ms": 100
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 31000,
+            "compare_ms": 30900,
+            "delta_ms": -100
+          },
+          {
+            "label": "Verval",
+            "base_ms": -22333,
+            "compare_ms": -22567,
+            "delta_ms": -234
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 40.0,
+            "compare_split": 40.1,
+            "split_delta_ms": 100,
+            "cumulative_delta_ms": 100,
+            "base_400": 53.333333333333336,
+            "compare_400": 53.46666666666667,
+            "eq_delta_ms": 133
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.0,
+            "compare_split": 29.9,
+            "split_delta_ms": -100,
+            "cumulative_delta_ms": 0,
+            "base_400": 30.0,
+            "compare_400": 29.9,
+            "eq_delta_ms": -100
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": 30.7,
+            "split_delta_ms": 200,
+            "cumulative_delta_ms": 200,
+            "base_400": 30.5,
+            "compare_400": 30.7,
+            "eq_delta_ms": 200
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 31.0,
+            "compare_split": 30.9,
+            "split_delta_ms": -100,
+            "cumulative_delta_ms": 100,
+            "base_400": 31.0,
+            "compare_400": 30.9,
+            "eq_delta_ms": -100
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": -250,
+          "opening_delta_ms": 100,
+          "slot_delta_ms": -100,
+          "verval_delta_ms": -233
+        },
+        "samenvatting_tekst": "Vergelijkingsrit was overall sneller met stabielere opbouw.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 40000,
+          "vergelijking_opening_ms": 40100,
+          "basis_slot_ms": 31000,
+          "vergelijking_slot_ms": 30900,
+          "basis_verval_ms": -22333,
+          "vergelijking_verval_ms": -22567
+        },
+        "onderdelen": {
+          "sterkste": 2,
+          "zwakste": 3
+        },
+        "delta_chart_points": 4,
+        "lap_overlay_points": [
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "name": "overall slower by 250 ms",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": 131750,
+        "laps_csv": "40.0,30.0,30.5,31.0"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": 132000,
+        "laps_csv": "40.1,30.1,30.5,31.0"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 131750,
+            "compare_ms": 132000,
+            "delta_ms": 250
+          },
+          {
+            "label": "Opening",
+            "base_ms": 40000,
+            "compare_ms": 40100,
+            "delta_ms": 100
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 31000,
+            "compare_ms": 31000,
+            "delta_ms": 0
+          },
+          {
+            "label": "Verval",
+            "base_ms": -22333,
+            "compare_ms": -22467,
+            "delta_ms": -134
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 40.0,
+            "compare_split": 40.1,
+            "split_delta_ms": 100,
+            "cumulative_delta_ms": 100,
+            "base_400": 53.333333333333336,
+            "compare_400": 53.46666666666667,
+            "eq_delta_ms": 133
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.0,
+            "compare_split": 30.1,
+            "split_delta_ms": 100,
+            "cumulative_delta_ms": 200,
+            "base_400": 30.0,
+            "compare_400": 30.1,
+            "eq_delta_ms": 100
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": 30.5,
+            "split_delta_ms": 0,
+            "cumulative_delta_ms": 200,
+            "base_400": 30.5,
+            "compare_400": 30.5,
+            "eq_delta_ms": 0
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 31.0,
+            "compare_split": 31.0,
+            "split_delta_ms": 0,
+            "cumulative_delta_ms": 200,
+            "base_400": 31.0,
+            "compare_400": 31.0,
+            "eq_delta_ms": 0
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": 250,
+          "opening_delta_ms": 100,
+          "slot_delta_ms": 0,
+          "verval_delta_ms": -133
+        },
+        "samenvatting_tekst": "Vergelijkingsrit verloor vooral tijd in meerdere segmenten.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 40000,
+          "vergelijking_opening_ms": 40100,
+          "basis_slot_ms": 31000,
+          "vergelijking_slot_ms": 31000,
+          "basis_verval_ms": -22333,
+          "vergelijking_verval_ms": -22467
+        },
+        "onderdelen": {
+          "sterkste": 3,
+          "zwakste": 1
+        },
+        "delta_chart_points": 4,
+        "lap_overlay_points": [
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "name": "tiny differences",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": 131000,
+        "laps_csv": "40.0,30.0,30.5,30.5"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": 131100,
+        "laps_csv": "40.0,30.05,30.5,30.55"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 131000,
+            "compare_ms": 131100,
+            "delta_ms": 100
+          },
+          {
+            "label": "Opening",
+            "base_ms": 40000,
+            "compare_ms": 40000,
+            "delta_ms": 0
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 30500,
+            "compare_ms": 30550,
+            "delta_ms": 50
+          },
+          {
+            "label": "Verval",
+            "base_ms": -22833,
+            "compare_ms": -22783,
+            "delta_ms": 50
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 40.0,
+            "compare_split": 40.0,
+            "split_delta_ms": 0,
+            "cumulative_delta_ms": 0,
+            "base_400": 53.333333333333336,
+            "compare_400": 53.333333333333336,
+            "eq_delta_ms": 0
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.0,
+            "compare_split": 30.05,
+            "split_delta_ms": 50,
+            "cumulative_delta_ms": 50,
+            "base_400": 30.0,
+            "compare_400": 30.05,
+            "eq_delta_ms": 50
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": 30.5,
+            "split_delta_ms": 0,
+            "cumulative_delta_ms": 50,
+            "base_400": 30.5,
+            "compare_400": 30.5,
+            "eq_delta_ms": 0
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": 30.55,
+            "split_delta_ms": 50,
+            "cumulative_delta_ms": 100,
+            "base_400": 30.5,
+            "compare_400": 30.55,
+            "eq_delta_ms": 50
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": 100,
+          "opening_delta_ms": 0,
+          "slot_delta_ms": 50,
+          "verval_delta_ms": 50
+        },
+        "samenvatting_tekst": "Kleine verschillen: het tempoverloop bepaalt hier het resultaat.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 40000,
+          "vergelijking_opening_ms": 40000,
+          "basis_slot_ms": 30500,
+          "vergelijking_slot_ms": 30550,
+          "basis_verval_ms": -22833,
+          "vergelijking_verval_ms": -22783
+        },
+        "onderdelen": {
+          "sterkste": 1,
+          "zwakste": 2
+        },
+        "delta_chart_points": 4,
+        "lap_overlay_points": [
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "name": "exactly -300 ms and 75% faster splits",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": 132000,
+        "laps_csv": "40.0,30.0,30.5,31.5"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": 131700,
+        "laps_csv": "39.9,29.9,30.4,31.5"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 132000,
+            "compare_ms": 131700,
+            "delta_ms": -300
+          },
+          {
+            "label": "Opening",
+            "base_ms": 40000,
+            "compare_ms": 39900,
+            "delta_ms": -100
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 31500,
+            "compare_ms": 31500,
+            "delta_ms": 0
+          },
+          {
+            "label": "Verval",
+            "base_ms": -21833,
+            "compare_ms": -21700,
+            "delta_ms": 133
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 40.0,
+            "compare_split": 39.9,
+            "split_delta_ms": -100,
+            "cumulative_delta_ms": -100,
+            "base_400": 53.333333333333336,
+            "compare_400": 53.2,
+            "eq_delta_ms": -133
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.0,
+            "compare_split": 29.9,
+            "split_delta_ms": -100,
+            "cumulative_delta_ms": -200,
+            "base_400": 30.0,
+            "compare_400": 29.9,
+            "eq_delta_ms": -100
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": 30.4,
+            "split_delta_ms": -100,
+            "cumulative_delta_ms": -300,
+            "base_400": 30.5,
+            "compare_400": 30.4,
+            "eq_delta_ms": -100
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 31.5,
+            "compare_split": 31.5,
+            "split_delta_ms": 0,
+            "cumulative_delta_ms": -300,
+            "base_400": 31.5,
+            "compare_400": 31.5,
+            "eq_delta_ms": 0
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": -300,
+          "opening_delta_ms": -100,
+          "slot_delta_ms": 0,
+          "verval_delta_ms": 133
+        },
+        "samenvatting_tekst": "Sneller over vrijwel de hele rit.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 40000,
+          "vergelijking_opening_ms": 39900,
+          "basis_slot_ms": 31500,
+          "vergelijking_slot_ms": 31500,
+          "basis_verval_ms": -21833,
+          "vergelijking_verval_ms": -21700
+        },
+        "onderdelen": {
+          "sterkste": 1,
+          "zwakste": 4
+        },
+        "delta_chart_points": 4,
+        "lap_overlay_points": [
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "name": "opening exactly -150 and fade delta exactly 250",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": 131000,
+        "laps_csv": "40.5,30.0,30.0,30.0"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": 131000,
+        "laps_csv": "40.35,30.0,30.0,30.05"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 131000,
+            "compare_ms": 131000,
+            "delta_ms": 0
+          },
+          {
+            "label": "Opening",
+            "base_ms": 40500,
+            "compare_ms": 40350,
+            "delta_ms": -150
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 30000,
+            "compare_ms": 30050,
+            "delta_ms": 50
+          },
+          {
+            "label": "Verval",
+            "base_ms": -24000,
+            "compare_ms": -23750,
+            "delta_ms": 250
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 40.5,
+            "compare_split": 40.35,
+            "split_delta_ms": -150,
+            "cumulative_delta_ms": -150,
+            "base_400": 54.0,
+            "compare_400": 53.8,
+            "eq_delta_ms": -200
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.0,
+            "compare_split": 30.0,
+            "split_delta_ms": 0,
+            "cumulative_delta_ms": -150,
+            "base_400": 30.0,
+            "compare_400": 30.0,
+            "eq_delta_ms": 0
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 30.0,
+            "compare_split": 30.0,
+            "split_delta_ms": 0,
+            "cumulative_delta_ms": -150,
+            "base_400": 30.0,
+            "compare_400": 30.0,
+            "eq_delta_ms": 0
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 30.0,
+            "compare_split": 30.05,
+            "split_delta_ms": 50,
+            "cumulative_delta_ms": -100,
+            "base_400": 30.0,
+            "compare_400": 30.05,
+            "eq_delta_ms": 50
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": 0,
+          "opening_delta_ms": -150,
+          "slot_delta_ms": 50,
+          "verval_delta_ms": 250
+        },
+        "samenvatting_tekst": "Snellere opening, maar veel verval in de slotfase.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 40500,
+          "vergelijking_opening_ms": 40350,
+          "basis_slot_ms": 30000,
+          "vergelijking_slot_ms": 30050,
+          "basis_verval_ms": -24000,
+          "vergelijking_verval_ms": -23750
+        },
+        "onderdelen": {
+          "sterkste": 1,
+          "zwakste": 4
+        },
+        "delta_chart_points": 4,
+        "lap_overlay_points": [
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "name": "slower opening (+200) with stronger finish (-200)",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": 131500,
+        "laps_csv": "40.0,30.0,30.5,31.0"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": 131450,
+        "laps_csv": "40.2,30.1,30.8,30.8"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 131500,
+            "compare_ms": 131450,
+            "delta_ms": -50
+          },
+          {
+            "label": "Opening",
+            "base_ms": 40000,
+            "compare_ms": 40200,
+            "delta_ms": 200
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 31000,
+            "compare_ms": 30800,
+            "delta_ms": -200
+          },
+          {
+            "label": "Verval",
+            "base_ms": -22333,
+            "compare_ms": -22800,
+            "delta_ms": -467
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 40.0,
+            "compare_split": 40.2,
+            "split_delta_ms": 200,
+            "cumulative_delta_ms": 200,
+            "base_400": 53.333333333333336,
+            "compare_400": 53.60000000000001,
+            "eq_delta_ms": 267
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.0,
+            "compare_split": 30.1,
+            "split_delta_ms": 100,
+            "cumulative_delta_ms": 300,
+            "base_400": 30.0,
+            "compare_400": 30.1,
+            "eq_delta_ms": 100
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": 30.8,
+            "split_delta_ms": 300,
+            "cumulative_delta_ms": 600,
+            "base_400": 30.5,
+            "compare_400": 30.8,
+            "eq_delta_ms": 300
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 31.0,
+            "compare_split": 30.8,
+            "split_delta_ms": -200,
+            "cumulative_delta_ms": 400,
+            "base_400": 31.0,
+            "compare_400": 30.8,
+            "eq_delta_ms": -200
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": -50,
+          "opening_delta_ms": 200,
+          "slot_delta_ms": -200,
+          "verval_delta_ms": -467
+        },
+        "samenvatting_tekst": "Rustigere start met een sterkere finish.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 40000,
+          "vergelijking_opening_ms": 40200,
+          "basis_slot_ms": 31000,
+          "vergelijking_slot_ms": 30800,
+          "basis_verval_ms": -22333,
+          "vergelijking_verval_ms": -22800
+        },
+        "onderdelen": {
+          "sterkste": 4,
+          "zwakste": 3
+        },
+        "delta_chart_points": 4,
+        "lap_overlay_points": [
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "name": "slower opening exactly +150, finish exactly -120",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": 131500,
+        "laps_csv": "40.0,30.0,30.5,31.0"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": 131500,
+        "laps_csv": "40.15,30.1,30.8,30.88"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 131500,
+            "compare_ms": 131500,
+            "delta_ms": 0
+          },
+          {
+            "label": "Opening",
+            "base_ms": 40000,
+            "compare_ms": 40150,
+            "delta_ms": 150
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 31000,
+            "compare_ms": 30880,
+            "delta_ms": -120
+          },
+          {
+            "label": "Verval",
+            "base_ms": -22333,
+            "compare_ms": -22653,
+            "delta_ms": -320
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 40.0,
+            "compare_split": 40.15,
+            "split_delta_ms": 150,
+            "cumulative_delta_ms": 150,
+            "base_400": 53.333333333333336,
+            "compare_400": 53.53333333333333,
+            "eq_delta_ms": 200
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.0,
+            "compare_split": 30.1,
+            "split_delta_ms": 100,
+            "cumulative_delta_ms": 250,
+            "base_400": 30.0,
+            "compare_400": 30.1,
+            "eq_delta_ms": 100
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": 30.8,
+            "split_delta_ms": 300,
+            "cumulative_delta_ms": 550,
+            "base_400": 30.5,
+            "compare_400": 30.8,
+            "eq_delta_ms": 300
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 31.0,
+            "compare_split": 30.88,
+            "split_delta_ms": -120,
+            "cumulative_delta_ms": 430,
+            "base_400": 31.0,
+            "compare_400": 30.88,
+            "eq_delta_ms": -120
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": 0,
+          "opening_delta_ms": 150,
+          "slot_delta_ms": -120,
+          "verval_delta_ms": -320
+        },
+        "samenvatting_tekst": "Rustigere start met een sterkere finish.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 40000,
+          "vergelijking_opening_ms": 40150,
+          "basis_slot_ms": 31000,
+          "vergelijking_slot_ms": 30880,
+          "basis_verval_ms": -22333,
+          "vergelijking_verval_ms": -22653
+        },
+        "onderdelen": {
+          "sterkste": 4,
+          "zwakste": 3
+        },
+        "delta_chart_points": 4,
+        "lap_overlay_points": [
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "name": "different lap counts",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": 132000,
+        "laps_csv": "40.0,30.0,30.5,31.0"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": 131000,
+        "laps_csv": "40.0,30.0,30.5"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 132000,
+            "compare_ms": 131000,
+            "delta_ms": -1000
+          },
+          {
+            "label": "Opening",
+            "base_ms": 40000,
+            "compare_ms": 40000,
+            "delta_ms": 0
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 31000,
+            "compare_ms": 15250,
+            "delta_ms": -15750
+          },
+          {
+            "label": "Verval",
+            "base_ms": -22333,
+            "compare_ms": -38083,
+            "delta_ms": -15750
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 40.0,
+            "compare_split": 40.0,
+            "split_delta_ms": 0,
+            "cumulative_delta_ms": 0,
+            "base_400": 53.333333333333336,
+            "compare_400": 53.333333333333336,
+            "eq_delta_ms": 0
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.0,
+            "compare_split": 30.0,
+            "split_delta_ms": 0,
+            "cumulative_delta_ms": 0,
+            "base_400": 30.0,
+            "compare_400": 30.0,
+            "eq_delta_ms": 0
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": 30.5,
+            "split_delta_ms": 0,
+            "cumulative_delta_ms": 0,
+            "base_400": 30.5,
+            "compare_400": 15.25,
+            "eq_delta_ms": -15250
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 31.0,
+            "compare_split": null,
+            "split_delta_ms": null,
+            "cumulative_delta_ms": null,
+            "base_400": 31.0,
+            "compare_400": null,
+            "eq_delta_ms": null
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": -1000,
+          "opening_delta_ms": 0,
+          "slot_delta_ms": -500,
+          "verval_delta_ms": -15750
+        },
+        "samenvatting_tekst": "Vergelijkingsrit was overall sneller met stabielere opbouw.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 40000,
+          "vergelijking_opening_ms": 40000,
+          "basis_slot_ms": 31000,
+          "vergelijking_slot_ms": 30500,
+          "basis_verval_ms": -22333,
+          "vergelijking_verval_ms": -38083
+        },
+        "onderdelen": {
+          "sterkste": 1,
+          "zwakste": 1
+        },
+        "delta_chart_points": 3,
+        "lap_overlay_points": [
+          4,
+          3
+        ]
+      }
+    },
+    {
+      "name": "500 m, one full lap",
+      "base": {
+        "distance_m": 500,
+        "total_time_ms": 40500,
+        "laps_csv": "10.3,30.2"
+      },
+      "compare": {
+        "distance_m": 500,
+        "total_time_ms": 40100,
+        "laps_csv": "10.1,30.0"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 40500,
+            "compare_ms": 40100,
+            "delta_ms": -400
+          },
+          {
+            "label": "Opening",
+            "base_ms": 10300,
+            "compare_ms": 10100,
+            "delta_ms": -200
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 30200,
+            "compare_ms": 30000,
+            "delta_ms": -200
+          },
+          {
+            "label": "Verval",
+            "base_ms": -11000,
+            "compare_ms": -10400,
+            "delta_ms": 600
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 100,
+            "base_split": 10.3,
+            "compare_split": 10.1,
+            "split_delta_ms": -200,
+            "cumulative_delta_ms": -200,
+            "base_400": 41.2,
+            "compare_400": 40.4,
+            "eq_delta_ms": -800
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.2,
+            "compare_split": 30.0,
+            "split_delta_ms": -200,
+            "cumulative_delta_ms": -400,
+            "base_400": 30.2,
+            "compare_400": 30.0,
+            "eq_delta_ms": -200
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": -400,
+          "opening_delta_ms": -200,
+          "slot_delta_ms": -200,
+          "verval_delta_ms": 600
+        },
+        "samenvatting_tekst": "Sneller over vrijwel de hele rit.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 10300,
+          "vergelijking_opening_ms": 10100,
+          "basis_slot_ms": 30200,
+          "vergelijking_slot_ms": 30000,
+          "basis_verval_ms": -11000,
+          "vergelijking_verval_ms": -10400
+        },
+        "onderdelen": {
+          "sterkste": 1,
+          "zwakste": 1
+        },
+        "delta_chart_points": 2,
+        "lap_overlay_points": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "name": "3000 m, 8 laps vs 7 laps (odd lap-count quirk)",
+      "base": {
+        "distance_m": 3000,
+        "total_time_ms": 270000,
+        "laps_csv": "21.0,32.0,32.2,32.5,32.8,33.0,33.2,34.0"
+      },
+      "compare": {
+        "distance_m": 3000,
+        "total_time_ms": 268000,
+        "laps_csv": "20.8,31.9,32.0,32.4,32.6,32.9,34.2"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 270000,
+            "compare_ms": 268000,
+            "delta_ms": -2000
+          },
+          {
+            "label": "Opening",
+            "base_ms": 21000,
+            "compare_ms": 20800,
+            "delta_ms": -200
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 34000,
+            "compare_ms": 17100,
+            "delta_ms": -16900
+          },
+          {
+            "label": "Verval",
+            "base_ms": -8000,
+            "compare_ms": -24500,
+            "delta_ms": -16500
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 200,
+            "base_split": 21.0,
+            "compare_split": 20.8,
+            "split_delta_ms": -200,
+            "cumulative_delta_ms": -200,
+            "base_400": 42.0,
+            "compare_400": 41.6,
+            "eq_delta_ms": -400
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 32.0,
+            "compare_split": 31.9,
+            "split_delta_ms": -100,
+            "cumulative_delta_ms": -300,
+            "base_400": 32.0,
+            "compare_400": 31.9,
+            "eq_delta_ms": -100
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 32.2,
+            "compare_split": 32.0,
+            "split_delta_ms": -200,
+            "cumulative_delta_ms": -500,
+            "base_400": 32.2,
+            "compare_400": 32.0,
+            "eq_delta_ms": -200
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 32.5,
+            "compare_split": 32.4,
+            "split_delta_ms": -100,
+            "cumulative_delta_ms": -600,
+            "base_400": 32.5,
+            "compare_400": 32.4,
+            "eq_delta_ms": -100
+          },
+          {
+            "index": 5,
+            "distance_m": 400,
+            "base_split": 32.8,
+            "compare_split": 32.6,
+            "split_delta_ms": -200,
+            "cumulative_delta_ms": -800,
+            "base_400": 32.8,
+            "compare_400": 32.6,
+            "eq_delta_ms": -200
+          },
+          {
+            "index": 6,
+            "distance_m": 400,
+            "base_split": 33.0,
+            "compare_split": 32.9,
+            "split_delta_ms": -100,
+            "cumulative_delta_ms": -900,
+            "base_400": 33.0,
+            "compare_400": 32.9,
+            "eq_delta_ms": -100
+          },
+          {
+            "index": 7,
+            "distance_m": 400,
+            "base_split": 33.2,
+            "compare_split": 34.2,
+            "split_delta_ms": 1000,
+            "cumulative_delta_ms": 100,
+            "base_400": 33.2,
+            "compare_400": 17.1,
+            "eq_delta_ms": -16100
+          },
+          {
+            "index": 8,
+            "distance_m": 400,
+            "base_split": 34.0,
+            "compare_split": null,
+            "split_delta_ms": null,
+            "cumulative_delta_ms": null,
+            "base_400": 34.0,
+            "compare_400": null,
+            "eq_delta_ms": null
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": -2000,
+          "opening_delta_ms": -200,
+          "slot_delta_ms": 200,
+          "verval_delta_ms": -16500
+        },
+        "samenvatting_tekst": "Sneller over vrijwel de hele rit.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 21000,
+          "vergelijking_opening_ms": 20800,
+          "basis_slot_ms": 34000,
+          "vergelijking_slot_ms": 34200,
+          "basis_verval_ms": -8000,
+          "vergelijking_verval_ms": -24500
+        },
+        "onderdelen": {
+          "sterkste": 1,
+          "zwakste": 7
+        },
+        "delta_chart_points": 7,
+        "lap_overlay_points": [
+          8,
+          7
+        ]
+      }
+    },
+    {
+      "name": "no laps on one side",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": 133000,
+        "laps_csv": "41.0,30.5,30.8,30.7"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": 131500,
+        "laps_csv": null
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 133000,
+            "compare_ms": 131500,
+            "delta_ms": -1500
+          },
+          {
+            "label": "Opening",
+            "base_ms": 41000,
+            "compare_ms": null,
+            "delta_ms": null
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 30700,
+            "compare_ms": null,
+            "delta_ms": null
+          },
+          {
+            "label": "Verval",
+            "base_ms": -23967,
+            "compare_ms": null,
+            "delta_ms": null
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 41.0,
+            "compare_split": null,
+            "split_delta_ms": null,
+            "cumulative_delta_ms": null,
+            "base_400": 54.666666666666664,
+            "compare_400": null,
+            "eq_delta_ms": null
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": null,
+            "split_delta_ms": null,
+            "cumulative_delta_ms": null,
+            "base_400": 30.5,
+            "compare_400": null,
+            "eq_delta_ms": null
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 30.8,
+            "compare_split": null,
+            "split_delta_ms": null,
+            "cumulative_delta_ms": null,
+            "base_400": 30.8,
+            "compare_400": null,
+            "eq_delta_ms": null
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 30.7,
+            "compare_split": null,
+            "split_delta_ms": null,
+            "cumulative_delta_ms": null,
+            "base_400": 30.7,
+            "compare_400": null,
+            "eq_delta_ms": null
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": -1500,
+          "opening_delta_ms": null,
+          "slot_delta_ms": null,
+          "verval_delta_ms": null
+        },
+        "samenvatting_tekst": "Vergelijkingsrit was overall sneller met stabielere opbouw.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [],
+          "basis_opening_ms": 41000,
+          "vergelijking_opening_ms": null,
+          "basis_slot_ms": 30700,
+          "vergelijking_slot_ms": null,
+          "basis_verval_ms": -23967,
+          "vergelijking_verval_ms": null
+        },
+        "onderdelen": {
+          "sterkste": null,
+          "zwakste": null
+        },
+        "delta_chart_points": 0,
+        "lap_overlay_points": [
+          4,
+          0
+        ]
+      }
+    },
+    {
+      "name": "no laps at all, times differ",
+      "base": {
+        "distance_m": 1000,
+        "total_time_ms": 82000,
+        "laps_csv": null
+      },
+      "compare": {
+        "distance_m": 1000,
+        "total_time_ms": 81000,
+        "laps_csv": null
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 82000,
+            "compare_ms": 81000,
+            "delta_ms": -1000
+          },
+          {
+            "label": "Opening",
+            "base_ms": null,
+            "compare_ms": null,
+            "delta_ms": null
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": null,
+            "compare_ms": null,
+            "delta_ms": null
+          },
+          {
+            "label": "Verval",
+            "base_ms": null,
+            "compare_ms": null,
+            "delta_ms": null
+          }
+        ],
+        "splits": [],
+        "highlights": {
+          "total_delta_ms": -1000,
+          "opening_delta_ms": null,
+          "slot_delta_ms": null,
+          "verval_delta_ms": null
+        },
+        "samenvatting_tekst": "Vergelijkingsrit was overall sneller met stabielere opbouw.",
+        "pacing": {
+          "basis_labels": [],
+          "vergelijking_labels": [],
+          "basis_opening_ms": null,
+          "vergelijking_opening_ms": null,
+          "basis_slot_ms": null,
+          "vergelijking_slot_ms": null,
+          "basis_verval_ms": null,
+          "vergelijking_verval_ms": null
+        },
+        "onderdelen": {
+          "sterkste": null,
+          "zwakste": null
+        },
+        "delta_chart_points": 0,
+        "lap_overlay_points": null
+      }
+    },
+    {
+      "name": "missing total times",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": null,
+        "laps_csv": "41.0,30.5,30.8,30.7"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": null,
+        "laps_csv": "40.2,29.9,30.4,31.0"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": null,
+            "compare_ms": null,
+            "delta_ms": null
+          },
+          {
+            "label": "Opening",
+            "base_ms": 41000,
+            "compare_ms": 40200,
+            "delta_ms": -800
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 30700,
+            "compare_ms": 31000,
+            "delta_ms": 300
+          },
+          {
+            "label": "Verval",
+            "base_ms": -23967,
+            "compare_ms": -22600,
+            "delta_ms": 1367
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 41.0,
+            "compare_split": 40.2,
+            "split_delta_ms": -800,
+            "cumulative_delta_ms": -800,
+            "base_400": 54.666666666666664,
+            "compare_400": 53.60000000000001,
+            "eq_delta_ms": -1067
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": 29.9,
+            "split_delta_ms": -600,
+            "cumulative_delta_ms": -1400,
+            "base_400": 30.5,
+            "compare_400": 29.9,
+            "eq_delta_ms": -600
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 30.8,
+            "compare_split": 30.4,
+            "split_delta_ms": -400,
+            "cumulative_delta_ms": -1800,
+            "base_400": 30.8,
+            "compare_400": 30.4,
+            "eq_delta_ms": -400
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 30.7,
+            "compare_split": 31.0,
+            "split_delta_ms": 300,
+            "cumulative_delta_ms": -1500,
+            "base_400": 30.7,
+            "compare_400": 31.0,
+            "eq_delta_ms": 300
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": null,
+          "opening_delta_ms": -800,
+          "slot_delta_ms": 300,
+          "verval_delta_ms": 1367
+        },
+        "samenvatting_tekst": "Onvoldoende data om een duidelijke vergelijking te maken.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 41000,
+          "vergelijking_opening_ms": 40200,
+          "basis_slot_ms": 30700,
+          "vergelijking_slot_ms": 31000,
+          "basis_verval_ms": -23967,
+          "vergelijking_verval_ms": -22600
+        },
+        "onderdelen": {
+          "sterkste": 1,
+          "zwakste": 4
+        },
+        "delta_chart_points": 4,
+        "lap_overlay_points": [
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "name": "compare has no total, base has",
+      "base": {
+        "distance_m": 1500,
+        "total_time_ms": 133000,
+        "laps_csv": "41.0,30.5,30.8,30.7"
+      },
+      "compare": {
+        "distance_m": 1500,
+        "total_time_ms": null,
+        "laps_csv": "40.2,29.9,30.4,31.0"
+      },
+      "expected": {
+        "summary": [
+          {
+            "label": "Totale tijd",
+            "base_ms": 133000,
+            "compare_ms": null,
+            "delta_ms": null
+          },
+          {
+            "label": "Opening",
+            "base_ms": 41000,
+            "compare_ms": 40200,
+            "delta_ms": -800
+          },
+          {
+            "label": "Laatste 400-eq",
+            "base_ms": 30700,
+            "compare_ms": 31000,
+            "delta_ms": 300
+          },
+          {
+            "label": "Verval",
+            "base_ms": -23967,
+            "compare_ms": -22600,
+            "delta_ms": 1367
+          }
+        ],
+        "splits": [
+          {
+            "index": 1,
+            "distance_m": 300,
+            "base_split": 41.0,
+            "compare_split": 40.2,
+            "split_delta_ms": -800,
+            "cumulative_delta_ms": -800,
+            "base_400": 54.666666666666664,
+            "compare_400": 53.60000000000001,
+            "eq_delta_ms": -1067
+          },
+          {
+            "index": 2,
+            "distance_m": 400,
+            "base_split": 30.5,
+            "compare_split": 29.9,
+            "split_delta_ms": -600,
+            "cumulative_delta_ms": -1400,
+            "base_400": 30.5,
+            "compare_400": 29.9,
+            "eq_delta_ms": -600
+          },
+          {
+            "index": 3,
+            "distance_m": 400,
+            "base_split": 30.8,
+            "compare_split": 30.4,
+            "split_delta_ms": -400,
+            "cumulative_delta_ms": -1800,
+            "base_400": 30.8,
+            "compare_400": 30.4,
+            "eq_delta_ms": -400
+          },
+          {
+            "index": 4,
+            "distance_m": 400,
+            "base_split": 30.7,
+            "compare_split": 31.0,
+            "split_delta_ms": 300,
+            "cumulative_delta_ms": -1500,
+            "base_400": 30.7,
+            "compare_400": 31.0,
+            "eq_delta_ms": 300
+          }
+        ],
+        "highlights": {
+          "total_delta_ms": null,
+          "opening_delta_ms": -800,
+          "slot_delta_ms": 300,
+          "verval_delta_ms": 1367
+        },
+        "samenvatting_tekst": "Onvoldoende data om een duidelijke vergelijking te maken.",
+        "pacing": {
+          "basis_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "vergelijking_labels": [
+            "Controleerde start",
+            "Sterke slotronde",
+            "Gelijkmatige opbouw"
+          ],
+          "basis_opening_ms": 41000,
+          "vergelijking_opening_ms": 40200,
+          "basis_slot_ms": 30700,
+          "vergelijking_slot_ms": 31000,
+          "basis_verval_ms": -23967,
+          "vergelijking_verval_ms": -22600
+        },
+        "onderdelen": {
+          "sterkste": 1,
+          "zwakste": 4
+        },
+        "delta_chart_points": 4,
+        "lap_overlay_points": [
+          4,
+          4
+        ]
+      }
+    }
+  ]
+}

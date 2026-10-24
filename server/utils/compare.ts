@@ -6,11 +6,11 @@ import { computeRaceMetrics, per400Times, segmentDistances } from './splits'
  * / get_pacing_labels / get_sterkste_en_zwakste_onderdelen (old app, commit
  * 4dc6959). Pinned by golden_calculations.json -> race_comparison.
  *
- * NOT ported: build_vergelijkings_samenvatting (auto-generated Dutch
- * prose summary) and the SVG chart-coordinate builders -- the numeric
- * data below is what those built on top of, and the rebuild draws its
- * own SVG straight from these numbers (see app/components/CompareChart.vue)
- * rather than re-deriving the old pixel-coordinate math.
+ * The old SVG chart-coordinate builders are NOT ported -- the page draws its
+ * charts from the numbers below (app/components/SplitChart.vue). The Dutch
+ * prose summary (build_vergelijkings_samenvatting) is ported as
+ * buildComparisonSummaryText. All of it is pinned by golden_compare.json,
+ * produced by running the old build_comparison_context.
  */
 
 export interface SplitComparisonRow {
@@ -41,9 +41,17 @@ export interface ComparisonContext {
     slotDeltaMs: number | null
     vervalDeltaMs: number | null
   }
+  /** One sentence on where time was won or lost. */
+  samenvattingTekst: string
   pacing: {
     basisLabels: string[]
     vergelijkingLabels: string[]
+    basisOpeningMs: number | null
+    vergelijkingOpeningMs: number | null
+    basisSlotMs: number | null
+    vergelijkingSlotMs: number | null
+    basisVervalMs: number | null
+    vergelijkingVervalMs: number | null
   }
   onderdelen: {
     sterkste: SplitComparisonRow | null
@@ -74,6 +82,34 @@ export function getPacingLabels(laps: number[], distanceM: number): string[] {
   else if (fade <= 0.15) labels.push('Gelijkmatige opbouw')
 
   return [...new Set(labels)]
+}
+
+/**
+ * The one-sentence verdict, from the same deltas the highlights show.
+ * First matching rule wins (order matters).
+ */
+export function buildComparisonSummaryText(input: {
+  totalDeltaMs: number | null
+  openingDeltaMs: number | null
+  slotDeltaMs: number | null
+  vervalDeltaMs: number | null
+  splitDeltasMs: number[]
+}): string {
+  const { totalDeltaMs, openingDeltaMs, slotDeltaMs, vervalDeltaMs, splitDeltasMs } = input
+  if (totalDeltaMs === null) return 'Onvoldoende data om een duidelijke vergelijking te maken.'
+
+  const fasterRatio = splitDeltasMs.length ? splitDeltasMs.filter((v) => v < 0).length / splitDeltasMs.length : 0
+
+  if (fasterRatio >= 0.75 && totalDeltaMs <= -300) return 'Sneller over vrijwel de hele rit.'
+  if (openingDeltaMs !== null && vervalDeltaMs !== null && openingDeltaMs <= -150 && vervalDeltaMs >= 250) {
+    return 'Snellere opening, maar veel verval in de slotfase.'
+  }
+  if (openingDeltaMs !== null && slotDeltaMs !== null && openingDeltaMs >= 150 && slotDeltaMs <= -120) {
+    return 'Rustigere start met een sterkere finish.'
+  }
+  if (totalDeltaMs <= -250) return 'Vergelijkingsrit was overall sneller met stabielere opbouw.'
+  if (totalDeltaMs >= 250) return 'Vergelijkingsrit verloor vooral tijd in meerdere segmenten.'
+  return 'Kleine verschillen: het tempoverloop bepaalt hier het resultaat.'
 }
 
 export function getStrongestWeakestSegment(rows: SplitComparisonRow[]): {
@@ -181,9 +217,22 @@ export function buildComparisonContext(
       slotDeltaMs,
       vervalDeltaMs,
     },
+    samenvattingTekst: buildComparisonSummaryText({
+      totalDeltaMs,
+      openingDeltaMs,
+      slotDeltaMs,
+      vervalDeltaMs,
+      splitDeltasMs: splits.map((r) => r.splitDeltaMs).filter((v): v is number => v !== null),
+    }),
     pacing: {
       basisLabels: getPacingLabels(base.laps, base.distanceM),
       vergelijkingLabels: getPacingLabels(compare.laps, compare.distanceM),
+      basisOpeningMs: base.laps.length ? pythonRound(base.laps[0]! * 1000) : null,
+      vergelijkingOpeningMs: compare.laps.length ? pythonRound(compare.laps[0]! * 1000) : null,
+      basisSlotMs: base.laps.length ? pythonRound(base.laps[base.laps.length - 1]! * 1000) : null,
+      vergelijkingSlotMs: compare.laps.length ? pythonRound(compare.laps[compare.laps.length - 1]! * 1000) : null,
+      basisVervalMs: baseMetrics.fade400Eq !== null ? pythonRound(baseMetrics.fade400Eq * 1000) : null,
+      vergelijkingVervalMs: compareMetrics.fade400Eq !== null ? pythonRound(compareMetrics.fade400Eq * 1000) : null,
     },
     onderdelen: getStrongestWeakestSegment(splits),
   }
