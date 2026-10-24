@@ -74,6 +74,7 @@ function signed(ms: number | null) {
 
 <template>
   <div class="space-y-8 max-w-3xl">
+    <SubTabs section="progress" class="!mb-0" />
     <h1 class="page-title">Targets</h1>
 
     <section class="card space-y-3">
