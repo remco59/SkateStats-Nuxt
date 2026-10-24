@@ -1,0 +1,646 @@
+{
+  "generated_by": "scripts/golden/duplicates.py against old SkateStats at 01a634c8265df0612bef38f0f41eab932007953f: deduplicate_competitions (main.py) incl. its SQL, on in-memory databases",
+  "scenarios": [
+    {
+      "name": "different titles for the same day merge, preferring the title without a date",
+      "competitions": [
+        {
+          "id": 1,
+          "owner": 1,
+          "name": "Herfstcup uitslag 05-10-2025",
+          "venue": "Thialf",
+          "date": "2025-10-05",
+          "notes": "Geimporteerd van OSTA: https://osta.example/1"
+        },
+        {
+          "id": 2,
+          "owner": 1,
+          "name": "Herfstcup",
+          "venue": null,
+          "date": "2025-10-05",
+          "notes": "Geimporteerd van OSTA: https://osta.example/2"
+        },
+        {
+          "id": 3,
+          "owner": 1,
+          "name": "Herfstcup 2025",
+          "venue": "Thialf (NED)",
+          "date": "2025-10-05",
+          "notes": "Geimporteerd van OSTA: https://osta.example/1"
+        }
+      ],
+      "races": [
+        {
+          "id": 10,
+          "competition_id": 1,
+          "skater_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 40000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [
+            10000,
+            30000
+          ],
+          "dnf": 0,
+          "notes": "Geimporteerd van OSTA: https://osta.example/r1"
+        },
+        {
+          "id": 11,
+          "competition_id": 2,
+          "skater_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 40000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [
+            10000,
+            30000
+          ],
+          "dnf": 0,
+          "notes": "Geimporteerd van OSTA: https://osta.example/r1"
+        },
+        {
+          "id": 12,
+          "competition_id": 2,
+          "skater_id": 1,
+          "distance_m": 1000,
+          "total_time_ms": 82000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [
+            24000,
+            29000,
+            29000
+          ],
+          "dnf": 0,
+          "notes": "Geimporteerd van OSTA: https://osta.example/r2"
+        },
+        {
+          "id": 13,
+          "competition_id": 3,
+          "skater_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 130000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [
+            40000,
+            30000,
+            30000,
+            30000
+          ],
+          "dnf": 0,
+          "notes": null
+        }
+      ],
+      "expected": {
+        "counts": {
+          "merged_competitions": 2,
+          "moved_races": 2,
+          "removed_duplicate_races": 1
+        },
+        "competitions": [
+          {
+            "id": 1,
+            "owner": 1,
+            "name": "Herfstcup 2025",
+            "venue": "Thialf",
+            "date": "2025-10-05",
+            "notes": "Geimporteerd van OSTA: https://osta.example/1\nGeimporteerd van OSTA: https://osta.example/2"
+          }
+        ],
+        "races": {
+          "10": 1,
+          "12": 1,
+          "13": 1
+        }
+      }
+    },
+    {
+      "name": "two venues on the same day stay apart; a blank venue is not guessed",
+      "competitions": [
+        {
+          "id": 1,
+          "owner": 1,
+          "name": "Clubkampioenschap",
+          "venue": "Thialf",
+          "date": "2025-11-01",
+          "notes": null
+        },
+        {
+          "id": 2,
+          "owner": 1,
+          "name": "Clubkampioenschap",
+          "venue": "Kardinge",
+          "date": "2025-11-01",
+          "notes": null
+        },
+        {
+          "id": 3,
+          "owner": 1,
+          "name": "Clubkampioenschap",
+          "venue": null,
+          "date": "2025-11-01",
+          "notes": null
+        }
+      ],
+      "races": [
+        {
+          "id": 10,
+          "competition_id": 1,
+          "skater_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 40000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [],
+          "dnf": 0,
+          "notes": null
+        },
+        {
+          "id": 11,
+          "competition_id": 2,
+          "skater_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 41000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [],
+          "dnf": 0,
+          "notes": null
+        },
+        {
+          "id": 12,
+          "competition_id": 3,
+          "skater_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 42000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [],
+          "dnf": 0,
+          "notes": null
+        }
+      ],
+      "expected": {
+        "counts": {
+          "merged_competitions": 0,
+          "moved_races": 0,
+          "removed_duplicate_races": 0
+        },
+        "competitions": [
+          {
+            "id": 1,
+            "owner": 1,
+            "name": "Clubkampioenschap",
+            "venue": "Thialf",
+            "date": "2025-11-01",
+            "notes": null
+          },
+          {
+            "id": 2,
+            "owner": 1,
+            "name": "Clubkampioenschap",
+            "venue": "Kardinge",
+            "date": "2025-11-01",
+            "notes": null
+          },
+          {
+            "id": 3,
+            "owner": 1,
+            "name": "Clubkampioenschap",
+            "venue": null,
+            "date": "2025-11-01",
+            "notes": null
+          }
+        ],
+        "races": {
+          "10": 1,
+          "11": 2,
+          "12": 3
+        }
+      }
+    },
+    {
+      "name": "a blank venue merges when there is only one known venue",
+      "competitions": [
+        {
+          "id": 1,
+          "owner": 1,
+          "name": "NK Afstanden",
+          "venue": null,
+          "date": "2025-12-13",
+          "notes": null
+        },
+        {
+          "id": 2,
+          "owner": 1,
+          "name": "nk afstanden",
+          "venue": "Thialf",
+          "date": "2025-12-13",
+          "notes": null
+        }
+      ],
+      "races": [
+        {
+          "id": 10,
+          "competition_id": 1,
+          "skater_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 131000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [],
+          "dnf": 0,
+          "notes": null
+        },
+        {
+          "id": 11,
+          "competition_id": 2,
+          "skater_id": 1,
+          "distance_m": 3000,
+          "total_time_ms": 270000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [],
+          "dnf": 0,
+          "notes": null
+        }
+      ],
+      "expected": {
+        "counts": {
+          "merged_competitions": 1,
+          "moved_races": 1,
+          "removed_duplicate_races": 0
+        },
+        "competitions": [
+          {
+            "id": 1,
+            "owner": 1,
+            "name": "NK Afstanden",
+            "venue": "Thialf",
+            "date": "2025-12-13",
+            "notes": null
+          }
+        ],
+        "races": {
+          "10": 1,
+          "11": 1
+        }
+      }
+    },
+    {
+      "name": "duplicate detection: same source url, rich fingerprint, bare distance+time, distinct urls",
+      "competitions": [
+        {
+          "id": 1,
+          "owner": 1,
+          "name": "Wintercup",
+          "venue": "Thialf",
+          "date": "2026-01-10",
+          "notes": null
+        },
+        {
+          "id": 2,
+          "owner": 1,
+          "name": "Wintercup",
+          "venue": "Thialf",
+          "date": "2026-01-10",
+          "notes": null
+        }
+      ],
+      "races": [
+        {
+          "id": 10,
+          "competition_id": 1,
+          "skater_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 40000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [
+            10000,
+            30000
+          ],
+          "dnf": 0,
+          "notes": "Geimporteerd van OSTA: https://osta.example/a"
+        },
+        {
+          "id": 11,
+          "competition_id": 1,
+          "skater_id": 1,
+          "distance_m": 1000,
+          "total_time_ms": 80000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [],
+          "dnf": 0,
+          "notes": null
+        },
+        {
+          "id": 12,
+          "competition_id": 1,
+          "skater_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 130000,
+          "lane": "Binnen",
+          "opponent": null,
+          "laps_ms": [
+            40000,
+            30000,
+            30000,
+            30000
+          ],
+          "dnf": 0,
+          "notes": null
+        },
+        {
+          "id": 13,
+          "competition_id": 1,
+          "skater_id": 1,
+          "distance_m": 3000,
+          "total_time_ms": 270000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [],
+          "dnf": 0,
+          "notes": "Geimporteerd van OSTA: https://osta.example/x"
+        },
+        {
+          "id": 20,
+          "competition_id": 2,
+          "skater_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 40000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [
+            10000,
+            30000
+          ],
+          "dnf": 0,
+          "notes": "Rondetijden van OSTA: https://osta.example/a"
+        },
+        {
+          "id": 21,
+          "competition_id": 2,
+          "skater_id": 1,
+          "distance_m": 1000,
+          "total_time_ms": 80000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [],
+          "dnf": 0,
+          "notes": null
+        },
+        {
+          "id": 22,
+          "competition_id": 2,
+          "skater_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 130000,
+          "lane": "binnen",
+          "opponent": null,
+          "laps_ms": [
+            40000,
+            30000,
+            30000,
+            30000
+          ],
+          "dnf": 0,
+          "notes": null
+        },
+        {
+          "id": 23,
+          "competition_id": 2,
+          "skater_id": 1,
+          "distance_m": 3000,
+          "total_time_ms": 270000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [],
+          "dnf": 0,
+          "notes": "Geimporteerd van OSTA: https://osta.example/y"
+        },
+        {
+          "id": 24,
+          "competition_id": 2,
+          "skater_id": 1,
+          "distance_m": 500,
+          "total_time_ms": null,
+          "lane": "Buiten",
+          "opponent": null,
+          "laps_ms": [],
+          "dnf": 1,
+          "notes": null
+        }
+      ],
+      "expected": {
+        "counts": {
+          "merged_competitions": 1,
+          "moved_races": 3,
+          "removed_duplicate_races": 2
+        },
+        "competitions": [
+          {
+            "id": 1,
+            "owner": 1,
+            "name": "Wintercup",
+            "venue": "Thialf",
+            "date": "2026-01-10",
+            "notes": null
+          }
+        ],
+        "races": {
+          "10": 1,
+          "11": 1,
+          "12": 1,
+          "13": 1,
+          "21": 1,
+          "23": 1,
+          "24": 1
+        }
+      }
+    },
+    {
+      "name": "users are never merged with each other",
+      "competitions": [
+        {
+          "id": 1,
+          "owner": 1,
+          "name": "Herfstcup",
+          "venue": "Thialf",
+          "date": "2025-10-05",
+          "notes": null
+        },
+        {
+          "id": 2,
+          "owner": 2,
+          "name": "Herfstcup",
+          "venue": "Thialf",
+          "date": "2025-10-05",
+          "notes": null
+        }
+      ],
+      "races": [
+        {
+          "id": 10,
+          "competition_id": 1,
+          "skater_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 40000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [],
+          "dnf": 0,
+          "notes": null
+        },
+        {
+          "id": 11,
+          "competition_id": 2,
+          "skater_id": 2,
+          "distance_m": 500,
+          "total_time_ms": 40000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [],
+          "dnf": 0,
+          "notes": null
+        }
+      ],
+      "expected": {
+        "counts": {
+          "merged_competitions": 0,
+          "moved_races": 0,
+          "removed_duplicate_races": 0
+        },
+        "competitions": [
+          {
+            "id": 1,
+            "owner": 1,
+            "name": "Herfstcup",
+            "venue": "Thialf",
+            "date": "2025-10-05",
+            "notes": null
+          },
+          {
+            "id": 2,
+            "owner": 2,
+            "name": "Herfstcup",
+            "venue": "Thialf",
+            "date": "2025-10-05",
+            "notes": null
+          }
+        ],
+        "races": {
+          "10": 1,
+          "11": 2
+        }
+      }
+    },
+    {
+      "name": "notes are merged line by line without repeating a line",
+      "competitions": [
+        {
+          "id": 1,
+          "owner": 1,
+          "name": "Cup",
+          "venue": "Thialf",
+          "date": "2025-10-05",
+          "notes": "Trainer: Jan\nVideo online"
+        },
+        {
+          "id": 2,
+          "owner": 1,
+          "name": "Cup",
+          "venue": "Thialf",
+          "date": "2025-10-05",
+          "notes": "Video online\nWeer: koud"
+        }
+      ],
+      "races": [],
+      "expected": {
+        "counts": {
+          "merged_competitions": 1,
+          "moved_races": 0,
+          "removed_duplicate_races": 0
+        },
+        "competitions": [
+          {
+            "id": 1,
+            "owner": 1,
+            "name": "Cup",
+            "venue": "Thialf",
+            "date": "2025-10-05",
+            "notes": "Trainer: Jan\nVideo online\nWeer: koud"
+          }
+        ],
+        "races": {}
+      }
+    },
+    {
+      "name": "nothing to merge",
+      "competitions": [
+        {
+          "id": 1,
+          "owner": 1,
+          "name": "Cup A",
+          "venue": "Thialf",
+          "date": "2025-10-05",
+          "notes": null
+        },
+        {
+          "id": 2,
+          "owner": 1,
+          "name": "Cup B",
+          "venue": "Thialf",
+          "date": "2025-10-05",
+          "notes": null
+        }
+      ],
+      "races": [
+        {
+          "id": 10,
+          "competition_id": 1,
+          "skater_id": 1,
+          "distance_m": 500,
+          "total_time_ms": 40000,
+          "lane": null,
+          "opponent": null,
+          "laps_ms": [],
+          "dnf": 0,
+          "notes": null
+        }
+      ],
+      "expected": {
+        "counts": {
+          "merged_competitions": 0,
+          "moved_races": 0,
+          "removed_duplicate_races": 0
+        },
+        "competitions": [
+          {
+            "id": 1,
+            "owner": 1,
+            "name": "Cup A",
+            "venue": "Thialf",
+            "date": "2025-10-05",
+            "notes": null
+          },
+          {
+            "id": 2,
+            "owner": 1,
+            "name": "Cup B",
+            "venue": "Thialf",
+            "date": "2025-10-05",
+            "notes": null
+          }
+        ],
+        "races": {
+          "10": 1
+        }
+      }
+    }
+  ]
+}

@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { eq } from 'drizzle-orm'
 import { backupPayloadSchema, exportUserData, importUserData } from '../../server/utils/backup'
 import { createTestDb, seedUser } from './helpers/test-db'
-import { competitions, races, raceLaps, targets, blacklist, ostaProfileLinks } from '../../server/db/schema'
+import { competitions, races, raceLaps, targets, blacklist, ostaProfileLinks, users } from '../../server/db/schema'
 
 describe('account backup export/import (plan section 9)', () => {
   it('imports a real old-app backup (export_sample.json) with matching competitions/races/targets', () => {
@@ -45,6 +45,27 @@ describe('account backup export/import (plan section 9)', () => {
     const bl = db.select().from(blacklist).where(eq(blacklist.userId, user.id)).all()
     expect(bl).toHaveLength(1)
     expect(bl[0]!.signature).toBe('osta|2024-10-05|knsb bekerwedstrijd deventer|NL12345')
+  })
+
+  it('restores the appearance preferences, including the old app\'s four motion levels', () => {
+    const db = createTestDb()
+    const user = seedUser(db)
+    const raw = JSON.parse(readFileSync('reference/fixtures/backup/export_sample.json', 'utf-8'))
+
+    raw.user.theme_preference = 'system'
+    raw.user.motion_preference = 'cards'
+    importUserData(db, user.id, backupPayloadSchema.parse(raw))
+    let row = db.select().from(users).where(eq(users.id, user.id)).get()!
+    expect(row.themePreference).toBe('system')
+    expect(row.motionPreference).toBe('cards')
+
+    // A value this app used earlier, and an unknown one, are normalized.
+    raw.user.motion_preference = 'reduced'
+    raw.user.theme_preference = 'neon'
+    importUserData(db, user.id, backupPayloadSchema.parse(raw))
+    row = db.select().from(users).where(eq(users.id, user.id)).get()!
+    expect(row.motionPreference).toBe('none')
+    expect(row.themePreference).toBe('dark')
   })
 
   it('re-importing (re-uploading the same backup) replaces rather than duplicates', () => {

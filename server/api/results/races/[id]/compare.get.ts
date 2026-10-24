@@ -13,9 +13,17 @@ export default defineEventHandler(async (event) => {
   const baseRace = getRaceWithContext(session.user.id, id)
   if (!baseRace) throw createError({ statusCode: 404 })
 
-  const candidates = listUserRacesWithContext(session.user.id).filter(
-    (r) => r.distanceM === baseRace.distanceM && r.id !== baseRace.id && r.totalTimeMs !== null,
-  )
+  // Same distance, newest first (as the old picker listed them). A race
+  // needs a time or laps to be worth comparing against; one with neither
+  // (e.g. a DNS) has nothing to compare.
+  const candidates = listUserRacesWithContext(session.user.id)
+    .filter(
+      (r) =>
+        r.distanceM === baseRace.distanceM &&
+        r.id !== baseRace.id &&
+        (r.totalTimeMs !== null || r.lapsMs.length > 0),
+    )
+    .sort((a, b) => b.competitionDate.localeCompare(a.competitionDate) || b.id - a.id)
 
   const compareRace = compareRaceId ? (candidates.find((r) => r.id === compareRaceId) ?? null) : null
 
@@ -32,6 +40,7 @@ export default defineEventHandler(async (event) => {
       id: r.id,
       competitionName: r.competitionName,
       competitionDate: r.competitionDate,
+      venue: r.venue,
       totalTimeMs: r.totalTimeMs,
     })),
     compareRace,

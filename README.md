@@ -32,6 +32,16 @@ SKATESTATS_DB=./data/skatestats.sqlite \
 
 Then log in at `http://localhost:3000/login`.
 
+Manage users from the shell (also inside the container, via
+`docker compose exec skatestats npx tsx scripts/users.ts ...`). Without a
+password argument you are asked for one:
+
+```bash
+npx tsx scripts/users.ts list-users
+npx tsx scripts/users.ts create-user <username> "<Skater Name>" [password] [--admin]
+npx tsx scripts/users.ts set-password <username> [password]   # also signs the user out everywhere
+```
+
 ## Tests
 
 ```bash

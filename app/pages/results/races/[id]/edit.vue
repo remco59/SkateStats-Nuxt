@@ -6,6 +6,14 @@ const router = useRouter()
 const id = route.params.id as string
 
 const { data: race, error: loadError } = await useFetch(`/api/results/races/${id}`)
+const { data: competitionsData } = await useFetch('/api/results/competitions')
+
+// Which competition the race belongs to: an existing one (its id), or ''
+// for "make a new one" (then the three fields below are used).
+const competitionChoice = ref('')
+const newName = ref('')
+const newVenue = ref('')
+const newDate = ref('')
 
 const distanceM = ref(0)
 const status = ref<(typeof RACE_STATUSES)[number]>('finished')
@@ -22,9 +30,11 @@ const error = ref('')
 
 watchEffect(() => {
   if (!race.value) return
+  competitionChoice.value = String(race.value.competitionId)
   distanceM.value = race.value.distanceM
   status.value = race.value.status as (typeof RACE_STATUSES)[number]
-  lapsCsv.value = race.value.lapsMs.map((ms) => (ms / 1000).toFixed(2)).join(',')
+  // Not toFixed(2): that would round a lap like 30.125 to 30.13 on every save.
+  lapsCsv.value = race.value.lapsMs.map((ms) => String(ms / 1000)).join(',')
   totalTimeStr.value = race.value.totalTimeMs ? fmtMs(race.value.totalTimeMs) : ''
   trackType.value = race.value.trackType as 'indoor' | 'outdoor'
   lane.value = race.value.lane ?? ''
@@ -47,10 +57,27 @@ function parseTimeInput(v: string): number | undefined {
 
 async function submit() {
   error.value = ''
+
+  const competition: Record<string, unknown> = {}
+  if (competitionChoice.value === '') {
+    if (!newName.value.trim() || !newDate.value) {
+      error.value = 'Vul een naam en een geldige datum (dd/mm/jjjj) in voor de nieuwe wedstrijd, of kies een bestaande.'
+      return
+    }
+    competition.newCompetition = {
+      name: newName.value.trim(),
+      venue: newVenue.value.trim() || undefined,
+      date: newDate.value,
+    }
+  } else {
+    competition.competitionId = Number(competitionChoice.value)
+  }
+
   try {
     await $fetch(`/api/results/races/${id}`, {
       method: 'PATCH',
       body: {
+        ...competition,
         distanceM: distanceM.value,
         status: status.value,
         trackType: trackType.value,
@@ -75,6 +102,25 @@ async function submit() {
 <template>
   <div v-if="race" class="max-w-lg space-y-4">
     <h1 class="text-xl font-semibold">Bewerk rit</h1>
+
+    <section class="space-y-2">
+      <label class="block text-sm space-y-1">
+        <span class="text-secondary">Wedstrijd</span>
+        <select v-model="competitionChoice" class="field">
+          <option v-for="c in competitionsData?.competitions" :key="c.id" :value="String(c.id)">
+            {{ fmtDate(c.date) }} - {{ c.name }}
+          </option>
+          <option value="">- Nieuwe wedstrijd aanmaken -</option>
+        </select>
+      </label>
+      <div v-if="competitionChoice === ''" class="space-y-2">
+        <div class="grid grid-cols-2 gap-2">
+          <input v-model="newName" class="field" placeholder="Nieuwe wedstrijdnaam" aria-label="Nieuwe wedstrijdnaam">
+          <input v-model="newVenue" class="field" placeholder="Locatie (optioneel)" aria-label="Nieuwe locatie">
+        </div>
+        <DateInput v-model="newDate" aria-label="Datum nieuwe wedstrijd" />
+      </div>
+    </section>
 
     <div class="grid grid-cols-2 gap-2">
       <input

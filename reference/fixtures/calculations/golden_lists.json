@@ -1,0 +1,650 @@
+{
+  "generated_by": "scripts/golden/lists.py against old SkateStats at 01a634c8265df0612bef38f0f41eab932007953f: build_races_context + build_competitions_context (main.py) incl. their SQL, on an in-memory database",
+  "competitions": [
+    {
+      "id": 1,
+      "name": "Herfstcup",
+      "venue": "Thialf",
+      "date": "2024-10-05"
+    },
+    {
+      "id": 2,
+      "name": "NK Afstanden",
+      "venue": "Thialf",
+      "date": "2024-12-14"
+    },
+    {
+      "id": 3,
+      "name": "Clubwedstrijd",
+      "venue": "thialf",
+      "date": "2024-12-14"
+    },
+    {
+      "id": 4,
+      "name": "Kardinge Open",
+      "venue": "Kardinge",
+      "date": "2025-01-11"
+    },
+    {
+      "id": 5,
+      "name": "Zonder locatie",
+      "venue": null,
+      "date": "2025-02-01"
+    },
+    {
+      "id": 6,
+      "name": "Lege locatie",
+      "venue": "  ",
+      "date": "2025-02-08"
+    }
+  ],
+  "races": [
+    {
+      "id": 1,
+      "competition_id": 1,
+      "distance_m": 500,
+      "total_time_ms": 40800,
+      "lane": "Binnen",
+      "tag": "training"
+    },
+    {
+      "id": 2,
+      "competition_id": 1,
+      "distance_m": 1500,
+      "total_time_ms": 133900,
+      "lane": "buiten",
+      "tag": null
+    },
+    {
+      "id": 3,
+      "competition_id": 2,
+      "distance_m": 500,
+      "total_time_ms": 40500,
+      "lane": "binnen",
+      "tag": "important"
+    },
+    {
+      "id": 4,
+      "competition_id": 2,
+      "distance_m": 500,
+      "total_time_ms": 40500,
+      "lane": "Buiten",
+      "tag": "test"
+    },
+    {
+      "id": 5,
+      "competition_id": 2,
+      "distance_m": 1000,
+      "total_time_ms": 83000,
+      "lane": null,
+      "tag": null
+    },
+    {
+      "id": 6,
+      "competition_id": 3,
+      "distance_m": 500,
+      "total_time_ms": 41000,
+      "lane": "Binnen",
+      "tag": "training"
+    },
+    {
+      "id": 7,
+      "competition_id": 4,
+      "distance_m": 1500,
+      "total_time_ms": 132000,
+      "lane": "  ",
+      "tag": "bad_ice"
+    },
+    {
+      "id": 8,
+      "competition_id": 4,
+      "distance_m": 500,
+      "total_time_ms": 40100,
+      "lane": "Buiten",
+      "tag": "training"
+    },
+    {
+      "id": 9,
+      "competition_id": 4,
+      "distance_m": 500,
+      "total_time_ms": 40100,
+      "lane": "Buiten",
+      "tag": null
+    },
+    {
+      "id": 10,
+      "competition_id": 5,
+      "distance_m": 3000,
+      "total_time_ms": 275000,
+      "lane": "gl",
+      "tag": "sick"
+    },
+    {
+      "id": 11,
+      "competition_id": 6,
+      "distance_m": 500,
+      "total_time_ms": 39900,
+      "lane": "Binnen",
+      "tag": "fallen"
+    },
+    {
+      "id": 12,
+      "competition_id": 1,
+      "distance_m": 1000,
+      "total_time_ms": 82500,
+      "lane": "Binnen",
+      "tag": "injured"
+    }
+  ],
+  "race_cases": [
+    {
+      "params": {},
+      "race_ids": [
+        11,
+        10,
+        9,
+        8,
+        7,
+        4,
+        3,
+        6,
+        5,
+        1,
+        12,
+        2
+      ],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "distance_m": "500"
+      },
+      "race_ids": [
+        11,
+        9,
+        8,
+        4,
+        3,
+        6,
+        1
+      ],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "tag_key": "training"
+      },
+      "race_ids": [
+        8,
+        6,
+        1
+      ],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "lane": "binnen"
+      },
+      "race_ids": [
+        11,
+        3,
+        6,
+        1,
+        12
+      ],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "lane": "BUITEN"
+      },
+      "race_ids": [
+        9,
+        8,
+        4,
+        2
+      ],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "venue": "thialf"
+      },
+      "race_ids": [
+        4,
+        3,
+        6,
+        5,
+        1,
+        12,
+        2
+      ],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "venue": "Kardinge"
+      },
+      "race_ids": [
+        9,
+        8,
+        7
+      ],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "date_from": "2024-12-14"
+      },
+      "race_ids": [
+        11,
+        10,
+        9,
+        8,
+        7,
+        4,
+        3,
+        6,
+        5
+      ],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "date_to": "2024-12-14"
+      },
+      "race_ids": [
+        4,
+        3,
+        6,
+        5,
+        1,
+        12,
+        2
+      ],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "date_from": "2024-12-14",
+        "date_to": "2025-01-11"
+      },
+      "race_ids": [
+        9,
+        8,
+        7,
+        4,
+        3,
+        6,
+        5
+      ],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "distance_m": "500",
+        "lane": "buiten",
+        "venue": "kardinge"
+      },
+      "race_ids": [
+        9,
+        8
+      ],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "distance_m": "500",
+        "tag_key": "training",
+        "date_from": "2024-11-01"
+      },
+      "race_ids": [
+        8,
+        6
+      ],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "tag_key": "no_such_tag"
+      },
+      "race_ids": [
+        11,
+        10,
+        9,
+        8,
+        7,
+        4,
+        3,
+        6,
+        5,
+        1,
+        12,
+        2
+      ],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "venue": "nowhere"
+      },
+      "race_ids": [],
+      "lane_options": [
+        "Binnen",
+        "Buiten",
+        "binnen",
+        "buiten",
+        "gl"
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    }
+  ],
+  "competition_cases": [
+    {
+      "params": {},
+      "competition_ids": [
+        6,
+        5,
+        4,
+        3,
+        2,
+        1
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "q": "thialf"
+      },
+      "competition_ids": [
+        3,
+        2,
+        1
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "q": "CUP"
+      },
+      "competition_ids": [
+        1
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "q": "open"
+      },
+      "competition_ids": [
+        4
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "venue": "Thialf"
+      },
+      "competition_ids": [
+        3,
+        2,
+        1
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "venue": "kardinge"
+      },
+      "competition_ids": [
+        4
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "date_from": "2024-12-14"
+      },
+      "competition_ids": [
+        6,
+        5,
+        4,
+        3,
+        2
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "date_to": "2024-12-14"
+      },
+      "competition_ids": [
+        3,
+        2,
+        1
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "date_from": "2024-12-14",
+        "date_to": "2025-01-11"
+      },
+      "competition_ids": [
+        4,
+        3,
+        2
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "q": "thialf",
+        "date_from": "2024-12-01"
+      },
+      "competition_ids": [
+        3,
+        2
+      ],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    },
+    {
+      "params": {
+        "q": "zzz"
+      },
+      "competition_ids": [],
+      "venue_options": [
+        "Kardinge",
+        "Thialf",
+        "thialf"
+      ]
+    }
+  ]
+}

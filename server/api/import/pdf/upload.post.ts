@@ -18,7 +18,8 @@ export default defineEventHandler(async (event) => {
   if (fileEntry.data.byteLength > MAX_PDF_UPLOAD_BYTES) {
     throw createError({ statusCode: 400, statusMessage: 'PDF is te groot (max 20MB).' })
   }
-  const skaterName = skaterNameEntry?.data.toString('utf-8').trim()
+  // The old import always used the account's skater name; a name typed here overrides it.
+  const skaterName = skaterNameEntry?.data.toString('utf-8').trim() || session.user.skaterName.trim()
   if (!skaterName) throw createError({ statusCode: 400, statusMessage: 'Geen schaatsersnaam ingesteld.' })
 
   let pageTexts: string[]

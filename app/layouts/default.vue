@@ -33,28 +33,42 @@ onUnmounted(() => {
   if (typeof document !== 'undefined') document.documentElement.style.overflow = ''
 })
 
+// `match` is the path prefix that marks a link active. The Results and
+// Progress links point at their first tab, so NuxtLink's own active-class
+// would not highlight them on /results/races or /progress/targets.
 const navLinks = [
   {
     to: '/',
+    match: '/',
     label: 'Dashboard',
     icon: 'M3 12l2-2m0 0l7-7 7 7m-9-9v9m0 0h9a2 2 0 002-2v-7m-11 9v-9',
   },
   {
     to: '/results/competitions',
+    match: '/results',
     label: 'Results',
     icon: 'M9 17V9m4 8V5m4 12v-6M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z',
   },
   {
     to: '/progress/stats',
+    match: '/progress',
     label: 'Progress',
     icon: 'M3 3v18h18M7 14l4-4 3 3 5-6',
   },
   {
     to: '/import',
+    match: '/import',
     label: 'Import',
     icon: 'M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2',
   },
 ]
+
+function isActive(link: { match: string }) {
+  if (link.match === '/') return route.path === '/'
+  return route.path === link.match || route.path.startsWith(`${link.match}/`)
+}
+
+const year = new Date().getFullYear()
 </script>
 
 <template>
@@ -72,13 +86,16 @@ const navLinks = [
           <span class="gradient-text font-heading font-semibold tracking-tight">SkateStats</span>
         </NuxtLink>
 
+        <NavSearch class="sidebar-search" />
+
         <nav class="sidebar-nav" aria-label="Hoofdnavigatie">
           <NuxtLink
             v-for="link in navLinks"
             :key="link.to"
             :to="link.to"
             class="sidebar-link"
-            active-class="sidebar-link-active"
+            :class="{ 'sidebar-link-active': isActive(link) }"
+            :aria-current="isActive(link) ? 'page' : undefined"
           >
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="shrink-0">
               <path :d="link.icon" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
@@ -163,13 +180,17 @@ const navLinks = [
       </div>
 
       <div v-if="mobileMenuOpen" id="mobile-menu" class="mobile-menu">
+        <div class="px-4 pt-3">
+          <NavSearch />
+        </div>
         <nav class="flex flex-col gap-1 px-4 py-3" aria-label="Mobiele navigatie">
           <NuxtLink
             v-for="link in navLinks"
             :key="link.to"
             :to="link.to"
             class="nav-link nav-link-block"
-            active-class="nav-link-active"
+            :class="{ 'nav-link-active': isActive(link) }"
+            :aria-current="isActive(link) ? 'page' : undefined"
           >
             {{ link.label }}
           </NuxtLink>
@@ -210,11 +231,18 @@ const navLinks = [
       @click="closeMobileMenu"
     />
 
-    <div class="flex-1 min-w-0">
-      <main id="main-content" class="page w-full py-6 min-w-0">
+    <div class="flex-1 min-w-0 flex flex-col">
+      <main id="main-content" class="page w-full py-6 min-w-0 flex-1">
         <slot />
       </main>
+      <footer class="app-footer">
+        SkateStats &bull; Copyright {{ year }} &bull; Gemaakt met
+        <span class="app-footer-heart" role="img" aria-label="liefde">&hearts;</span>
+        door Remco Land
+      </footer>
     </div>
+
+    <QuickActions />
   </div>
 </template>
 
@@ -249,10 +277,25 @@ const navLinks = [
   margin-bottom: var(--space-6);
 }
 
+.sidebar-search {
+  margin-bottom: var(--space-4);
+}
+
 .sidebar-nav {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
+}
+
+.app-footer {
+  padding: var(--space-5) var(--space-4) calc(var(--space-5) + 3.5rem);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-text-faint);
+}
+
+.app-footer-heart {
+  color: var(--color-accent);
 }
 
 .sidebar-account {

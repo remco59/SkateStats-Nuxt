@@ -3,26 +3,53 @@ import type { Db } from '../db/client'
 import { ostaProfileLinks } from '../db/schema'
 import { extractOstaResultsForPid } from './import/osta'
 import { ostaResultsToImportPayload } from './import/osta-source'
-import { classifyImportPayload, savePreviewBatch, type ParsedImportPayload } from './import/pipeline'
+import {
+  classifyImportPayload,
+  commitPreviewBatch,
+  deleteMonitorBatches,
+  savePreviewBatch,
+  type ParsedImportPayload,
+} from './import/pipeline'
+
+/** One competition with data that is not in the user's results yet. */
+export interface AvailableCompetition {
+  competitionSignature: string
+  name: string
+  date: string
+  venue: string | null
+  /** Races in it that are new (not already stored, not ignored). */
+  newRaceCount: number
+  /** False when the competition exists and only some races are new. */
+  isNewCompetition: boolean
+}
 
 export interface OstaDetectionResult {
   checked: number
   hasNew: boolean
   newCompetitionsCount: number
   newRacesCount: number
+  /** The stored preview holding `available`; import it or ignore items in it. */
   batchId: string | null
+  available: AvailableCompetition[]
+  /** What profiles set to "automatisch importeren" brought in during this check. */
+  autoImported: { competitions: number; races: number } | null
   errors: { pid: string; message: string }[]
 }
 
+// OSTA answers an empty season with this; for a monitor that is "nothing new
+// yet", not a failure worth showing.
+const NO_RESULTS_PREFIX = 'Geen OSTA ritten gevonden'
+
 /**
  * Checks every linked OSTA profile (monitorMode != 'off') for competitions/
- * races not yet in the user's data and not blacklisted, per plan section 8
- * (Phase 8: "OSTA monitor config... detection check on dashboard load").
- * Reuses the Phase 6/7 import pipeline's classification directly, so "new
- * data" here means exactly the same thing it means during a manual import.
+ * races not yet in the user's data and not blacklisted, per plan section 8.
+ * Reuses the import pipeline's classification directly, so "new data" means
+ * exactly what it means during a manual import.
  *
- * All linked profiles are merged into ONE preview batch (one banner, one
- * `/import/preview` visit) rather than one batch per profile.
+ * Profiles set to `notify` are merged into ONE stored preview (one banner,
+ * one `/import/preview` visit); profiles set to `auto_import` are imported
+ * right away -- only data that is new: anything that would change an
+ * existing race is left for a manual import.
  */
 export async function detectOstaUpdatesForUser(db: Db, userId: number): Promise<OstaDetectionResult> {
   const links = db
@@ -33,15 +60,17 @@ export async function detectOstaUpdatesForUser(db: Db, userId: number): Promise<
     .filter((l) => l.monitorMode !== 'off')
 
   const errors: { pid: string; message: string }[] = []
-  const mergedPayload: ParsedImportPayload = { source: 'osta', competitions: [] }
+  const notifyPayload: ParsedImportPayload = { source: 'osta', competitions: [] }
+  const autoPayload: ParsedImportPayload = { source: 'osta', competitions: [] }
 
   for (const link of links) {
     try {
       const parsed = await extractOstaResultsForPid(link.searchName, link.season, link.pid)
       const payload = ostaResultsToImportPayload(parsed)
-      mergedPayload.competitions.push(...payload.competitions)
+      ;(link.monitorMode === 'auto_import' ? autoPayload : notifyPayload).competitions.push(...payload.competitions)
     } catch (err) {
-      errors.push({ pid: link.pid, message: (err as Error).message })
+      const message = (err as Error).message
+      if (!message.startsWith(NO_RESULTS_PREFIX)) errors.push({ pid: link.pid, message })
     }
     db.update(ostaProfileLinks)
       .set({ lastCheckedAt: new Date().toISOString() })
@@ -49,24 +78,45 @@ export async function detectOstaUpdatesForUser(db: Db, userId: number): Promise<
       .run()
   }
 
-  if (!mergedPayload.competitions.length) {
-    return { checked: links.length, hasNew: false, newCompetitionsCount: 0, newRacesCount: 0, batchId: null, errors }
-  }
-
-  const preview = classifyImportPayload(db, userId, mergedPayload)
-  let newCompetitionsCount = 0
-  let newRacesCount = 0
-  for (const item of preview.items) {
-    if (item.action === 'new_competition') newCompetitionsCount += 1
-    for (const raceItem of item.races) {
-      if (raceItem.action === 'new') newRacesCount += 1
+  let autoImported: OstaDetectionResult['autoImported'] = null
+  if (autoPayload.competitions.length) {
+    const result = commitPreviewBatch(db, userId, classifyImportPayload(db, userId, autoPayload))
+    if (result.importedCompetitions || result.importedRaces) {
+      autoImported = { competitions: result.importedCompetitions, races: result.importedRaces }
     }
   }
 
-  if (newCompetitionsCount === 0 && newRacesCount === 0) {
-    return { checked: links.length, hasNew: false, newCompetitionsCount: 0, newRacesCount: 0, batchId: null, errors }
+  // A fresh check replaces the previous "new data" batch.
+  deleteMonitorBatches(db, userId)
+
+  const available: AvailableCompetition[] = []
+  let batchId: string | null = null
+  if (notifyPayload.competitions.length) {
+    const preview = classifyImportPayload(db, userId, notifyPayload)
+    for (const item of preview.items) {
+      if (item.action === 'blacklisted') continue
+      const newRaceCount = item.races.filter((r) => r.action === 'new').length
+      if (newRaceCount === 0) continue
+      available.push({
+        competitionSignature: item.competitionSignature,
+        name: item.competition.name,
+        date: item.competition.date,
+        venue: item.competition.venue,
+        newRaceCount,
+        isNewCompetition: item.action === 'new_competition',
+      })
+    }
+    if (available.length) batchId = savePreviewBatch(db, userId, { ...preview, origin: 'monitor' })
   }
 
-  const batchId = savePreviewBatch(db, userId, preview)
-  return { checked: links.length, hasNew: true, newCompetitionsCount, newRacesCount, batchId, errors }
+  return {
+    checked: links.length,
+    hasNew: available.length > 0,
+    newCompetitionsCount: available.filter((a) => a.isNewCompetition).length,
+    newRacesCount: available.reduce((sum, a) => sum + a.newRaceCount, 0),
+    batchId,
+    available,
+    autoImported,
+    errors,
+  }
 }

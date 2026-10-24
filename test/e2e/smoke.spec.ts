@@ -70,16 +70,19 @@ test.describe.serial('smoke suite', () => {
     await expect(page).toHaveURL(/\/import\/preview\?batchId=/, { timeout: 15_000 })
     await expect(page.getByText('KNSB Gewestelijke Wedstrijd Alkmaar')).toBeVisible()
     await page.getByRole('button', { name: 'Importeren' }).click()
-    await expect(page.getByText(/wedstrijden.*nieuwe ritten/)).toBeVisible()
+    await expect(page).toHaveURL(/\/import\?notice=imported/)
+    await expect(page.getByText(/wedstrijden aangemaakt.*ritten geïmporteerd/)).toBeVisible()
   })
 
   test('compare: compare the two manually-added 500m races', async () => {
     await page.goto('/results/races')
     await page.getByRole('row', { name: /40.23/ }).getByRole('link', { name: '500m' }).click()
     await page.getByRole('link', { name: 'Vergelijken' }).click()
-    await page.getByLabel('Selecteer vergelijkingsrit').selectOption({ label: 'E2E Wintercup (2025-01-15) -- 41.10' })
-    await expect(page.getByText('Samenvatting')).toBeVisible()
-    await expect(page.getByText('+0.87')).toBeVisible()
+    // Nothing chosen yet, so the picker opens by itself.
+    const picker = page.getByRole('dialog', { name: 'Selecteer vergelijkingsrit' })
+    await picker.getByRole('row', { name: /41\.10/ }).getByRole('button').click()
+    await expect(page.getByRole('heading', { name: 'Samenvatting' })).toBeVisible()
+    await expect(page.getByRole('row', { name: /Totale tijd/ }).getByText('+0.87')).toBeVisible()
   })
 
   test('export then import the account backup', async () => {
@@ -99,7 +102,12 @@ test.describe.serial('smoke suite', () => {
     await page.goto('/admin/users')
     const row = page.getByRole('row', { name: /e2e-admin/ })
     await row.getByRole('button', { name: 'Verwijderen' }).click()
-    await expect(row.getByText(/laatste beheerder/)).toBeVisible()
+    const dialog = page.getByRole('dialog')
+    // Deleting needs the username typed first.
+    await dialog.getByRole('textbox').fill('e2e-admin')
+    await dialog.getByRole('button', { name: 'Account verwijderen' }).click()
+    await expect(dialog.getByText(/laatste beheerder/)).toBeVisible()
+    await dialog.getByRole('button', { name: 'Annuleren' }).click()
   })
 
   test('logout', async () => {

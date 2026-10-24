@@ -1,47 +1,46 @@
 <script setup lang="ts">
+import {
+  MOTION_LABELS,
+  MOTION_PREFERENCES,
+  THEME_LABELS,
+  THEME_PREFERENCES,
+  normalizeMotionPreference,
+  normalizeThemePreference,
+} from '#shared/constants'
+
 const { data: account, refresh } = await useFetch('/api/account')
-const { fetch: refreshSession, clear } = useUserSession()
-const router = useRouter()
+const { fetch: refreshSession, user } = useUserSession()
 
-const skaterName = ref('')
-watchEffect(() => {
-  if (account.value) skaterName.value = account.value.skaterName
-})
+// Appearance: the selects are bound straight to the app-wide state, so a
+// choice previews live. Saving persists it; leaving the page without saving
+// reverts to what the session (= what is saved) says.
+const { theme, motion } = useAppearance()
+const appearanceSaving = ref(false)
+const appearanceMessage = ref('')
+const appearanceError = ref('')
 
-const profileSaving = ref(false)
-const profileMessage = ref('')
-async function saveProfile() {
-  profileSaving.value = true
-  profileMessage.value = ''
+async function saveAppearance() {
+  appearanceSaving.value = true
+  appearanceMessage.value = ''
+  appearanceError.value = ''
   try {
-    await $fetch('/api/account/profile', { method: 'PATCH', body: { skaterName: skaterName.value } })
-    await refresh()
-    await refreshSession()
-    profileMessage.value = 'Opgeslagen.'
-  } finally {
-    profileSaving.value = false
-  }
-}
-
-const currentPassword = ref('')
-const newPassword = ref('')
-const passwordMessage = ref('')
-const passwordError = ref('')
-async function changePassword() {
-  passwordMessage.value = ''
-  passwordError.value = ''
-  try {
-    await $fetch('/api/account/password', {
-      method: 'POST',
-      body: { currentPassword: currentPassword.value, newPassword: newPassword.value },
+    await $fetch('/api/account/profile', {
+      method: 'PATCH',
+      body: { themePreference: theme.value, motionPreference: motion.value },
     })
-    currentPassword.value = ''
-    newPassword.value = ''
-    passwordMessage.value = 'Wachtwoord gewijzigd.'
+    await refreshSession()
+    appearanceMessage.value = 'Opgeslagen.'
   } catch {
-    passwordError.value = 'Huidig wachtwoord klopt niet, of nieuw wachtwoord is te kort (min. 8 tekens).'
+    appearanceError.value = 'Opslaan mislukt.'
+  } finally {
+    appearanceSaving.value = false
   }
 }
+
+onBeforeUnmount(() => {
+  theme.value = normalizeThemePreference(user.value?.themePreference)
+  motion.value = normalizeMotionPreference(user.value?.motionPreference)
+})
 
 const { data: ostaProfiles, refresh: refreshOstaProfiles } = await useFetch('/api/account/osta-profiles')
 const newOstaPid = ref('')
@@ -101,81 +100,46 @@ async function importBackup() {
     importing.value = false
   }
 }
-
-const deleteConfirm = ref(false)
-const deleteError = ref('')
-async function deleteAccount() {
-  deleteError.value = ''
-  try {
-    await $fetch('/api/account/delete', { method: 'POST' })
-    await clear()
-    router.push('/login')
-  } catch (e: unknown) {
-    const err = e as { data?: { statusMessage?: string } }
-    deleteError.value = err.data?.statusMessage || 'Verwijderen mislukt.'
-  }
-}
 </script>
 
 <template>
   <div class="space-y-8 max-w-xl">
     <h1 class="text-xl font-semibold">Account instellingen</h1>
 
-    <section class="space-y-3">
-      <h2 class="text-sm font-medium" style="color: var(--color-text-muted)">Profiel</h2>
-      <input
-        v-model="skaterName"
-        class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
-      >
-      <button
-        class="rounded-md px-3 py-1.5 text-sm"
-        style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
-        :disabled="profileSaving"
-        @click="saveProfile"
-      >
-        Opslaan
-      </button>
-      <p v-if="profileMessage" class="text-sm" style="color: var(--color-success)">
-        {{ profileMessage }}
-      </p>
-    </section>
+    <AccountProfileForm
+      v-if="account"
+      :username="account.username"
+      :skater-name="account.skaterName"
+      @saved="refresh()"
+    />
 
     <section class="space-y-3">
-      <h2 class="text-sm font-medium" style="color: var(--color-text-muted)">Wachtwoord</h2>
-      <input
-        v-model="currentPassword"
-        type="password"
-        placeholder="Huidig wachtwoord"
-        class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
-      >
-      <input
-        v-model="newPassword"
-        type="password"
-        placeholder="Nieuw wachtwoord (min. 8 tekens)"
-        class="w-full rounded-md px-3 py-2 text-sm"
-        style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
-      >
-      <button
-        class="rounded-md px-3 py-1.5 text-sm"
-        style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
-        @click="changePassword"
-      >
-        Wachtwoord wijzigen
+      <h2 class="text-sm font-medium" style="color: var(--color-text-muted)">Weergave</h2>
+      <label class="block text-sm space-y-1">
+        <span style="color: var(--color-text-muted)">Thema</span>
+        <select v-model="theme" class="field">
+          <option v-for="t in THEME_PREFERENCES" :key="t" :value="t">{{ THEME_LABELS[t] }}</option>
+        </select>
+      </label>
+      <label class="block text-sm space-y-1">
+        <span style="color: var(--color-text-muted)">Animaties</span>
+        <select v-model="motion" class="field">
+          <option v-for="m in MOTION_PREFERENCES" :key="m" :value="m">{{ MOTION_LABELS[m] }}</option>
+        </select>
+      </label>
+      <button type="button" class="btn btn-primary btn-sm" :disabled="appearanceSaving" @click="saveAppearance">
+        Opslaan
       </button>
-      <p v-if="passwordMessage" class="text-sm" style="color: var(--color-success)">
-        {{ passwordMessage }}
-      </p>
-      <p v-if="passwordError" class="text-sm" style="color: var(--color-danger)">
-        {{ passwordError }}
-      </p>
+      <p v-if="appearanceMessage" class="text-sm" style="color: var(--color-success)">{{ appearanceMessage }}</p>
+      <p v-if="appearanceError" class="text-sm" style="color: var(--color-danger)">{{ appearanceError }}</p>
     </section>
+
+    <AccountPasswordForm />
 
     <section class="space-y-3">
       <h2 class="text-sm font-medium" style="color: var(--color-text-muted)">OSTA monitor</h2>
       <p class="text-xs" style="color: var(--color-text-muted)">
-        Gekoppelde profielen worden op het dashboard gecontroleerd op nieuwe wedstrijden.
+        Gekoppelde profielen worden op het dashboard gecontroleerd op nieuwe wedstrijden. Bij "Automatisch importeren" komen nieuwe wedstrijden direct in je resultaten; bij "Melden" kies je zelf.
       </p>
       <ul v-if="ostaProfiles?.length" class="space-y-2">
         <li
@@ -193,6 +157,7 @@ async function deleteAccount() {
               @change="updateOstaMonitorMode(p.id, ($event.target as HTMLSelectElement).value)"
             >
               <option value="notify">Melden</option>
+              <option value="auto_import">Automatisch importeren</option>
               <option value="off">Uit</option>
             </select>
             <button class="underline text-xs" @click="removeOstaProfile(p.id)">Verwijderen</button>
@@ -214,7 +179,8 @@ async function deleteAccount() {
         >
         <input
           v-model="newOstaSeason"
-          placeholder="Seizoen"
+          placeholder="Seizoen (2025 of ALL)"
+          aria-label="Seizoen"
           class="rounded-md px-3 py-2 text-sm"
           style="border: 1px solid var(--color-border); background: var(--color-surface); box-shadow: var(--shadow-card)"
         >
@@ -262,21 +228,6 @@ async function deleteAccount() {
       <p v-if="importError" class="text-sm" style="color: var(--color-danger)">{{ importError }}</p>
     </section>
 
-    <section class="space-y-3">
-      <h2 class="text-sm font-medium" style="color: var(--color-danger)">Account verwijderen</h2>
-      <label class="flex items-center gap-2 text-sm">
-        <input v-model="deleteConfirm" type="checkbox" >
-        Ik weet zeker dat ik mijn account wil verwijderen.
-      </label>
-      <button
-        class="rounded-md px-3 py-1.5 text-sm"
-        style="border: 1px solid var(--color-danger); color: var(--color-danger)"
-        :disabled="!deleteConfirm"
-        @click="deleteAccount"
-      >
-        Account verwijderen
-      </button>
-      <p v-if="deleteError" class="text-sm" style="color: var(--color-danger)">{{ deleteError }}</p>
-    </section>
+    <AccountDeleteForm v-if="account" :username="account.username" />
   </div>
 </template>

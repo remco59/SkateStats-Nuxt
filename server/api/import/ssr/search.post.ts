@@ -5,19 +5,25 @@ import { extractSsrResultsForSkater, ssrLookupSkaterId } from '../../../utils/im
 import { ssrResultsToImportPayload } from '../../../utils/import/ssr-source'
 import { classifyImportPayload, savePreviewBatch } from '../../../utils/import/pipeline'
 
-const bodySchema = z.object({
-  givenName: z.string().min(1),
-  familyName: z.string().min(1),
-  season: z.string().regex(/^\d{4}$/),
-})
+const bodySchema = z
+  .object({
+    // A known SSR skater id skips the name lookup.
+    skaterId: z.string().trim().optional(),
+    givenName: z.string().trim().optional(),
+    familyName: z.string().trim().optional(),
+    season: z.string().regex(/^\d{4}$/),
+  })
+  .refine((b) => b.skaterId || (b.givenName && b.familyName), {
+    message: 'Vul een voor- en achternaam of een Skater ID in.',
+  })
 
 export default defineEventHandler(async (event) => {
   const session = await requireValidSession(event)
-  const { givenName, familyName, season } = await readValidatedBody(event, bodySchema.parse)
+  const { skaterId, givenName, familyName, season } = await readValidatedBody(event, bodySchema.parse)
 
   try {
-    const skater = await ssrLookupSkaterId(givenName, familyName)
-    const parsed = await extractSsrResultsForSkater(skater.id, season)
+    const id = skaterId || (await ssrLookupSkaterId(givenName!, familyName!)).id
+    const parsed = await extractSsrResultsForSkater(id, season)
     const db = useDb()
     const preview = classifyImportPayload(db, session.user.id, ssrResultsToImportPayload(parsed))
     const batchId = savePreviewBatch(db, session.user.id, preview)
