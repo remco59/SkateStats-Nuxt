@@ -1,18 +1,90 @@
 <script setup lang="ts">
-const { data } = await useFetch('/api/dashboard/overview')
+import type { AvailableCompetition, OstaDetectionResult } from '~~/server/utils/osta-monitor'
 
-// Loaded client-side after the page renders, like the old app's async OSTA
-// banner -- avoids blocking the dashboard's first paint on an outbound
-// OSTA fetch per linked profile.
-const { data: ostaDetection } = useFetch('/api/dashboard/osta-detection', { server: false })
-const dismissed = ref(false)
+const route = useRoute()
+const router = useRouter()
 
-function trendContext(points: { totalTimeMs: number }[]) {
-  if (points.length < 2) return null
-  const current = points[points.length - 1]!.totalTimeMs
-  const previous = points[points.length - 2]!.totalTimeMs
-  const best = Math.min(...points.map((p) => p.totalTimeMs))
-  return { current, best, deltaMs: current - previous }
+// A URL without `trendSeason` is "just opened": the server then shows the
+// current season. `trendSeason=` (empty) is an explicit "all seasons".
+const trendSeasonParam = computed(() =>
+  route.query.trendSeason === undefined ? undefined : String(route.query.trendSeason),
+)
+const { data, refresh } = await useFetch('/api/dashboard/overview', {
+  query: { trendSeason: trendSeasonParam },
+})
+
+const trendSeasonSelect = ref(data.value?.selectedTrendSeason ?? '')
+watch(data, (d) => {
+  trendSeasonSelect.value = d?.selectedTrendSeason ?? ''
+})
+
+function applyTrendSeason() {
+  router.replace({ query: { trendSeason: trendSeasonSelect.value } })
+}
+
+// ---- OSTA monitor ------------------------------------------------------
+// Checked client-side after the page renders, like the old app's async
+// banner -- it makes an outbound OSTA request per linked profile.
+const detection = ref<OstaDetectionResult | null>(null)
+const available = ref<AvailableCompetition[]>([])
+const later = ref(false)
+const busy = ref(false)
+const flash = ref<{ tone: 'success' | 'warning'; text: string } | null>(null)
+
+const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`
+
+onMounted(async () => {
+  try {
+    const result = await $fetch<OstaDetectionResult>('/api/dashboard/osta-detection', { method: 'POST' })
+    detection.value = result
+    available.value = result.available
+    if (result.autoImported) {
+      flash.value = {
+        tone: 'success',
+        text: `OSTA automatisch geïmporteerd: ${plural(result.autoImported.competitions, 'wedstrijd', 'wedstrijden')} en ${plural(result.autoImported.races, 'rit', 'ritten')} toegevoegd.`,
+      }
+      await refresh()
+    }
+  } catch {
+    // The banner is a convenience; the dashboard works without it.
+  }
+})
+
+async function ignoreCompetition(item: AvailableCompetition) {
+  if (!detection.value?.batchId || busy.value) return
+  busy.value = true
+  try {
+    await $fetch(`/api/import/preview/${detection.value.batchId}/blacklist-competition`, {
+      method: 'POST',
+      body: { competitionSignature: item.competitionSignature },
+    })
+    available.value = available.value.filter((a) => a.competitionSignature !== item.competitionSignature)
+    flash.value = { tone: 'success', text: `${item.name} wordt niet meer voorgesteld.` }
+  } catch {
+    flash.value = { tone: 'warning', text: 'Negeren is niet gelukt.' }
+  } finally {
+    busy.value = false
+  }
+}
+
+async function importAll() {
+  if (!detection.value?.batchId || busy.value) return
+  busy.value = true
+  try {
+    const result = await $fetch<{ importedRaces: number }>(`/api/import/preview/${detection.value.batchId}/commit`, {
+      method: 'POST',
+      body: {},
+    })
+    available.value = []
+    flash.value = result.importedRaces
+      ? { tone: 'success', text: `OSTA geïmporteerd: ${plural(result.importedRaces, 'rit', 'ritten')} toegevoegd.` }
+      : { tone: 'warning', text: 'Geen nieuwe OSTA-data gevonden.' }
+    await refresh()
+  } catch {
+    flash.value = { tone: 'warning', text: 'OSTA-import is niet gelukt.' }
+  } finally {
+    busy.value = false
+  }
 }
 </script>
 
@@ -20,21 +92,46 @@ function trendContext(points: { totalTimeMs: number }[]) {
   <div class="space-y-8">
     <h1 class="page-title">Overzicht</h1>
 
-    <section
-      v-if="ostaDetection?.hasNew && !dismissed"
-      class="notice notice-accent flex-wrap"
-    >
-      <p>
-        Nieuwe OSTA-data gevonden: {{ ostaDetection.newCompetitionsCount }} wedstrijden,
-        {{ ostaDetection.newRacesCount }} ritten.
-      </p>
-      <div class="flex gap-2 shrink-0">
-        <NuxtLink :to="`/import/preview?batchId=${ostaDetection.batchId}`" class="btn btn-primary btn-sm">
-          Bekijken
-        </NuxtLink>
-        <button type="button" class="btn btn-secondary btn-sm" @click="dismissed = true">
-          Later
-        </button>
+    <p v-if="flash" class="notice" :class="flash.tone === 'success' ? 'notice-accent' : ''" role="status">
+      {{ flash.text }}
+    </p>
+    <p v-for="e in detection?.errors ?? []" :key="e.pid" class="notice" role="status">{{ e.message }}</p>
+
+    <section v-if="available.length && !later" class="card space-y-3" aria-labelledby="osta-new-title">
+      <div>
+        <h2 id="osta-new-title" class="card-title">Nieuwe OSTA-data beschikbaar</h2>
+        <p class="text-secondary text-sm">
+          {{ plural(available.length, 'wedstrijd', 'wedstrijden') }} met nieuwe ritten gevonden.
+        </p>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Wedstrijd</th>
+              <th class="num">Datum</th>
+              <th class="num">Ritten</th>
+              <th class="num">Actie</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in available" :key="item.competitionSignature">
+              <td>{{ item.name }}</td>
+              <td class="num text-meta">{{ fmtDate(item.date) }}</td>
+              <td class="num font-mono">{{ item.newRaceCount }}</td>
+              <td class="num">
+                <button type="button" class="btn btn-secondary btn-sm" :disabled="busy" @click="ignoreCompetition(item)">
+                  Negeer
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button type="button" class="btn btn-primary btn-sm" :disabled="busy" @click="importAll">Importeer alles</button>
+        <NuxtLink :to="`/import/preview?batchId=${detection?.batchId}`" class="btn btn-secondary btn-sm">Bekijken</NuxtLink>
+        <button type="button" class="btn btn-secondary btn-sm" @click="later = true">Later</button>
       </div>
     </section>
 
@@ -85,15 +182,22 @@ function trendContext(points: { totalTimeMs: number }[]) {
           <div class="stat-value-lg" style="color: var(--color-accent)">{{ data.prCount }}</div>
         </div>
       </div>
-      <div class="flex flex-wrap gap-x-8 gap-y-3 mt-5 pt-4" style="border-top: 1px solid var(--highlight-soft)">
-        <div>
+      <div
+        class="grid grid-cols-3 gap-x-4 gap-y-6 mt-5 pt-4"
+        style="border-top: 1px solid var(--highlight-soft)"
+      >
+        <div class="hidden sm:block">
           <div class="stat-label">Favoriete locatie</div>
           <div class="text-secondary font-medium mt-0.5">{{ data.favoriteVenue || '-' }}</div>
         </div>
-        <div>
+        <div class="hidden sm:block">
           <div class="stat-label">Favoriete afstand</div>
           <div class="text-secondary font-mono mt-0.5">{{ data.favoriteDistance ? `${data.favoriteDistance}m` : '-' }}</div>
         </div>
+        <NuxtLink to="/progress/stats" class="col-span-3 sm:col-span-1 group">
+          <div class="stat-label">Meer statistieken</div>
+          <div class="font-medium mt-0.5 group-hover:underline" style="color: var(--color-accent)">Bekijk alles &rarr;</div>
+        </NuxtLink>
       </div>
     </section>
 
@@ -146,6 +250,7 @@ function trendContext(points: { totalTimeMs: number }[]) {
               <thead>
                 <tr>
                   <th>Rit</th>
+                  <th class="num">Opening</th>
                   <th class="num">Eindtijd</th>
                   <th class="num">T.o.v. PR</th>
                 </tr>
@@ -155,6 +260,7 @@ function trendContext(points: { totalTimeMs: number }[]) {
                   <td class="font-mono">
                     <NuxtLink :to="`/results/races/${r.raceId}`" class="stretched-link">{{ r.distanceM }}m</NuxtLink>
                   </td>
+                  <td class="num text-meta">{{ r.openingMs === null ? '-' : fmtMs(r.openingMs) }}</td>
                   <td class="num">
                     <span class="stat-value-sm">{{ fmtMs(r.totalTimeMs) }}</span>
                     <span v-if="r.isPr" class="badge badge-pr ml-1">PR</span>
@@ -175,26 +281,39 @@ function trendContext(points: { totalTimeMs: number }[]) {
       </section>
     </div>
 
-    <section v-if="data?.trends.length">
-      <h2 class="section-heading mb-3">Ontwikkeling per afstand</h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <section v-if="data" id="home-trends-section">
+      <div class="flex flex-wrap items-end justify-between gap-3 mb-3">
+        <h2 class="section-heading">Ontwikkeling per afstand</h2>
+        <label v-if="data.trendSeasonOptions.length" class="flex items-center gap-2 text-sm">
+          <span class="text-secondary">Seizoen</span>
+          <select
+            v-model="trendSeasonSelect"
+            class="field"
+            style="width: auto"
+            aria-label="Filter op seizoen"
+            @change="applyTrendSeason"
+          >
+            <option value="">Alle seizoenen</option>
+            <option v-for="s in data.trendSeasonOptions" :key="s" :value="s">{{ s }}</option>
+          </select>
+        </label>
+      </div>
+      <div v-if="data.trends.length" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div v-for="trend in data.trends" :key="trend.distanceM" class="card">
           <div class="flex items-baseline justify-between mb-2">
             <div class="font-mono text-sm font-medium">{{ trend.distanceM }}m</div>
-            <div v-if="trendContext(trend.points)" class="text-xs font-mono flex items-center gap-1.5">
-              <span
-                v-if="Math.abs(trendContext(trend.points)!.deltaMs) >= 10"
-                :class="trendContext(trend.points)!.deltaMs <= 0 ? 'delta-better' : 'delta-worse'"
-              >
-                {{ trendContext(trend.points)!.deltaMs <= 0 ? '↓' : '↑' }}
-                {{ (Math.abs(trendContext(trend.points)!.deltaMs) / 1000).toFixed(1) }}s
+            <div v-if="trend.deltaMs !== null" class="text-xs font-mono flex items-center gap-1.5">
+              <span v-if="Math.abs(trend.deltaMs) >= 10" :class="trend.deltaMs <= 0 ? 'delta-better' : 'delta-worse'">
+                {{ trend.deltaMs <= 0 ? '↓' : '↑' }}
+                {{ (Math.abs(trend.deltaMs) / 1000).toFixed(1) }}s
               </span>
-              <span class="text-meta">best {{ fmtMs(trendContext(trend.points)!.best) }}</span>
+              <span class="text-meta">best {{ fmtMs(trend.bestMs) }}</span>
             </div>
           </div>
-          <TrendSparkline :points="trend.points" :distance-m="trend.distanceM" />
+          <TrendSparkline :sparkline="trend.sparkline" :distance-m="trend.distanceM" :latest="trend.latest" />
         </div>
       </div>
+      <p v-else class="empty-state">Nog onvoldoende data voor grafieken.</p>
     </section>
   </div>
 </template>

@@ -1,7 +1,12 @@
 import { z } from 'zod'
 import { useDb } from '../../../../db/client'
 import { requireValidSession } from '../../../../utils/access'
-import { addCompetitionToBlacklist, loadPreviewBatch } from '../../../../utils/import/pipeline'
+import {
+  addCompetitionToBlacklist,
+  loadPreviewBatch,
+  updatePreviewBatch,
+  withCompetitionBlacklisted,
+} from '../../../../utils/import/pipeline'
 
 const bodySchema = z.object({ competitionSignature: z.string().min(1) })
 
@@ -19,5 +24,9 @@ export default defineEventHandler(async (event) => {
   if (!item) throw createError({ statusCode: 404, statusMessage: 'Wedstrijd niet gevonden in deze batch.' })
 
   addCompetitionToBlacklist(db, session.user.id, item)
+  // Also mark it in the stored batch: otherwise committing that same batch
+  // afterwards (e.g. the dashboard's "importeer alles") would import the very
+  // competition that was just ignored.
+  updatePreviewBatch(db, session.user.id, batchId, withCompetitionBlacklisted(preview, competitionSignature))
   return { ok: true }
 })

@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import { and, eq } from 'drizzle-orm'
+import { and, eq, lt } from 'drizzle-orm'
 import type { Db } from '../../db/client'
 import { blacklist, competitions, importPreviewBatches, raceBlacklist, raceLaps, races } from '../../db/schema'
 import {
@@ -79,6 +79,8 @@ export interface CompetitionPreviewItem {
 export interface ImportPreview {
   source: ImportSourceName
   items: CompetitionPreviewItem[]
+  /** Set on the batch the dashboard's OSTA monitor keeps for "new data available". */
+  origin?: 'monitor'
 }
 
 function raceIdentityInput(r: ParsedImportRace): RaceIdentityInput {
@@ -188,33 +190,96 @@ export function classifyImportPayload(db: Db, userId: number, payload: ParsedImp
   return { source: payload.source, items }
 }
 
-export function savePreviewBatch(db: Db, userId: number, preview: ImportPreview): string {
+/** How long a stored preview stays usable. Nothing else ever cleans these up. */
+const PREVIEW_TTL_HOURS = 24
+
+/**
+ * Stores a preview so the user can come back to it (the preview page, or the
+ * dashboard's "import all"). Batches expire: this also drops the user's
+ * expired ones, so a dashboard that keeps finding the same new data does not
+ * pile up full copies of it.
+ */
+export function savePreviewBatch(
+  db: Db,
+  userId: number,
+  preview: ImportPreview,
+  now: Date = new Date(),
+): string {
   const id = randomUUID()
+  db.delete(importPreviewBatches)
+    .where(and(eq(importPreviewBatches.userId, userId), lt(importPreviewBatches.expiresAt, now.toISOString())))
+    .run()
   db.insert(importPreviewBatches)
     .values({
       id,
       userId,
       source: preview.source,
       payloadJson: preview as unknown as Record<string, unknown>,
-      createdAt: new Date().toISOString(),
+      createdAt: now.toISOString(),
+      expiresAt: new Date(now.getTime() + PREVIEW_TTL_HOURS * 3600_000).toISOString(),
     })
     .run()
   return id
 }
 
-export function loadPreviewBatch(db: Db, userId: number, batchId: string): ImportPreview | null {
+export function loadPreviewBatch(
+  db: Db,
+  userId: number,
+  batchId: string,
+  now: Date = new Date(),
+): ImportPreview | null {
   const row = db
     .select()
     .from(importPreviewBatches)
     .where(and(eq(importPreviewBatches.id, batchId), eq(importPreviewBatches.userId, userId)))
     .get()
-  return row ? (row.payloadJson as unknown as ImportPreview) : null
+  if (!row) return null
+  // expiresAt is null for batches saved before expiry existed: they never expire.
+  if (row.expiresAt && row.expiresAt < now.toISOString()) return null
+  return row.payloadJson as unknown as ImportPreview
 }
 
 export function deletePreviewBatch(db: Db, userId: number, batchId: string): void {
   db.delete(importPreviewBatches)
     .where(and(eq(importPreviewBatches.id, batchId), eq(importPreviewBatches.userId, userId)))
     .run()
+}
+
+/** The dashboard keeps ONE "new data" batch per user; a fresh check replaces it. */
+export function deleteMonitorBatches(db: Db, userId: number): void {
+  const rows = db.select().from(importPreviewBatches).where(eq(importPreviewBatches.userId, userId)).all()
+  for (const row of rows) {
+    if ((row.payloadJson as unknown as ImportPreview).origin === 'monitor') {
+      db.delete(importPreviewBatches).where(eq(importPreviewBatches.id, row.id)).run()
+    }
+  }
+}
+
+/** Replaces a stored batch's content (same id), e.g. after an item was ignored. */
+export function updatePreviewBatch(db: Db, userId: number, batchId: string, preview: ImportPreview): void {
+  db.update(importPreviewBatches)
+    .set({ payloadJson: preview as unknown as Record<string, unknown> })
+    .where(and(eq(importPreviewBatches.id, batchId), eq(importPreviewBatches.userId, userId)))
+    .run()
+}
+
+/**
+ * The preview with one competition marked as blacklisted, so committing the
+ * batch afterwards skips it. Pure: returns a new object.
+ */
+export function withCompetitionBlacklisted(preview: ImportPreview, competitionSignature: string): ImportPreview {
+  return {
+    ...preview,
+    items: preview.items.map((item) =>
+      item.competitionSignature === competitionSignature
+        ? {
+            ...item,
+            action: 'blacklisted' as const,
+            races: item.races.map((r) => ({ ...r, action: 'blacklisted' as const })),
+          }
+        : item,
+    ),
+  }
 }
 
 export type UpdateCandidateChoice = 'replace' | 'keep_both' | 'skip'
@@ -226,6 +291,22 @@ export interface CommitResult {
   skippedRaces: number
 }
 
+export interface CommitOptions {
+  /**
+   * `updateChoiceKey`s of the races the user ticked in the preview. Absent
+   * means "every new race" (what the dashboard's one-click import and the
+   * OSTA monitor do). Present, only ticked races are imported.
+   */
+  selectedRaceKeys?: ReadonlySet<string>
+  /**
+   * "Toevoegen als nieuwe wedstrijd": for an existing competition in which the
+   * user ticked a race that is already present, the ticked races are added to a
+   * NEW competition instead of being matched/skipped -- the user is saying this
+   * is a different competition that happens to look the same.
+   */
+  forceNewCompetition?: boolean
+}
+
 /**
  * Commits a preview batch in one transaction (rule 6). `updateChoices`
  * maps a race's updateChoiceKey (competitionSignature scoped identitySignature)
@@ -235,14 +316,19 @@ export interface CommitResult {
  * the SAME parsed payload after a successful commit is a no-op (rule 5):
  * every previously-new race now matches an existing one and classifies
  * as 'identical'.
+ *
+ * A competition is only created once one of its races is actually imported,
+ * so unticking every race of a new competition leaves nothing behind.
  */
 export function commitPreviewBatch(
   db: Db,
   userId: number,
   preview: ImportPreview,
   updateChoices: Record<string, UpdateCandidateChoice> = {},
+  options: CommitOptions = {},
 ): CommitResult {
   const result: CommitResult = { importedCompetitions: 0, importedRaces: 0, updatedRaces: 0, skippedRaces: 0 }
+  const { selectedRaceKeys, forceNewCompetition = false } = options
 
   db.transaction((tx) => {
     for (const item of preview.items) {
@@ -251,8 +337,13 @@ export function commitPreviewBatch(
         continue
       }
 
-      let competitionId = item.existingCompetitionId
-      if (!competitionId) {
+      const forceNew =
+        forceNewCompetition &&
+        item.existingCompetitionId !== undefined &&
+        item.races.some((r) => r.action === 'identical' && (selectedRaceKeys ? selectedRaceKeys.has(r.updateChoiceKey) : true))
+      let competitionId = forceNew ? undefined : item.existingCompetitionId
+      const ensureCompetition = (): number => {
+        if (competitionId) return competitionId
         const created = tx
           .insert(competitions)
           .values({
@@ -268,15 +359,27 @@ export function commitPreviewBatch(
           .get()
         competitionId = created.id
         result.importedCompetitions += 1
+        return created.id
       }
 
       for (const raceItem of item.races) {
-        if (raceItem.action === 'blacklisted' || raceItem.action === 'identical') {
+        if (raceItem.action === 'blacklisted') {
           result.skippedRaces += 1
           continue
         }
+        const ticked = selectedRaceKeys ? selectedRaceKeys.has(raceItem.updateChoiceKey) : true
 
-        if (raceItem.action === 'update_candidate') {
+        if (forceNew) {
+          // The user asked for these races to be added as new data: whatever
+          // they matched in the existing competition no longer matters.
+          if (!ticked) {
+            result.skippedRaces += 1
+            continue
+          }
+        } else if (raceItem.action === 'identical') {
+          result.skippedRaces += 1
+          continue
+        } else if (raceItem.action === 'update_candidate') {
           const choice = updateChoices[raceItem.updateChoiceKey] ?? 'skip'
           if (choice === 'skip') {
             result.skippedRaces += 1
@@ -308,13 +411,16 @@ export function commitPreviewBatch(
             continue
           }
           // 'keep_both' (or 'replace' with no existing id, defensively) falls through to insert-as-new below.
+        } else if (!ticked) {
+          result.skippedRaces += 1
+          continue
         }
 
         const now = new Date().toISOString()
         const inserted = tx
           .insert(races)
           .values({
-            competitionId,
+            competitionId: ensureCompetition(),
             userId,
             distanceM: raceItem.race.distanceM,
             status: raceItem.race.status,
@@ -354,4 +460,50 @@ export function addCompetitionToBlacklist(db: Db, userId: number, item: Competit
     })
     .onConflictDoNothing()
     .run()
+}
+
+/**
+ * Ticking an ignored (blacklisted) competition or race in the preview means
+ * "import it after all": its blacklist entry is removed, like the old app did,
+ * and the preview is classified again so those races become ordinary new /
+ * already-present / correction rows. Returns the same preview when nothing was
+ * released.
+ */
+export function releaseBlacklistedSelection(
+  db: Db,
+  userId: number,
+  preview: ImportPreview,
+  selectedRaceKeys: ReadonlySet<string>,
+): ImportPreview {
+  let released = false
+  for (const item of preview.items) {
+    const ticked = item.races.filter((r) => selectedRaceKeys.has(r.updateChoiceKey))
+    if (!ticked.length) continue
+
+    if (item.action === 'blacklisted') {
+      db.delete(blacklist)
+        .where(and(eq(blacklist.userId, userId), eq(blacklist.signature, item.competitionSignature)))
+        .run()
+      released = true
+    }
+    for (const raceItem of ticked) {
+      if (raceItem.action !== 'blacklisted') continue
+      db.delete(raceBlacklist)
+        .where(
+          and(
+            eq(raceBlacklist.userId, userId),
+            eq(raceBlacklist.competitionSignature, item.competitionSignature),
+            eq(raceBlacklist.raceIdentitySignature, raceItem.identitySignature),
+          ),
+        )
+        .run()
+      released = true
+    }
+  }
+  if (!released) return preview
+
+  return classifyImportPayload(db, userId, {
+    source: preview.source,
+    competitions: preview.items.map((item) => item.competition),
+  })
 }

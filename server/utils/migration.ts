@@ -1,5 +1,6 @@
 import type BetterSqlite3 from 'better-sqlite3'
 import { pythonRound } from '../../shared/utils/round'
+import { normalizeMotionPreference, normalizeThemePreference } from '../../shared/constants'
 import {
   users,
   competitions,
@@ -200,8 +201,8 @@ export function migrateOldDatabase(oldDb: BetterSqlite3.Database, newDb: Db): Mi
         passwordHash: u.password_hash,
         skaterName: skaterName ?? u.username,
         isAdmin: u.is_admin === 1,
-        themePreference: u.theme_preference ?? 'dark',
-        motionPreference: u.motion_preference ?? 'all',
+        themePreference: normalizeThemePreference(u.theme_preference),
+        motionPreference: normalizeMotionPreference(u.motion_preference),
         sessionVersion: u.session_version ?? 1,
         createdAt: u.created_at ?? new Date().toISOString(),
         updatedAt: u.updated_at ?? u.created_at ?? new Date().toISOString(),

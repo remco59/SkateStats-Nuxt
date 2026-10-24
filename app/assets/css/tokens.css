@@ -1,7 +1,14 @@
 /*
   Design tokens for the "Bitcoin DeFi" aesthetic: a deep cosmic void
   where data glows with the warmth of Bitcoin orange and digital gold.
-  Dark mode only -- precision engineering meets cryptographic trust.
+  Dark by default, with a warm light theme. Every colour token is defined
+  once with light-dark(light, dark); <html data-theme> picks the scheme:
+    dark   -> color-scheme: dark
+    light  -> color-scheme: light
+    system -> color-scheme: light dark (the browser follows the OS, no JS)
+  NOTE: custom properties holding light-dark() are NOT resolved by
+  getPropertyValue(); JS that needs a concrete colour (the ECharts charts)
+  must go through useThemeColors().
 */
 @import './fonts.css';
 
@@ -36,42 +43,106 @@
   --transition-fast: 180ms var(--ease-out);
   --transition-med: 320ms var(--ease-out);
 
-  /* True Void + Bitcoin Fire -- the only theme; dark mode only. */
-  --color-bg: #030304;
-  --color-surface: #0f1115;
-  --color-surface-2: #15171d;
-  --color-surface-3: #1b1e26;
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-border-strong: rgba(255, 255, 255, 0.18);
-  --color-text: #ffffff;
-  --color-text-muted: #94a3b8;
-  --color-text-faint: #64748b;
-  --highlight-soft: rgba(255, 255, 255, 0.06);
+  /* True Void + Bitcoin Fire (dark) / warm paper + deep orange (light).
+     In light mode the accent is darkened (orange-700) so accent-coloured
+     TEXT -- links, badges, active nav -- keeps ~5:1 contrast on white. */
+  --color-bg: light-dark(#faf8f5, #030304);
+  --color-surface: light-dark(#ffffff, #0f1115);
+  --color-surface-2: light-dark(#f4f1ec, #15171d);
+  --color-surface-3: light-dark(#ebe6df, #1b1e26);
+  --color-border: light-dark(rgba(23, 20, 15, 0.12), rgba(255, 255, 255, 0.1));
+  --color-border-strong: light-dark(rgba(23, 20, 15, 0.22), rgba(255, 255, 255, 0.18));
+  --color-text: light-dark(#17140f, #ffffff);
+  --color-text-muted: light-dark(#4b5563, #94a3b8);
+  --color-text-faint: light-dark(#6b7280, #64748b);
+  --highlight-soft: light-dark(rgba(23, 20, 15, 0.05), rgba(255, 255, 255, 0.06));
 
-  --color-accent: var(--color-orange-500);
-  --color-accent-hover: var(--color-orange-400);
-  --color-accent-contrast: #030304;
+  --color-accent: light-dark(#c2410c, var(--color-orange-500));
+  --color-accent-hover: light-dark(#9a3412, var(--color-orange-400));
+  --color-accent-contrast: light-dark(#ffffff, #030304);
   --color-accent-2: var(--color-orange-600);
-  --color-gold: var(--color-gold-500);
+  --color-gold: light-dark(#a16207, var(--color-gold-500));
 
-  --color-success: #22c55e;
-  --color-danger: #ef4444;
-  --color-warning: var(--color-gold-500);
+  --color-success: light-dark(#15803d, #22c55e);
+  --color-danger: light-dark(#dc2626, #ef4444);
+  --color-warning: light-dark(#a16207, var(--color-gold-500));
 
-  --scrim: rgba(3, 3, 4, 0.7);
+  --scrim: light-dark(rgba(23, 20, 15, 0.45), rgba(3, 3, 4, 0.7));
 
-  --shadow-card: 0 1px 0 rgba(0, 0, 0, 0.2);
-  --shadow-glow: 0 0 14px -4px rgba(247, 147, 26, 0.45);
-  --shadow-glow-strong: 0 0 20px -4px rgba(247, 147, 26, 0.55);
-  --shadow-glow-gold: 0 0 20px rgba(255, 214, 0, 0.3);
+  --shadow-card: 0 1px 0 light-dark(rgba(23, 20, 15, 0.06), rgba(0, 0, 0, 0.2));
+  --shadow-glow: 0 0 14px -4px light-dark(rgba(194, 65, 12, 0.35), rgba(247, 147, 26, 0.45));
+  --shadow-glow-strong: 0 0 20px -4px light-dark(rgba(194, 65, 12, 0.45), rgba(247, 147, 26, 0.55));
+  --shadow-glow-gold: 0 0 20px light-dark(rgba(161, 98, 7, 0.25), rgba(255, 214, 0, 0.3));
 
   --control-height: 2.5rem;
+
+  color-scheme: dark;
 }
 
-:root[data-motion='reduced'] * {
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='system'] {
+  color-scheme: light dark;
+}
+
+/* ==========================================================================
+   Motion preference (<html data-motion>): all | background | cards | none.
+   `reduced` is the app's earlier two-value setting, kept as an alias of none.
+   An OS-level reduced-motion request always wins.
+   ========================================================================== */
+:root[data-motion='none'] *,
+:root[data-motion='none'] *::before,
+:root[data-motion='none'] *::after,
+:root[data-motion='reduced'] *,
+:root[data-motion='reduced'] *::before,
+:root[data-motion='reduced'] *::after {
   animation-duration: 0.001ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 0.001ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Card reveal: app/plugins/reveal.client.ts tags blocks with .js-reveal and
+   adds .is-inview as they scroll into view. Without JS nothing is hidden. */
+@media (prefers-reduced-motion: no-preference) {
+  :root:is([data-motion='all'], [data-motion='cards']) .js-reveal {
+    transition:
+      opacity 420ms var(--ease-out) calc(var(--enter-index, 0) * 60ms),
+      transform 420ms var(--ease-out) calc(var(--enter-index, 0) * 60ms);
+  }
+
+  :root:is([data-motion='all'], [data-motion='cards']) .js-reveal:not(.is-inview) {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  /* Slowly drifting ambient glow behind the page. */
+  :root:is([data-motion='all'], [data-motion='background']) body::after {
+    animation: ambient-drift 22s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes ambient-drift {
+  from {
+    transform: translateX(-62%) scale(1);
+    opacity: 0.04;
+  }
+  to {
+    transform: translateX(-38%) scale(1.18);
+    opacity: 0.075;
+  }
 }
 
 /* ==========================================================================
@@ -103,8 +174,8 @@ body::before {
   z-index: -1;
   background-size: 50px 50px;
   background-image:
-    linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, light-dark(rgba(23, 20, 15, 0.06), rgba(148, 163, 184, 0.05)) 1px, transparent 1px),
+    linear-gradient(to bottom, light-dark(rgba(23, 20, 15, 0.06), rgba(148, 163, 184, 0.05)) 1px, transparent 1px);
   mask-image: radial-gradient(circle at 50% 0%, black 0%, transparent 70%);
   -webkit-mask-image: radial-gradient(circle at 50% 0%, black 0%, transparent 70%);
 }
@@ -524,7 +595,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   background: var(--color-surface-2);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px -10px light-dark(rgba(23, 20, 15, 0.2), rgba(0, 0, 0, 0.5));
 }
 
 .menu-panel .btn {
@@ -534,7 +605,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Glass / translucent panel for floating or nested surfaces */
 .glass {
-  background: rgba(255, 255, 255, 0.05);
+  background: light-dark(rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.05));
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--color-border);
@@ -627,8 +698,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-ghost:hover {
-  border-color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-text);
+  background: var(--highlight-soft);
 }
 
 .btn-link {
