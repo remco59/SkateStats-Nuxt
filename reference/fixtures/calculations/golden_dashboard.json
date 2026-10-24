@@ -1,0 +1,1738 @@
+{
+  "generated_by": "scripts/golden/dashboard.py against old SkateStats at 01a634c8265df0612bef38f0f41eab932007953f: build_home_trend_context + build_sparkline (main.py), clock pinned to 2025-03-01",
+  "cases": [
+    {
+      "name": "default to current season",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 1,
+          "competition_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 150000,
+          "dnf": 0,
+          "competition_name": "Herfstcup 23",
+          "competition_date": "2023-10-07",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 2,
+          "competition_id": 2,
+          "distance_m": 500,
+          "total_time_ms": 43000,
+          "dnf": 0,
+          "competition_name": "Herfstcup 23",
+          "competition_date": "2023-10-07",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 3,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": 148000,
+          "dnf": 0,
+          "competition_name": "Nieuwjaarscup",
+          "competition_date": "2024-01-20",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 10,
+          "competition_id": 10,
+          "distance_m": 1500,
+          "total_time_ms": 140000,
+          "dnf": 0,
+          "competition_name": "Opening",
+          "competition_date": "2024-09-14",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 11,
+          "competition_id": 11,
+          "distance_m": 500,
+          "total_time_ms": 41200,
+          "dnf": 0,
+          "competition_name": "Opening",
+          "competition_date": "2024-09-14",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 12,
+          "competition_id": 12,
+          "distance_m": 1500,
+          "total_time_ms": 137000,
+          "dnf": 0,
+          "competition_name": "Herfstcup",
+          "competition_date": "2024-10-05",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 13,
+          "competition_id": 13,
+          "distance_m": 1000,
+          "total_time_ms": 83500,
+          "dnf": 0,
+          "competition_name": "Herfstcup",
+          "competition_date": "2024-10-05",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 14,
+          "competition_id": 14,
+          "distance_m": 1500,
+          "total_time_ms": 133900,
+          "dnf": 0,
+          "competition_name": "Wintercup",
+          "competition_date": "2024-11-16",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 15,
+          "competition_id": 15,
+          "distance_m": 500,
+          "total_time_ms": 40800,
+          "dnf": 0,
+          "competition_name": "Wintercup",
+          "competition_date": "2024-11-16",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 16,
+          "competition_id": 16,
+          "distance_m": 1500,
+          "total_time_ms": null,
+          "dnf": 1,
+          "competition_name": "Wintercup",
+          "competition_date": "2024-11-16",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 17,
+          "competition_id": 17,
+          "distance_m": 1500,
+          "total_time_ms": 138000,
+          "dnf": 0,
+          "competition_name": "Decembercup",
+          "competition_date": "2024-11-30",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 18,
+          "competition_id": 18,
+          "distance_m": 3000,
+          "total_time_ms": 275000,
+          "dnf": 1,
+          "competition_name": "NK afstanden",
+          "competition_date": "2024-12-14",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 19,
+          "competition_id": 19,
+          "distance_m": 1500,
+          "total_time_ms": 132500,
+          "dnf": 0,
+          "competition_name": "Nieuwjaar",
+          "competition_date": "2025-01-11",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 20,
+          "competition_id": 20,
+          "distance_m": 500,
+          "total_time_ms": 40550,
+          "dnf": 0,
+          "competition_name": "Nieuwjaar",
+          "competition_date": "2025-01-11",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 21,
+          "competition_id": 21,
+          "distance_m": 500,
+          "total_time_ms": 40300,
+          "dnf": 0,
+          "competition_name": "Nieuwjaar (2)",
+          "competition_date": "2025-01-11",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 22,
+          "competition_id": 22,
+          "distance_m": 1000,
+          "total_time_ms": 82000,
+          "dnf": 0,
+          "competition_name": "Thialf Trophy",
+          "competition_date": "2025-02-08",
+          "venue": "Thialf",
+          "lane": null
+        }
+      ],
+      "params": {
+        "trend_season": "",
+        "default_to_current": true
+      },
+      "expected": {
+        "trend_season_options": [
+          "2024-2025",
+          "2023-2024"
+        ],
+        "selected_trend_season": "2024-2025",
+        "trend_rows": [
+          {
+            "distance_m": 500,
+            "count": 4,
+            "sparkline": {
+              "width": 320,
+              "height": 132,
+              "points": "8.0,12.0 168.9,52.9 312.0,78.4 312.0,104.0",
+              "circles": [
+                {
+                  "x": "8.0",
+                  "y": "12.0",
+                  "href": "/races/11",
+                  "tooltip_date": "14-09-2024",
+                  "tooltip_name": "Opening",
+                  "tooltip_time": "41.20"
+                },
+                {
+                  "x": "168.9",
+                  "y": "52.9",
+                  "href": "/races/15",
+                  "tooltip_date": "16-11-2024",
+                  "tooltip_name": "Wintercup",
+                  "tooltip_time": "40.80"
+                },
+                {
+                  "x": "312.0",
+                  "y": "78.4",
+                  "href": "/races/20",
+                  "tooltip_date": "11-01-2025",
+                  "tooltip_name": "Nieuwjaar",
+                  "tooltip_time": "40.55"
+                },
+                {
+                  "x": "312.0",
+                  "y": "104.0",
+                  "href": "/races/21",
+                  "tooltip_date": "11-01-2025",
+                  "tooltip_name": "Nieuwjaar (2)",
+                  "tooltip_time": "40.30"
+                }
+              ],
+              "month_ticks": [
+                {
+                  "x": "8.0",
+                  "label": "sep"
+                },
+                {
+                  "x": "130.6",
+                  "label": "nov"
+                },
+                {
+                  "x": "286.5",
+                  "label": "jan"
+                }
+              ],
+              "baseline_y": 104,
+              "left_padding": 8,
+              "right_padding": 8,
+              "min_ms": 40300,
+              "max_ms": 41200,
+              "delta_ms": -900
+            },
+            "latest_time": "40.30",
+            "latest_date": "11-01-2025"
+          },
+          {
+            "distance_m": 1000,
+            "count": 2,
+            "sparkline": {
+              "width": 320,
+              "height": 132,
+              "points": "8.0,12.0 312.0,104.0",
+              "circles": [
+                {
+                  "x": "8.0",
+                  "y": "12.0",
+                  "href": "/races/13",
+                  "tooltip_date": "05-10-2024",
+                  "tooltip_name": "Herfstcup",
+                  "tooltip_time": "1:23.50"
+                },
+                {
+                  "x": "312.0",
+                  "y": "104.0",
+                  "href": "/races/22",
+                  "tooltip_date": "08-02-2025",
+                  "tooltip_name": "Thialf Trophy",
+                  "tooltip_time": "1:22.00"
+                }
+              ],
+              "month_ticks": [
+                {
+                  "x": "8.0",
+                  "label": "okt"
+                },
+                {
+                  "x": "295.1",
+                  "label": "feb"
+                }
+              ],
+              "baseline_y": 104,
+              "left_padding": 8,
+              "right_padding": 8,
+              "min_ms": 82000,
+              "max_ms": 83500,
+              "delta_ms": -1500
+            },
+            "latest_time": "1:22.00",
+            "latest_date": "08-02-2025"
+          },
+          {
+            "distance_m": 1500,
+            "count": 5,
+            "sparkline": {
+              "width": 320,
+              "height": 132,
+              "points": "8.0,12.0 61.6,48.8 168.9,86.8 204.7,36.5 312.0,104.0",
+              "circles": [
+                {
+                  "x": "8.0",
+                  "y": "12.0",
+                  "href": "/races/10",
+                  "tooltip_date": "14-09-2024",
+                  "tooltip_name": "Opening",
+                  "tooltip_time": "2:20.00"
+                },
+                {
+                  "x": "61.6",
+                  "y": "48.8",
+                  "href": "/races/12",
+                  "tooltip_date": "05-10-2024",
+                  "tooltip_name": "Herfstcup",
+                  "tooltip_time": "2:17.00"
+                },
+                {
+                  "x": "168.9",
+                  "y": "86.8",
+                  "href": "/races/14",
+                  "tooltip_date": "16-11-2024",
+                  "tooltip_name": "Wintercup",
+                  "tooltip_time": "2:13.90"
+                },
+                {
+                  "x": "204.7",
+                  "y": "36.5",
+                  "href": "/races/17",
+                  "tooltip_date": "30-11-2024",
+                  "tooltip_name": "Decembercup",
+                  "tooltip_time": "2:18.00"
+                },
+                {
+                  "x": "312.0",
+                  "y": "104.0",
+                  "href": "/races/19",
+                  "tooltip_date": "11-01-2025",
+                  "tooltip_name": "Nieuwjaar",
+                  "tooltip_time": "2:12.50"
+                }
+              ],
+              "month_ticks": [
+                {
+                  "x": "8.0",
+                  "label": "sep"
+                },
+                {
+                  "x": "51.4",
+                  "label": "okt"
+                },
+                {
+                  "x": "130.6",
+                  "label": "nov"
+                },
+                {
+                  "x": "286.5",
+                  "label": "jan"
+                }
+              ],
+              "baseline_y": 104,
+              "left_padding": 8,
+              "right_padding": 8,
+              "min_ms": 132500,
+              "max_ms": 140000,
+              "delta_ms": -7500
+            },
+            "latest_time": "2:12.50",
+            "latest_date": "11-01-2025"
+          }
+        ]
+      }
+    },
+    {
+      "name": "all seasons (explicit empty)",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 1,
+          "competition_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 150000,
+          "dnf": 0,
+          "competition_name": "Herfstcup 23",
+          "competition_date": "2023-10-07",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 2,
+          "competition_id": 2,
+          "distance_m": 500,
+          "total_time_ms": 43000,
+          "dnf": 0,
+          "competition_name": "Herfstcup 23",
+          "competition_date": "2023-10-07",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 3,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": 148000,
+          "dnf": 0,
+          "competition_name": "Nieuwjaarscup",
+          "competition_date": "2024-01-20",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 10,
+          "competition_id": 10,
+          "distance_m": 1500,
+          "total_time_ms": 140000,
+          "dnf": 0,
+          "competition_name": "Opening",
+          "competition_date": "2024-09-14",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 11,
+          "competition_id": 11,
+          "distance_m": 500,
+          "total_time_ms": 41200,
+          "dnf": 0,
+          "competition_name": "Opening",
+          "competition_date": "2024-09-14",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 12,
+          "competition_id": 12,
+          "distance_m": 1500,
+          "total_time_ms": 137000,
+          "dnf": 0,
+          "competition_name": "Herfstcup",
+          "competition_date": "2024-10-05",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 13,
+          "competition_id": 13,
+          "distance_m": 1000,
+          "total_time_ms": 83500,
+          "dnf": 0,
+          "competition_name": "Herfstcup",
+          "competition_date": "2024-10-05",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 14,
+          "competition_id": 14,
+          "distance_m": 1500,
+          "total_time_ms": 133900,
+          "dnf": 0,
+          "competition_name": "Wintercup",
+          "competition_date": "2024-11-16",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 15,
+          "competition_id": 15,
+          "distance_m": 500,
+          "total_time_ms": 40800,
+          "dnf": 0,
+          "competition_name": "Wintercup",
+          "competition_date": "2024-11-16",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 16,
+          "competition_id": 16,
+          "distance_m": 1500,
+          "total_time_ms": null,
+          "dnf": 1,
+          "competition_name": "Wintercup",
+          "competition_date": "2024-11-16",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 17,
+          "competition_id": 17,
+          "distance_m": 1500,
+          "total_time_ms": 138000,
+          "dnf": 0,
+          "competition_name": "Decembercup",
+          "competition_date": "2024-11-30",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 18,
+          "competition_id": 18,
+          "distance_m": 3000,
+          "total_time_ms": 275000,
+          "dnf": 1,
+          "competition_name": "NK afstanden",
+          "competition_date": "2024-12-14",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 19,
+          "competition_id": 19,
+          "distance_m": 1500,
+          "total_time_ms": 132500,
+          "dnf": 0,
+          "competition_name": "Nieuwjaar",
+          "competition_date": "2025-01-11",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 20,
+          "competition_id": 20,
+          "distance_m": 500,
+          "total_time_ms": 40550,
+          "dnf": 0,
+          "competition_name": "Nieuwjaar",
+          "competition_date": "2025-01-11",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 21,
+          "competition_id": 21,
+          "distance_m": 500,
+          "total_time_ms": 40300,
+          "dnf": 0,
+          "competition_name": "Nieuwjaar (2)",
+          "competition_date": "2025-01-11",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 22,
+          "competition_id": 22,
+          "distance_m": 1000,
+          "total_time_ms": 82000,
+          "dnf": 0,
+          "competition_name": "Thialf Trophy",
+          "competition_date": "2025-02-08",
+          "venue": "Thialf",
+          "lane": null
+        }
+      ],
+      "params": {
+        "trend_season": "",
+        "default_to_current": false
+      },
+      "expected": {
+        "trend_season_options": [
+          "2024-2025",
+          "2023-2024"
+        ],
+        "selected_trend_season": "",
+        "trend_rows": [
+          {
+            "distance_m": 500,
+            "count": 5,
+            "sparkline": {
+              "width": 320,
+              "height": 132,
+              "points": "8.0,12.0 233.7,73.3 275.2,87.0 312.0,95.5 312.0,104.0",
+              "circles": [
+                {
+                  "x": "8.0",
+                  "y": "12.0",
+                  "href": "/races/2",
+                  "tooltip_date": "07-10-2023",
+                  "tooltip_name": "Herfstcup 23",
+                  "tooltip_time": "43.00"
+                },
+                {
+                  "x": "233.7",
+                  "y": "73.3",
+                  "href": "/races/11",
+                  "tooltip_date": "14-09-2024",
+                  "tooltip_name": "Opening",
+                  "tooltip_time": "41.20"
+                },
+                {
+                  "x": "275.2",
+                  "y": "87.0",
+                  "href": "/races/15",
+                  "tooltip_date": "16-11-2024",
+                  "tooltip_name": "Wintercup",
+                  "tooltip_time": "40.80"
+                },
+                {
+                  "x": "312.0",
+                  "y": "95.5",
+                  "href": "/races/20",
+                  "tooltip_date": "11-01-2025",
+                  "tooltip_name": "Nieuwjaar",
+                  "tooltip_time": "40.55"
+                },
+                {
+                  "x": "312.0",
+                  "y": "104.0",
+                  "href": "/races/21",
+                  "tooltip_date": "11-01-2025",
+                  "tooltip_name": "Nieuwjaar (2)",
+                  "tooltip_time": "40.30"
+                }
+              ],
+              "month_ticks": [
+                {
+                  "x": "8.0",
+                  "label": "2023"
+                },
+                {
+                  "x": "64.6",
+                  "label": "2024"
+                },
+                {
+                  "x": "305.4",
+                  "label": "2025"
+                }
+              ],
+              "baseline_y": 104,
+              "left_padding": 8,
+              "right_padding": 8,
+              "min_ms": 40300,
+              "max_ms": 43000,
+              "delta_ms": -2700
+            },
+            "latest_time": "40.30",
+            "latest_date": "11-01-2025"
+          },
+          {
+            "distance_m": 1000,
+            "count": 2,
+            "sparkline": {
+              "width": 320,
+              "height": 132,
+              "points": "8.0,12.0 312.0,104.0",
+              "circles": [
+                {
+                  "x": "8.0",
+                  "y": "12.0",
+                  "href": "/races/13",
+                  "tooltip_date": "05-10-2024",
+                  "tooltip_name": "Herfstcup",
+                  "tooltip_time": "1:23.50"
+                },
+                {
+                  "x": "312.0",
+                  "y": "104.0",
+                  "href": "/races/22",
+                  "tooltip_date": "08-02-2025",
+                  "tooltip_name": "Thialf Trophy",
+                  "tooltip_time": "1:22.00"
+                }
+              ],
+              "month_ticks": [
+                {
+                  "x": "8.0",
+                  "label": "2024"
+                },
+                {
+                  "x": "220.3",
+                  "label": "2025"
+                }
+              ],
+              "baseline_y": 104,
+              "left_padding": 8,
+              "right_padding": 8,
+              "min_ms": 82000,
+              "max_ms": 83500,
+              "delta_ms": -1500
+            },
+            "latest_time": "1:22.00",
+            "latest_date": "08-02-2025"
+          },
+          {
+            "distance_m": 1500,
+            "count": 7,
+            "sparkline": {
+              "width": 320,
+              "height": 132,
+              "points": "8.0,12.0 77.1,22.5 233.7,64.6 247.5,80.3 275.2,96.6 284.4,75.1 312.0,104.0",
+              "circles": [
+                {
+                  "x": "8.0",
+                  "y": "12.0",
+                  "href": "/races/1",
+                  "tooltip_date": "07-10-2023",
+                  "tooltip_name": "Herfstcup 23",
+                  "tooltip_time": "2:30.00"
+                },
+                {
+                  "x": "77.1",
+                  "y": "22.5",
+                  "href": "/races/3",
+                  "tooltip_date": "20-01-2024",
+                  "tooltip_name": "Nieuwjaarscup",
+                  "tooltip_time": "2:28.00"
+                },
+                {
+                  "x": "233.7",
+                  "y": "64.6",
+                  "href": "/races/10",
+                  "tooltip_date": "14-09-2024",
+                  "tooltip_name": "Opening",
+                  "tooltip_time": "2:20.00"
+                },
+                {
+                  "x": "247.5",
+                  "y": "80.3",
+                  "href": "/races/12",
+                  "tooltip_date": "05-10-2024",
+                  "tooltip_name": "Herfstcup",
+                  "tooltip_time": "2:17.00"
+                },
+                {
+                  "x": "275.2",
+                  "y": "96.6",
+                  "href": "/races/14",
+                  "tooltip_date": "16-11-2024",
+                  "tooltip_name": "Wintercup",
+                  "tooltip_time": "2:13.90"
+                },
+                {
+                  "x": "284.4",
+                  "y": "75.1",
+                  "href": "/races/17",
+                  "tooltip_date": "30-11-2024",
+                  "tooltip_name": "Decembercup",
+                  "tooltip_time": "2:18.00"
+                },
+                {
+                  "x": "312.0",
+                  "y": "104.0",
+                  "href": "/races/19",
+                  "tooltip_date": "11-01-2025",
+                  "tooltip_name": "Nieuwjaar",
+                  "tooltip_time": "2:12.50"
+                }
+              ],
+              "month_ticks": [
+                {
+                  "x": "8.0",
+                  "label": "2023"
+                },
+                {
+                  "x": "64.6",
+                  "label": "2024"
+                },
+                {
+                  "x": "305.4",
+                  "label": "2025"
+                }
+              ],
+              "baseline_y": 104,
+              "left_padding": 8,
+              "right_padding": 8,
+              "min_ms": 132500,
+              "max_ms": 150000,
+              "delta_ms": -17500
+            },
+            "latest_time": "2:12.50",
+            "latest_date": "11-01-2025"
+          }
+        ]
+      }
+    },
+    {
+      "name": "older season",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 1,
+          "competition_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 150000,
+          "dnf": 0,
+          "competition_name": "Herfstcup 23",
+          "competition_date": "2023-10-07",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 2,
+          "competition_id": 2,
+          "distance_m": 500,
+          "total_time_ms": 43000,
+          "dnf": 0,
+          "competition_name": "Herfstcup 23",
+          "competition_date": "2023-10-07",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 3,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": 148000,
+          "dnf": 0,
+          "competition_name": "Nieuwjaarscup",
+          "competition_date": "2024-01-20",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 10,
+          "competition_id": 10,
+          "distance_m": 1500,
+          "total_time_ms": 140000,
+          "dnf": 0,
+          "competition_name": "Opening",
+          "competition_date": "2024-09-14",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 11,
+          "competition_id": 11,
+          "distance_m": 500,
+          "total_time_ms": 41200,
+          "dnf": 0,
+          "competition_name": "Opening",
+          "competition_date": "2024-09-14",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 12,
+          "competition_id": 12,
+          "distance_m": 1500,
+          "total_time_ms": 137000,
+          "dnf": 0,
+          "competition_name": "Herfstcup",
+          "competition_date": "2024-10-05",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 13,
+          "competition_id": 13,
+          "distance_m": 1000,
+          "total_time_ms": 83500,
+          "dnf": 0,
+          "competition_name": "Herfstcup",
+          "competition_date": "2024-10-05",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 14,
+          "competition_id": 14,
+          "distance_m": 1500,
+          "total_time_ms": 133900,
+          "dnf": 0,
+          "competition_name": "Wintercup",
+          "competition_date": "2024-11-16",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 15,
+          "competition_id": 15,
+          "distance_m": 500,
+          "total_time_ms": 40800,
+          "dnf": 0,
+          "competition_name": "Wintercup",
+          "competition_date": "2024-11-16",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 16,
+          "competition_id": 16,
+          "distance_m": 1500,
+          "total_time_ms": null,
+          "dnf": 1,
+          "competition_name": "Wintercup",
+          "competition_date": "2024-11-16",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 17,
+          "competition_id": 17,
+          "distance_m": 1500,
+          "total_time_ms": 138000,
+          "dnf": 0,
+          "competition_name": "Decembercup",
+          "competition_date": "2024-11-30",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 18,
+          "competition_id": 18,
+          "distance_m": 3000,
+          "total_time_ms": 275000,
+          "dnf": 1,
+          "competition_name": "NK afstanden",
+          "competition_date": "2024-12-14",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 19,
+          "competition_id": 19,
+          "distance_m": 1500,
+          "total_time_ms": 132500,
+          "dnf": 0,
+          "competition_name": "Nieuwjaar",
+          "competition_date": "2025-01-11",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 20,
+          "competition_id": 20,
+          "distance_m": 500,
+          "total_time_ms": 40550,
+          "dnf": 0,
+          "competition_name": "Nieuwjaar",
+          "competition_date": "2025-01-11",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 21,
+          "competition_id": 21,
+          "distance_m": 500,
+          "total_time_ms": 40300,
+          "dnf": 0,
+          "competition_name": "Nieuwjaar (2)",
+          "competition_date": "2025-01-11",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 22,
+          "competition_id": 22,
+          "distance_m": 1000,
+          "total_time_ms": 82000,
+          "dnf": 0,
+          "competition_name": "Thialf Trophy",
+          "competition_date": "2025-02-08",
+          "venue": "Thialf",
+          "lane": null
+        }
+      ],
+      "params": {
+        "trend_season": "2023-2024",
+        "default_to_current": false
+      },
+      "expected": {
+        "trend_season_options": [
+          "2024-2025",
+          "2023-2024"
+        ],
+        "selected_trend_season": "2023-2024",
+        "trend_rows": [
+          {
+            "distance_m": 500,
+            "count": 1,
+            "sparkline": null,
+            "latest_time": "43.00",
+            "latest_date": "07-10-2023"
+          },
+          {
+            "distance_m": 1500,
+            "count": 2,
+            "sparkline": {
+              "width": 320,
+              "height": 132,
+              "points": "8.0,12.0 312.0,104.0",
+              "circles": [
+                {
+                  "x": "8.0",
+                  "y": "12.0",
+                  "href": "/races/1",
+                  "tooltip_date": "07-10-2023",
+                  "tooltip_name": "Herfstcup 23",
+                  "tooltip_time": "2:30.00"
+                },
+                {
+                  "x": "312.0",
+                  "y": "104.0",
+                  "href": "/races/3",
+                  "tooltip_date": "20-01-2024",
+                  "tooltip_name": "Nieuwjaarscup",
+                  "tooltip_time": "2:28.00"
+                }
+              ],
+              "month_ticks": [
+                {
+                  "x": "8.0",
+                  "label": "okt"
+                },
+                {
+                  "x": "257.0",
+                  "label": "jan"
+                }
+              ],
+              "baseline_y": 104,
+              "left_padding": 8,
+              "right_padding": 8,
+              "min_ms": 148000,
+              "max_ms": 150000,
+              "delta_ms": -2000
+            },
+            "latest_time": "2:28.00",
+            "latest_date": "20-01-2024"
+          }
+        ]
+      }
+    },
+    {
+      "name": "unknown season falls back to current",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 1,
+          "competition_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 150000,
+          "dnf": 0,
+          "competition_name": "Herfstcup 23",
+          "competition_date": "2023-10-07",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 2,
+          "competition_id": 2,
+          "distance_m": 500,
+          "total_time_ms": 43000,
+          "dnf": 0,
+          "competition_name": "Herfstcup 23",
+          "competition_date": "2023-10-07",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 3,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": 148000,
+          "dnf": 0,
+          "competition_name": "Nieuwjaarscup",
+          "competition_date": "2024-01-20",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 10,
+          "competition_id": 10,
+          "distance_m": 1500,
+          "total_time_ms": 140000,
+          "dnf": 0,
+          "competition_name": "Opening",
+          "competition_date": "2024-09-14",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 11,
+          "competition_id": 11,
+          "distance_m": 500,
+          "total_time_ms": 41200,
+          "dnf": 0,
+          "competition_name": "Opening",
+          "competition_date": "2024-09-14",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 12,
+          "competition_id": 12,
+          "distance_m": 1500,
+          "total_time_ms": 137000,
+          "dnf": 0,
+          "competition_name": "Herfstcup",
+          "competition_date": "2024-10-05",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 13,
+          "competition_id": 13,
+          "distance_m": 1000,
+          "total_time_ms": 83500,
+          "dnf": 0,
+          "competition_name": "Herfstcup",
+          "competition_date": "2024-10-05",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 14,
+          "competition_id": 14,
+          "distance_m": 1500,
+          "total_time_ms": 133900,
+          "dnf": 0,
+          "competition_name": "Wintercup",
+          "competition_date": "2024-11-16",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 15,
+          "competition_id": 15,
+          "distance_m": 500,
+          "total_time_ms": 40800,
+          "dnf": 0,
+          "competition_name": "Wintercup",
+          "competition_date": "2024-11-16",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 16,
+          "competition_id": 16,
+          "distance_m": 1500,
+          "total_time_ms": null,
+          "dnf": 1,
+          "competition_name": "Wintercup",
+          "competition_date": "2024-11-16",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 17,
+          "competition_id": 17,
+          "distance_m": 1500,
+          "total_time_ms": 138000,
+          "dnf": 0,
+          "competition_name": "Decembercup",
+          "competition_date": "2024-11-30",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 18,
+          "competition_id": 18,
+          "distance_m": 3000,
+          "total_time_ms": 275000,
+          "dnf": 1,
+          "competition_name": "NK afstanden",
+          "competition_date": "2024-12-14",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 19,
+          "competition_id": 19,
+          "distance_m": 1500,
+          "total_time_ms": 132500,
+          "dnf": 0,
+          "competition_name": "Nieuwjaar",
+          "competition_date": "2025-01-11",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 20,
+          "competition_id": 20,
+          "distance_m": 500,
+          "total_time_ms": 40550,
+          "dnf": 0,
+          "competition_name": "Nieuwjaar",
+          "competition_date": "2025-01-11",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 21,
+          "competition_id": 21,
+          "distance_m": 500,
+          "total_time_ms": 40300,
+          "dnf": 0,
+          "competition_name": "Nieuwjaar (2)",
+          "competition_date": "2025-01-11",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 22,
+          "competition_id": 22,
+          "distance_m": 1000,
+          "total_time_ms": 82000,
+          "dnf": 0,
+          "competition_name": "Thialf Trophy",
+          "competition_date": "2025-02-08",
+          "venue": "Thialf",
+          "lane": null
+        }
+      ],
+      "params": {
+        "trend_season": "2019-2020",
+        "default_to_current": false
+      },
+      "expected": {
+        "trend_season_options": [
+          "2024-2025",
+          "2023-2024"
+        ],
+        "selected_trend_season": "2024-2025",
+        "trend_rows": [
+          {
+            "distance_m": 500,
+            "count": 4,
+            "sparkline": {
+              "width": 320,
+              "height": 132,
+              "points": "8.0,12.0 168.9,52.9 312.0,78.4 312.0,104.0",
+              "circles": [
+                {
+                  "x": "8.0",
+                  "y": "12.0",
+                  "href": "/races/11",
+                  "tooltip_date": "14-09-2024",
+                  "tooltip_name": "Opening",
+                  "tooltip_time": "41.20"
+                },
+                {
+                  "x": "168.9",
+                  "y": "52.9",
+                  "href": "/races/15",
+                  "tooltip_date": "16-11-2024",
+                  "tooltip_name": "Wintercup",
+                  "tooltip_time": "40.80"
+                },
+                {
+                  "x": "312.0",
+                  "y": "78.4",
+                  "href": "/races/20",
+                  "tooltip_date": "11-01-2025",
+                  "tooltip_name": "Nieuwjaar",
+                  "tooltip_time": "40.55"
+                },
+                {
+                  "x": "312.0",
+                  "y": "104.0",
+                  "href": "/races/21",
+                  "tooltip_date": "11-01-2025",
+                  "tooltip_name": "Nieuwjaar (2)",
+                  "tooltip_time": "40.30"
+                }
+              ],
+              "month_ticks": [
+                {
+                  "x": "8.0",
+                  "label": "sep"
+                },
+                {
+                  "x": "130.6",
+                  "label": "nov"
+                },
+                {
+                  "x": "286.5",
+                  "label": "jan"
+                }
+              ],
+              "baseline_y": 104,
+              "left_padding": 8,
+              "right_padding": 8,
+              "min_ms": 40300,
+              "max_ms": 41200,
+              "delta_ms": -900
+            },
+            "latest_time": "40.30",
+            "latest_date": "11-01-2025"
+          },
+          {
+            "distance_m": 1000,
+            "count": 2,
+            "sparkline": {
+              "width": 320,
+              "height": 132,
+              "points": "8.0,12.0 312.0,104.0",
+              "circles": [
+                {
+                  "x": "8.0",
+                  "y": "12.0",
+                  "href": "/races/13",
+                  "tooltip_date": "05-10-2024",
+                  "tooltip_name": "Herfstcup",
+                  "tooltip_time": "1:23.50"
+                },
+                {
+                  "x": "312.0",
+                  "y": "104.0",
+                  "href": "/races/22",
+                  "tooltip_date": "08-02-2025",
+                  "tooltip_name": "Thialf Trophy",
+                  "tooltip_time": "1:22.00"
+                }
+              ],
+              "month_ticks": [
+                {
+                  "x": "8.0",
+                  "label": "okt"
+                },
+                {
+                  "x": "295.1",
+                  "label": "feb"
+                }
+              ],
+              "baseline_y": 104,
+              "left_padding": 8,
+              "right_padding": 8,
+              "min_ms": 82000,
+              "max_ms": 83500,
+              "delta_ms": -1500
+            },
+            "latest_time": "1:22.00",
+            "latest_date": "08-02-2025"
+          },
+          {
+            "distance_m": 1500,
+            "count": 5,
+            "sparkline": {
+              "width": 320,
+              "height": 132,
+              "points": "8.0,12.0 61.6,48.8 168.9,86.8 204.7,36.5 312.0,104.0",
+              "circles": [
+                {
+                  "x": "8.0",
+                  "y": "12.0",
+                  "href": "/races/10",
+                  "tooltip_date": "14-09-2024",
+                  "tooltip_name": "Opening",
+                  "tooltip_time": "2:20.00"
+                },
+                {
+                  "x": "61.6",
+                  "y": "48.8",
+                  "href": "/races/12",
+                  "tooltip_date": "05-10-2024",
+                  "tooltip_name": "Herfstcup",
+                  "tooltip_time": "2:17.00"
+                },
+                {
+                  "x": "168.9",
+                  "y": "86.8",
+                  "href": "/races/14",
+                  "tooltip_date": "16-11-2024",
+                  "tooltip_name": "Wintercup",
+                  "tooltip_time": "2:13.90"
+                },
+                {
+                  "x": "204.7",
+                  "y": "36.5",
+                  "href": "/races/17",
+                  "tooltip_date": "30-11-2024",
+                  "tooltip_name": "Decembercup",
+                  "tooltip_time": "2:18.00"
+                },
+                {
+                  "x": "312.0",
+                  "y": "104.0",
+                  "href": "/races/19",
+                  "tooltip_date": "11-01-2025",
+                  "tooltip_name": "Nieuwjaar",
+                  "tooltip_time": "2:12.50"
+                }
+              ],
+              "month_ticks": [
+                {
+                  "x": "8.0",
+                  "label": "sep"
+                },
+                {
+                  "x": "51.4",
+                  "label": "okt"
+                },
+                {
+                  "x": "130.6",
+                  "label": "nov"
+                },
+                {
+                  "x": "286.5",
+                  "label": "jan"
+                }
+              ],
+              "baseline_y": 104,
+              "left_padding": 8,
+              "right_padding": 8,
+              "min_ms": 132500,
+              "max_ms": 140000,
+              "delta_ms": -7500
+            },
+            "latest_time": "2:12.50",
+            "latest_date": "11-01-2025"
+          }
+        ]
+      }
+    },
+    {
+      "name": "default to current but no data this season",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 1,
+          "competition_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 150000,
+          "dnf": 0,
+          "competition_name": "Herfstcup 23",
+          "competition_date": "2023-10-07",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 2,
+          "competition_id": 2,
+          "distance_m": 500,
+          "total_time_ms": 43000,
+          "dnf": 0,
+          "competition_name": "Herfstcup 23",
+          "competition_date": "2023-10-07",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 3,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": 148000,
+          "dnf": 0,
+          "competition_name": "Nieuwjaarscup",
+          "competition_date": "2024-01-20",
+          "venue": "Thialf",
+          "lane": null
+        }
+      ],
+      "params": {
+        "trend_season": "",
+        "default_to_current": true
+      },
+      "expected": {
+        "trend_season_options": [
+          "2023-2024"
+        ],
+        "selected_trend_season": "",
+        "trend_rows": [
+          {
+            "distance_m": 500,
+            "count": 1,
+            "sparkline": null,
+            "latest_time": "43.00",
+            "latest_date": "07-10-2023"
+          },
+          {
+            "distance_m": 1500,
+            "count": 2,
+            "sparkline": {
+              "width": 320,
+              "height": 132,
+              "points": "8.0,12.0 312.0,104.0",
+              "circles": [
+                {
+                  "x": "8.0",
+                  "y": "12.0",
+                  "href": "/races/1",
+                  "tooltip_date": "07-10-2023",
+                  "tooltip_name": "Herfstcup 23",
+                  "tooltip_time": "2:30.00"
+                },
+                {
+                  "x": "312.0",
+                  "y": "104.0",
+                  "href": "/races/3",
+                  "tooltip_date": "20-01-2024",
+                  "tooltip_name": "Nieuwjaarscup",
+                  "tooltip_time": "2:28.00"
+                }
+              ],
+              "month_ticks": [
+                {
+                  "x": "8.0",
+                  "label": "2023"
+                },
+                {
+                  "x": "257.0",
+                  "label": "2024"
+                }
+              ],
+              "baseline_y": 104,
+              "left_padding": 8,
+              "right_padding": 8,
+              "min_ms": 148000,
+              "max_ms": 150000,
+              "delta_ms": -2000
+            },
+            "latest_time": "2:28.00",
+            "latest_date": "20-01-2024"
+          }
+        ]
+      }
+    },
+    {
+      "name": "unknown season, current has no data",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 1,
+          "competition_id": 1,
+          "distance_m": 1500,
+          "total_time_ms": 150000,
+          "dnf": 0,
+          "competition_name": "Herfstcup 23",
+          "competition_date": "2023-10-07",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 2,
+          "competition_id": 2,
+          "distance_m": 500,
+          "total_time_ms": 43000,
+          "dnf": 0,
+          "competition_name": "Herfstcup 23",
+          "competition_date": "2023-10-07",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 3,
+          "competition_id": 3,
+          "distance_m": 1500,
+          "total_time_ms": 148000,
+          "dnf": 0,
+          "competition_name": "Nieuwjaarscup",
+          "competition_date": "2024-01-20",
+          "venue": "Thialf",
+          "lane": null
+        }
+      ],
+      "params": {
+        "trend_season": "2019-2020",
+        "default_to_current": false
+      },
+      "expected": {
+        "trend_season_options": [
+          "2023-2024"
+        ],
+        "selected_trend_season": "",
+        "trend_rows": [
+          {
+            "distance_m": 500,
+            "count": 1,
+            "sparkline": null,
+            "latest_time": "43.00",
+            "latest_date": "07-10-2023"
+          },
+          {
+            "distance_m": 1500,
+            "count": 2,
+            "sparkline": {
+              "width": 320,
+              "height": 132,
+              "points": "8.0,12.0 312.0,104.0",
+              "circles": [
+                {
+                  "x": "8.0",
+                  "y": "12.0",
+                  "href": "/races/1",
+                  "tooltip_date": "07-10-2023",
+                  "tooltip_name": "Herfstcup 23",
+                  "tooltip_time": "2:30.00"
+                },
+                {
+                  "x": "312.0",
+                  "y": "104.0",
+                  "href": "/races/3",
+                  "tooltip_date": "20-01-2024",
+                  "tooltip_name": "Nieuwjaarscup",
+                  "tooltip_time": "2:28.00"
+                }
+              ],
+              "month_ticks": [
+                {
+                  "x": "8.0",
+                  "label": "2023"
+                },
+                {
+                  "x": "257.0",
+                  "label": "2024"
+                }
+              ],
+              "baseline_y": 104,
+              "left_padding": 8,
+              "right_padding": 8,
+              "min_ms": 148000,
+              "max_ms": 150000,
+              "delta_ms": -2000
+            },
+            "latest_time": "2:28.00",
+            "latest_date": "20-01-2024"
+          }
+        ]
+      }
+    },
+    {
+      "name": "several points on one day",
+      "today": "2025-03-01",
+      "rows": [
+        {
+          "id": 40,
+          "competition_id": 40,
+          "distance_m": 1500,
+          "total_time_ms": 130000,
+          "dnf": 0,
+          "competition_name": "Rit 0",
+          "competition_date": "2025-02-01",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 40,
+          "competition_id": 40,
+          "distance_m": 1500,
+          "total_time_ms": 130100,
+          "dnf": 0,
+          "competition_name": "Rit 1",
+          "competition_date": "2025-02-01",
+          "venue": "Thialf",
+          "lane": null
+        },
+        {
+          "id": 40,
+          "competition_id": 40,
+          "distance_m": 1500,
+          "total_time_ms": 130200,
+          "dnf": 0,
+          "competition_name": "Rit 2",
+          "competition_date": "2025-02-01",
+          "venue": "Thialf",
+          "lane": null
+        }
+      ],
+      "params": {
+        "trend_season": "",
+        "default_to_current": false
+      },
+      "expected": {
+        "trend_season_options": [
+          "2024-2025"
+        ],
+        "selected_trend_season": "",
+        "trend_rows": [
+          {
+            "distance_m": 1500,
+            "count": 3,
+            "sparkline": {
+              "width": 320,
+              "height": 132,
+              "points": "8.0,104.0 8.0,58.0 8.0,12.0",
+              "circles": [
+                {
+                  "x": "8.0",
+                  "y": "104.0",
+                  "href": "/races/40",
+                  "tooltip_date": "01-02-2025",
+                  "tooltip_name": "Rit 0",
+                  "tooltip_time": "2:10.00"
+                },
+                {
+                  "x": "8.0",
+                  "y": "58.0",
+                  "href": "/races/40",
+                  "tooltip_date": "01-02-2025",
+                  "tooltip_name": "Rit 1",
+                  "tooltip_time": "2:10.10"
+                },
+                {
+                  "x": "8.0",
+                  "y": "12.0",
+                  "href": "/races/40",
+                  "tooltip_date": "01-02-2025",
+                  "tooltip_name": "Rit 2",
+                  "tooltip_time": "2:10.20"
+                }
+              ],
+              "month_ticks": [
+                {
+                  "x": "8.0",
+                  "label": "2025"
+                }
+              ],
+              "baseline_y": 104,
+              "left_padding": 8,
+              "right_padding": 8,
+              "min_ms": 130000,
+              "max_ms": 130200,
+              "delta_ms": 200
+            },
+            "latest_time": "2:10.20",
+            "latest_date": "01-02-2025"
+          }
+        ]
+      }
+    },
+    {
+      "name": "no races",
+      "today": "2025-03-01",
+      "rows": [],
+      "params": {
+        "trend_season": "",
+        "default_to_current": true
+      },
+      "expected": {
+        "trend_season_options": [],
+        "selected_trend_season": "",
+        "trend_rows": []
+      }
+    }
+  ]
+}

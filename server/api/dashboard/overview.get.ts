@@ -1,9 +1,16 @@
 import { requireValidSession } from '../../utils/access'
 import { listUserRacesWithContext } from '../../utils/race-service'
 import { buildNotificationCenterContext } from '../../utils/notifications'
+import { buildHomeTrendContext } from '../../utils/dashboard-trends'
+
+/** "Nieuw PR" badge window on the best-times table (old app: last 7 days). */
+const RECENT_PR_DAYS = 7
 
 export default defineEventHandler(async (event) => {
   const session = await requireValidSession(event)
+  const query = getQuery(event)
+  // Absent => current season, present-but-empty => all seasons (like the old ?trend_season=).
+  const trendSeason = 'trendSeason' in query ? String(query.trendSeason ?? '') : undefined
   const races = listUserRacesWithContext(session.user.id)
   const notifications = buildNotificationCenterContext(races)
 
@@ -36,13 +43,25 @@ export default defineEventHandler(async (event) => {
         .sort((a, b) => a.distanceM - b.distanceM)
     : []
 
-  const trendByDistance = new Map<number, { date: string; totalTimeMs: number; raceId: number }[]>()
-  for (const r of finished) {
-    const list = trendByDistance.get(r.distanceM) ?? []
-    list.push({ date: r.competitionDate, totalTimeMs: r.totalTimeMs!, raceId: r.id })
-    trendByDistance.set(r.distanceM, list)
-  }
-  for (const list of trendByDistance.values()) list.sort((a, b) => (a.date < b.date ? -1 : 1))
+  const recentPrCutoff = new Date(Date.now() - RECENT_PR_DAYS * 86_400_000).toISOString().slice(0, 10)
+
+  // Same input as the old query: every race with a time, oldest first.
+  const trendRows = races
+    .filter((r) => r.totalTimeMs !== null)
+    .sort((a, b) =>
+      a.competitionDate !== b.competitionDate ? (a.competitionDate < b.competitionDate ? -1 : 1) : a.id - b.id,
+    )
+  const trendContext = buildHomeTrendContext(
+    trendRows.map((r) => ({
+      id: r.id,
+      distanceM: r.distanceM,
+      totalTimeMs: r.totalTimeMs,
+      status: r.status,
+      competitionDate: r.competitionDate,
+      competitionName: r.competitionName,
+    })),
+    { trendSeason, invert: true },
+  )
 
   return {
     competitionCount: competitionIds.size,
@@ -55,7 +74,7 @@ export default defineEventHandler(async (event) => {
       distanceM: r.distanceM,
       totalTimeMs: r.totalTimeMs,
       competitionDate: r.competitionDate,
-      isRecentPr: r.isPr,
+      isRecentPr: r.competitionDate >= recentPrCutoff,
     })),
     latestCompetition: latestCompetition
       ? {
@@ -69,13 +88,14 @@ export default defineEventHandler(async (event) => {
             totalTimeMs: r.totalTimeMs,
             status: r.status,
             isPr: r.isPr,
-            deltaVsPreviousPrMs: r.deltaVsPreviousPrMs,
+            openingMs: r.lapsMs?.[0] ?? null,
+            deltaVsPreviousPrMs: r.status === 'finished' ? r.deltaVsPreviousPrMs : null,
           })),
         }
       : null,
-    trends: [...trendByDistance.entries()]
-      .sort((a, b) => a[0] - b[0])
-      .map(([distanceM, points]) => ({ distanceM, points })),
+    trends: trendContext.trends,
+    trendSeasonOptions: trendContext.seasonOptions,
+    selectedTrendSeason: trendContext.selectedSeason,
     notifications: {
       recentPrs: notifications.recentPrs.map((r) => ({
         raceId: r.id,

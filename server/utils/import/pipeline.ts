@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import { and, eq } from 'drizzle-orm'
+import { and, eq, lt } from 'drizzle-orm'
 import type { Db } from '../../db/client'
 import { blacklist, competitions, importPreviewBatches, raceBlacklist, raceLaps, races } from '../../db/schema'
 import {
@@ -79,6 +79,8 @@ export interface CompetitionPreviewItem {
 export interface ImportPreview {
   source: ImportSourceName
   items: CompetitionPreviewItem[]
+  /** Set on the batch the dashboard's OSTA monitor keeps for "new data available". */
+  origin?: 'monitor'
 }
 
 function raceIdentityInput(r: ParsedImportRace): RaceIdentityInput {
@@ -188,33 +190,96 @@ export function classifyImportPayload(db: Db, userId: number, payload: ParsedImp
   return { source: payload.source, items }
 }
 
-export function savePreviewBatch(db: Db, userId: number, preview: ImportPreview): string {
+/** How long a stored preview stays usable. Nothing else ever cleans these up. */
+const PREVIEW_TTL_HOURS = 24
+
+/**
+ * Stores a preview so the user can come back to it (the preview page, or the
+ * dashboard's "import all"). Batches expire: this also drops the user's
+ * expired ones, so a dashboard that keeps finding the same new data does not
+ * pile up full copies of it.
+ */
+export function savePreviewBatch(
+  db: Db,
+  userId: number,
+  preview: ImportPreview,
+  now: Date = new Date(),
+): string {
   const id = randomUUID()
+  db.delete(importPreviewBatches)
+    .where(and(eq(importPreviewBatches.userId, userId), lt(importPreviewBatches.expiresAt, now.toISOString())))
+    .run()
   db.insert(importPreviewBatches)
     .values({
       id,
       userId,
       source: preview.source,
       payloadJson: preview as unknown as Record<string, unknown>,
-      createdAt: new Date().toISOString(),
+      createdAt: now.toISOString(),
+      expiresAt: new Date(now.getTime() + PREVIEW_TTL_HOURS * 3600_000).toISOString(),
     })
     .run()
   return id
 }
 
-export function loadPreviewBatch(db: Db, userId: number, batchId: string): ImportPreview | null {
+export function loadPreviewBatch(
+  db: Db,
+  userId: number,
+  batchId: string,
+  now: Date = new Date(),
+): ImportPreview | null {
   const row = db
     .select()
     .from(importPreviewBatches)
     .where(and(eq(importPreviewBatches.id, batchId), eq(importPreviewBatches.userId, userId)))
     .get()
-  return row ? (row.payloadJson as unknown as ImportPreview) : null
+  if (!row) return null
+  // expiresAt is null for batches saved before expiry existed: they never expire.
+  if (row.expiresAt && row.expiresAt < now.toISOString()) return null
+  return row.payloadJson as unknown as ImportPreview
 }
 
 export function deletePreviewBatch(db: Db, userId: number, batchId: string): void {
   db.delete(importPreviewBatches)
     .where(and(eq(importPreviewBatches.id, batchId), eq(importPreviewBatches.userId, userId)))
     .run()
+}
+
+/** The dashboard keeps ONE "new data" batch per user; a fresh check replaces it. */
+export function deleteMonitorBatches(db: Db, userId: number): void {
+  const rows = db.select().from(importPreviewBatches).where(eq(importPreviewBatches.userId, userId)).all()
+  for (const row of rows) {
+    if ((row.payloadJson as unknown as ImportPreview).origin === 'monitor') {
+      db.delete(importPreviewBatches).where(eq(importPreviewBatches.id, row.id)).run()
+    }
+  }
+}
+
+/** Replaces a stored batch's content (same id), e.g. after an item was ignored. */
+export function updatePreviewBatch(db: Db, userId: number, batchId: string, preview: ImportPreview): void {
+  db.update(importPreviewBatches)
+    .set({ payloadJson: preview as unknown as Record<string, unknown> })
+    .where(and(eq(importPreviewBatches.id, batchId), eq(importPreviewBatches.userId, userId)))
+    .run()
+}
+
+/**
+ * The preview with one competition marked as blacklisted, so committing the
+ * batch afterwards skips it. Pure: returns a new object.
+ */
+export function withCompetitionBlacklisted(preview: ImportPreview, competitionSignature: string): ImportPreview {
+  return {
+    ...preview,
+    items: preview.items.map((item) =>
+      item.competitionSignature === competitionSignature
+        ? {
+            ...item,
+            action: 'blacklisted' as const,
+            races: item.races.map((r) => ({ ...r, action: 'blacklisted' as const })),
+          }
+        : item,
+    ),
+  }
 }
 
 export type UpdateCandidateChoice = 'replace' | 'keep_both' | 'skip'

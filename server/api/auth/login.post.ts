@@ -39,15 +39,7 @@ export default defineEventHandler(async (event) => {
     .where(eq(users.id, user.id))
     .run()
 
-  await setUserSession(event, {
-    user: {
-      id: user.id,
-      username: user.username,
-      skaterName: user.skaterName,
-      isAdmin: user.isAdmin,
-      sessionVersion: user.sessionVersion,
-    },
-  })
+  await setUserSession(event, { user: toSessionUser(user) })
 
   return { ok: true }
 })
