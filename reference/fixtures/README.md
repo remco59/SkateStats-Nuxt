@@ -48,6 +48,15 @@ quirks called out in REBUILD_PLAN.md section 4.
   `random.choice` so every story variant is captured, not just one random
   pick. Regenerate with `python3 scripts/golden/stats-extras.py
   /path/to/old/SkateStats`.
+- `calculations/golden_targets.json` — target progress (the lap-derived
+  per-distance stats and `build_goal_progress`) and the live split plan
+  (`segmentDistancesForTarget` / `buildTargetSplitPlan` /
+  `rebalanceTargetSplits`). Unlike the Python-only fixtures above, the split
+  plan lives in the old app's `templates/goals.html` as JavaScript, so
+  `scripts/golden/targets.py` extracts those functions verbatim and runs
+  them under Node. Regenerate with
+  `python3 scripts/golden/targets.py /path/to/old/SkateStats`; it records the
+  old repo's commit in `generated_by`.
 - `osta/search_results_single.html` — real `index.php?ZoekStr=Remco Land`
   response: a single-candidate match, which OSTA redirects straight to the
   profile/season page instead of a `table.naam` list (exercises

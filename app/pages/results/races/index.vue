@@ -28,6 +28,7 @@ function applyFilters() {
 
 <template>
   <div class="space-y-6">
+    <SubTabs section="results" class="!mb-0" />
     <div class="flex items-center justify-between">
       <h1 class="page-title">Ritten</h1>
       <NuxtLink to="/results/races/new" class="btn btn-primary btn-sm">

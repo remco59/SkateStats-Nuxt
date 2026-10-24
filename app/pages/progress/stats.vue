@@ -46,6 +46,7 @@ const hasLapStats = (distanceM: number) => distanceM !== 100 && distanceM !== 30
 
 <template>
   <div class="space-y-8">
+    <SubTabs section="progress" class="!mb-0" />
     <h1 class="page-title">Statistieken</h1>
 
     <section v-if="data?.story" class="card story" aria-label="Coach analyse">
