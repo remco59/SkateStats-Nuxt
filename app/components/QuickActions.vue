@@ -2,6 +2,7 @@
 // Floating quick-add button (old app: the "+" FAB). Gives one-tap access to
 // the three most common entry points from every page -- in particular
 // "Rit toevoegen", which otherwise needs a trip through a competition page.
+// Below the sidebar breakpoint it floats above the bottom tab bar.
 const route = useRoute()
 const open = ref(false)
 
@@ -68,7 +69,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
 .fab-inner {
   position: fixed;
   right: var(--space-4);
-  bottom: var(--space-4);
+  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + var(--space-4));
   z-index: 19;
   display: flex;
   flex-direction: column;
@@ -89,16 +90,16 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
 .fab-action {
   display: inline-flex;
   align-items: center;
-  min-height: var(--control-height);
+  min-height: 2.75rem;
   padding: 0 1.1rem;
   border-radius: var(--radius-pill);
   border: 1px solid var(--color-border-strong);
-  background: var(--color-surface-2);
+  background: var(--color-surface);
   color: var(--color-text);
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   white-space: nowrap;
-  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-float);
   transition: border-color var(--transition-fast), color var(--transition-fast);
 }
 
@@ -111,14 +112,14 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 3.25rem;
-  height: 3.25rem;
+  width: 3.5rem;
+  height: 3.5rem;
   border: none;
   border-radius: var(--radius-pill);
   cursor: pointer;
-  color: #ffffff;
-  background: linear-gradient(to right, var(--color-orange-600), var(--color-orange-500));
-  box-shadow: var(--shadow-glow-strong);
+  color: var(--color-accent-contrast);
+  background: var(--color-accent);
+  box-shadow: var(--shadow-float);
 }
 
 .fab-icon {

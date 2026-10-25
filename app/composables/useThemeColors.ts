@@ -8,7 +8,7 @@
  * Re-resolved when the theme attribute changes or the OS scheme flips
  * (relevant for the `system` theme).
  */
-const FALLBACK = { accent: '#f7931a', border: 'rgba(255, 255, 255, 0.1)', textMuted: '#94a3b8' }
+const FALLBACK = { accent: '#6db0ff', border: 'rgba(190, 215, 240, 0.14)', textMuted: '#a9bccd' }
 
 export function useThemeColors() {
   const colors = reactive({ ...FALLBACK })

@@ -40,8 +40,7 @@ async function updateApp() {
         tijdens het herstarten kort niet bereikbaar.
       </p>
       <button
-        class="rounded-md px-3 py-1.5 text-sm disabled:opacity-50"
-        style="background: linear-gradient(to right, var(--color-accent-2), var(--color-accent)); color: #fff; box-shadow: var(--shadow-glow)"
+        class="btn btn-primary btn-sm"
         :disabled="updating"
         @click="updateApp"
       >

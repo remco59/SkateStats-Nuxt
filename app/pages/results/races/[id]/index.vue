@@ -103,7 +103,7 @@ const lapSeconds = computed(() => race.value?.lapsMs.map((ms) => ms / 1000) ?? [
           </div>
         </div>
         <div class="text-right">
-          <div class="stat-label">T.o.v. vorige PR</div>
+          <div class="stat-label">Verschil met vorige PR</div>
           <div class="stat-value-sm mt-0.5">
             <span v-if="race.deltaVsPreviousPrMs === null" class="delta-neutral">
               <span v-if="isFirstTime" class="text-secondary" style="font-family: var(--font-sans); font-weight: 400">
